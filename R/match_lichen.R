@@ -23,7 +23,7 @@ match_lichen <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
   if (!is.character(sp_names) && !is.vector(sp_names)) {
     stop("sp_string must be a string or a vector")
   } else if (is.character(sp_names)) {
-    sp_names = c(sp_names)
+    sp_names <- c(sp_names)
   }
 
 
@@ -80,13 +80,14 @@ match_lichen <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
     #progress bar
 
     # Extract response content
-    data = fromJSON(rawToChar(response$content))
+    data <-  fromJSON(rawToChar(response$content))
 
 
-    input = as.data.frame(data[1])
-    match = data[2]
+    input <-  as.data.frame(data[1])
+    match <-  data[2]
     match <- match$match
-    result = cbind(input, match)
+    result <- 
+      cbind(input, match)
     if (i == 1) {
       result_merged <- result
     } else {

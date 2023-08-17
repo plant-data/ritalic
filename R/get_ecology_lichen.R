@@ -19,7 +19,8 @@ get_ecology_lichen <-function(sp_names) {
   if (!is.character(sp_names) && !is.vector(sp_names)) {
     stop("sp_string must be a string or a vector")
   } else if (is.character(sp_names)) {
-    sp_names = c(sp_names)
+    sp_names <- 
+      c(sp_names)
   }
   
   # create a vector with only unique species names
