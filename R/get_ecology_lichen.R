@@ -36,6 +36,9 @@ get_ecology_lichen <-function(sp_names) {
     success <- FALSE
     while (!success) {
       
+      sp_name <- unique_sp_names[i];
+      sp_name <- URLencode(sp_name)
+      
       url <- "https://italic.units.it/api/v1/ecology/"
       url <- paste(url, sp_name, sep = '')
       
