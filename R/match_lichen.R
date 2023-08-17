@@ -25,7 +25,9 @@ match_lichen <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
   } else if (is.character(sp_names)) {
     sp_names <- c(sp_names)
   }
-
+  
+  # replace Na with empty values
+  sp_names <- ifelse(is.na(sp_names), "", sp_names)
 
   # create a vector with only unique species names
   unique_sp_names <- unique(sp_names)
@@ -37,14 +39,7 @@ match_lichen <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
 
     success <- FALSE
     while (!success) {
-      
-      
-      sp_name <- unique_sp_names[i];
-      
-      if(is.na(sp_name)){
-        sp_name <- ''
-      }
-
+ 
       url <- "https://italic.units.it/api/v1/match"
       headers <- c('Content-Type' = 'application/json')
       body <-
