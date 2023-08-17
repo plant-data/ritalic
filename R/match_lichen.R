@@ -37,9 +37,13 @@ match_lichen <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
 
     success <- FALSE
     while (!success) {
-
+      
+      
       sp_name <- unique_sp_names[i];
-      #print(sp_name)
+      
+      if(is.na(sp_name)){
+        sp_name <- ''
+      }
 
       url <- "https://italic.units.it/api/v1/match"
       headers <- c('Content-Type' = 'application/json')
