@@ -40,8 +40,6 @@ get_checklist_lichen <- function(area) {
     stop("An unknown error occurred, please try again later")
   }
   
-  
-  
   # If status_code = 200 everything is fine
   data <- fromJSON(rawToChar(response$content))
   
@@ -53,10 +51,6 @@ get_checklist_lichen <- function(area) {
   if (warnings != '') {
     warning(warnings)
   }
-  
-  
-  
-  
   return(checklist)
   
 }
