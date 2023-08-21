@@ -26,7 +26,9 @@ get_occurrences_lichen <-function(sp_name) {
       sp_name <- URLencode(sp_name)
       
       url <- "https://italic.units.it/api/v1/occurrences/"
+      parameters <- '?only-points=true'
       url <- paste(url, sp_name, sep = '')
+      url <- paste(url, parameters, sep = '')
       
       response <- GET(url)
       
