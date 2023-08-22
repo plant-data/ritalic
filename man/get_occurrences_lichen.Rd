@@ -4,10 +4,12 @@
 \alias{get_occurrences_lichen}
 \title{Match species names to their corresponding accepted names in the ITALIC database}
 \usage{
-get_occurrences_lichen(sp_name)
+get_occurrences_lichen(sp_name, only_genus = FALSE)
 }
 \arguments{
 \item{sp_name}{a character vector of species names to be matched}
+
+\item{only_genus}{search for genus instead of species name}
 }
 \value{
 a list of matched names, with the original names as the names of the list and the matched names as the values
