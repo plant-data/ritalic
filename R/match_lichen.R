@@ -1,13 +1,16 @@
-#' Match species names to their corresponding accepted names in the ITALIC database
+#' Align scientific names names against the Checklist of the Lichens of Italy (Nimis, 2016)
 #'
-#' Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
-#'
-#' @param sp_names a character vector of species names to be matched
+#' The function attempts to find the best matching name against the Checklist
+#' of the Lichens of Italy
+#' 
+#' @param sp_names a character vector of scientific names
 #' @param subsp_marks an optional character vector of markers to match at the subspecies level
 #' @param var_marks an optional character vector of markers to match at the variety level
 #' @param form_marks an optional character vector of markers to match at the form level
 #'
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
+#' with seven columns, \code{input_name}, \code{matched_name}, 
+#'.    \code{status}, \code{accepted_name}, \code{score}, \code{name_score}, \code{auth_score}
 #'
 #' @examples
 #' match_lichen(c("Cetraria islandica", "Lecanora ciliata"))
