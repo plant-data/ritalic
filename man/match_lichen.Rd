@@ -2,12 +2,12 @@
 % Please edit documentation in R/match_lichen.R
 \name{match_lichen}
 \alias{match_lichen}
-\title{Match species names to their corresponding accepted names in the ITALIC database}
+\title{Align scientific names names against the Checklist of the Lichens of Italy (Nimis, 2016)}
 \usage{
 match_lichen(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
 \arguments{
-\item{sp_names}{a character vector of species names to be matched}
+\item{sp_names}{a character vector of scientific names}
 
 \item{subsp_marks}{an optional character vector of markers to match at the subspecies level}
 
@@ -17,9 +17,12 @@ match_lichen(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
 \value{
 a list of matched names, with the original names as the names of the list and the matched names as the values
+with seven columns, \code{input_name}, \code{matched_name},
+.    \code{status}, \code{accepted_name}, \code{score}, \code{name_score}, \code{auth_score}
 }
 \description{
-Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
+The function attempts to find the best matching name against the Checklist
+of the Lichens of Italy
 }
 \examples{
 match_lichen(c("Cetraria islandica", "Lecanora ciliata"))
