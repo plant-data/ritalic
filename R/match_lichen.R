@@ -1,5 +1,6 @@
+#' Align lichen names
+#' 
 #' Align scientific names names against the Checklist of the Lichens of Italy (Nimis, 2016)
-#'
 #' The function attempts to find the best matching name against the Checklist
 #' of the Lichens of Italy
 #' 

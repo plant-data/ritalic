@@ -2,7 +2,7 @@
 % Please edit documentation in R/match_lichen.R
 \name{match_lichen}
 \alias{match_lichen}
-\title{Align scientific names names against the Checklist of the Lichens of Italy (Nimis, 2016)}
+\title{Align lichen names}
 \usage{
 match_lichen(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
@@ -21,6 +21,7 @@ with seven columns, \code{input_name}, \code{matched_name},
 .    \code{status}, \code{accepted_name}, \code{score}, \code{name_score}, \code{auth_score}
 }
 \description{
+Align scientific names names against the Checklist of the Lichens of Italy (Nimis, 2016)
 The function attempts to find the best matching name against the Checklist
 of the Lichens of Italy
 }
