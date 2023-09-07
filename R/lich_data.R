@@ -30,5 +30,5 @@ lich_data <- function(sp_names) {
   # merge the datasets with cbind
   result <- cbind(classification2, description2, ecology2, rarity2)
 
-  return(description2)
+  return(result)
 }
