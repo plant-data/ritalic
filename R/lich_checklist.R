@@ -6,13 +6,13 @@
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
 #'
 #' @examples
-#' get_checklist_lichen('Molise')
+#' lich_checklist('Molise')
 #'
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-get_checklist_lichen <- function(area) {
+lich_checklist <- function(area) {
   # sp_names must be a character
   if (!is.character(area)) {
     stop("area must be a string or a character")

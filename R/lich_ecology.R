@@ -6,14 +6,14 @@
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
 #'
 #' @examples
-#' get_ecology_lichen(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' lich_ecology(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #'
 #' @import utils
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-get_ecology_lichen <-function(sp_names) {
+lich_ecology <-function(sp_names) {
   
   # sp_names must be a vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {

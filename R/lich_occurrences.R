@@ -7,14 +7,14 @@
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
 #'
 #' @examples
-#' get_occurrences_lichen("Cetraria ericetorum Opiz")
+#' lich_occurrences("Cetraria ericetorum Opiz")
 #'
 #' @import utils
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-get_occurrences_lichen <-function(sp_name, only_genus = FALSE) {
+lich_occurrences <-function(sp_name, only_genus = FALSE) {
   
   # sp_names must be a vector
   if (!is.character(sp_name)) {

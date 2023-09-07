@@ -6,14 +6,14 @@
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
 #'
 #' @examples
-#' get_classification_lichen(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' lich_description(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #'
 #' @import utils
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-get_classification_lichen <-function(sp_names) {
+lich_description <-function(sp_names) {
   
   # sp_names must be a vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {
@@ -39,7 +39,7 @@ get_classification_lichen <-function(sp_names) {
       sp_name <- unique_sp_names[i];
       sp_name <- URLencode(sp_name)
       
-      url <- "https://italic.units.it/api/v1/classification/"
+      url <- "https://italic.units.it/api/v1/description/"
       url <- paste(url, sp_name, sep = '')
       
       response <- GET(url)
@@ -64,11 +64,11 @@ get_classification_lichen <-function(sp_names) {
     data <- fromJSON(rawToChar(response$content))
     
     input <- as.data.frame(data[1])
-    classification <- data[2]
-    classification <- as.data.frame(classification$classification)
+    description <- data[2]
+    description <- as.data.frame(description$description)
     warnings <-  as.data.frame(data[3])
     
-    result <- cbind(input,classification,warnings)
+    result <- cbind(input,description,warnings)
     
     if (i == 1) {
       result_merged <- result
