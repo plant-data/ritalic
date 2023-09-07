@@ -2,6 +2,7 @@
 
 export(lich_checklist)
 export(lich_classification)
+export(lich_data)
 export(lich_description)
 export(lich_ecology)
 export(lich_match)

@@ -27,9 +27,9 @@ lich_occurrences <-function(sp_name, only_genus = FALSE) {
       sp_name <- URLencode(sp_name)
       
       url <- "https://italic.units.it/api/v1/occurrences/"
-      parameters <- '?only-points=true'
+      parameters <- '?points-only=true'
       if (only_genus) {
-        parameters <- paste(parameters, '&only-genus=true', sep = '')
+        parameters <- paste(parameters, '&is-genus=true', sep = '')
       }
       url <- paste(url, sp_name, sep = '')
       url <- paste(url, parameters, sep = '')
