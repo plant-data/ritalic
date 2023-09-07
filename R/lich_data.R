@@ -19,7 +19,7 @@ lich_data <- function(sp_names) {
   print('ecology')
   ecology <- lich_ecology(sp_names)
   print('rarity')
-  rarity <- lich_rarity(sp_names)
+  #rarity <- lich_rarity(sp_names)
   
   # in each dataset remove the first and last column
   classification <- classification[, 1:ncol(classification) - 1]
