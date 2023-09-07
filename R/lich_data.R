@@ -14,13 +14,13 @@ lich_data <- function(sp_names) {
 
   progress_bar_block <- define_progress_bar(4)
   classification <- lich_classification(sp_names)
-  utils::setTxtProgressBar(progress_bar_block, 1)
+  utils::setTxtProgressBar(progress_bar_block, 1/4)
   description <- lich_description(sp_names)
-  utils::setTxtProgressBar(progress_bar_block, 2)
+  utils::setTxtProgressBar(progress_bar_block, 2/4)
   ecology <- lich_ecology(sp_names)
-  utils::setTxtProgressBar(progress_bar_block, 3)
+  utils::setTxtProgressBar(progress_bar_block, 3/4)
   rarity <- lich_rarity(sp_names)
-  utils::setTxtProgressBar(progress_bar_block, 4)
+  utils::setTxtProgressBar(progress_bar_block, 4/4)
   
   # in each dataset remove the first and last column
   classification <- classification[, 1:ncol(classification) - 1]
