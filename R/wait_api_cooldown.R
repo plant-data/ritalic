@@ -5,6 +5,6 @@
 #'
 #' @param seconds The number of seconds to wait
 #' @keywords wait time
-waitApiCooldown <- function(seconds = 10) {
+wait_api_cooldown <- function(seconds = 10) {
   Sys.sleep(seconds)
 }

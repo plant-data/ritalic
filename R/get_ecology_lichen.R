@@ -51,7 +51,7 @@ get_ecology_lichen <-function(sp_names) {
         stop("Impossible to connect to the server, please try again later")
       } else if (response$status_code == 429) {
         # wait the end of the api cooldown and retry
-        waitApiCooldown()
+        wait_api_cooldown()
       } else if (response$status_code == 200) {
         success <- TRUE
       } else {
