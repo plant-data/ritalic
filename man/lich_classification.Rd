@@ -2,18 +2,18 @@
 % Please edit documentation in R/lich_classification.R
 \name{lich_classification}
 \alias{lich_classification}
-\title{Match species names to their corresponding accepted names in the ITALIC database}
+\title{Lichen classification}
 \usage{
 lich_classification(sp_names)
 }
 \arguments{
-\item{sp_names}{a character vector of species names to be matched}
+\item{sp_names}{A vector containing scientific names of lichens.}
 }
 \value{
-a list of matched names, with the original names as the names of the list and the matched names as the values
+A dataframe containing the classification of the lichen species passed as input.
 }
 \description{
-Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
+This function returns the classification of the lichen species passed as input.
 }
 \examples{
 lich_classification(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))

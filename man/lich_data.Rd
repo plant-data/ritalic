@@ -13,7 +13,7 @@ lich_data(sp_names)
 A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
 }
 \description{
-This function returns a dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
+This function returns a dataframe containing the classification, description, ecology and rarity of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
 }
 \examples{
 lich_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))

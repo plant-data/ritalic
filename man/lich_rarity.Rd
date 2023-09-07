@@ -2,18 +2,18 @@
 % Please edit documentation in R/lich_rarity.R
 \name{lich_rarity}
 \alias{lich_rarity}
-\title{Match species names to their corresponding accepted names in the ITALIC database}
+\title{Lichen rarity}
 \usage{
 lich_rarity(sp_names)
 }
 \arguments{
-\item{sp_names}{a character vector of species names to be matched}
+\item{sp_names}{A vector containing scientific names of lichens.}
 }
 \value{
-a list of matched names, with the original names as the names of the list and the matched names as the values
+A dataframe containing the rarity of the lichen species passed as input.
 }
 \description{
-Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
+This function returns the rarity of the lichen species passed as input. For more info about rarity see https://italic.units.it/?procedure=base&t=59&c=60#commonness
 }
 \examples{
 lich_rarity(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))

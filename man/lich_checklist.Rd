@@ -2,18 +2,18 @@
 % Please edit documentation in R/lich_checklist.R
 \name{lich_checklist}
 \alias{lich_checklist}
-\title{Match species names to their corresponding accepted names in the ITALIC database}
+\title{Lichen checklist}
 \usage{
 lich_checklist(area)
 }
 \arguments{
-\item{area}{a character vector of species names to be matched}
+\item{area}{A string containing one area of Italy.}
 }
 \value{
-a list of matched names, with the original names as the names of the list and the matched names as the values
+A dataframe containing the checklist of the lichen species present in the area of Italy passed as input.
 }
 \description{
-Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
+This function returns the checklist of the lichen species present in the area of Italy passed as input. Accepted values for the area parameter are the following:Friuli, Venezia-Giulia, Veneto, Trentino Alto-Adige, Lombardia, Piemonte, Valle d'Aosta, Liguria, Emilia Romagna, Toscana, Umbria, Marche, Abruzzo, Molise, Puglia, Basilicata, Campania, Calabria, Sicilia, Sardegna, Lazio, Italy, Dolomites
 }
 \examples{
 lich_checklist('Molise')

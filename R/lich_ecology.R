@@ -1,10 +1,9 @@
-#' Match species names to their corresponding accepted names in the ITALIC database
-#'
-#' Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
-#'
-#' @param sp_names a character vector of species names to be matched
-#' @return a list of matched names, with the original names as the names of the list and the matched names as the values
-#'
+# write the documentation
+#' @title Lichen ecology
+#' @description This function returns the ecology parameters of the lichen species passed as input. For more info about the ecology parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
+#' @param sp_names A vector containing scientific names of lichens.
+#' @return A dataframe containing the ecology of the lichen species passed as input.
+#' 
 #' @examples
 #' lich_ecology(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #'

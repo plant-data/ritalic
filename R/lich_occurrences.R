@@ -1,11 +1,8 @@
-#' Match species names to their corresponding accepted names in the ITALIC database
-#'
-#' Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
-#'
-#' @param sp_name a character vector of species names to be matched
-#' @param only_genus search for genus instead of species name
-#' @return a list of matched names, with the original names as the names of the list and the matched names as the values
-#'
+#' @title Lichen occurrences
+#' @description This function returns the occurrences of the lichen species passed as input.
+#' @param sp_name A string containing the scientific name of the lichen.
+#' @param only_genus A boolean value, if TRUE the occurrences of all the species of the input genus are returned.
+#' @return A dataframe containing the occurrences of the lichen species passed as input.
 #' @examples
 #' lich_occurrences("Cetraria ericetorum Opiz")
 #'
@@ -14,7 +11,7 @@
 #' @import jsonlite
 #'
 #' @export
-lich_occurrences <-function(sp_name, only_genus = FALSE) {
+lich_occurrences <- function(sp_name, only_genus = FALSE) {
   
   # sp_names must be a vector
   if (!is.character(sp_name)) {

@@ -1,10 +1,7 @@
-#' Match species names to their corresponding accepted names in the ITALIC database
-#'
-#' Given a list of species names, this function matches each name to its corresponding accepted name in the ITALIC database. The function uses the ITALIC API to perform the matching. The function can also accept optional arguments to match at the subspecies, variety, form, or cultivar level.
-#'
-#' @param area a character vector of species names to be matched
-#' @return a list of matched names, with the original names as the names of the list and the matched names as the values
-#'
+#' @title Lichen checklist
+#' @description This function returns the checklist of the lichen species present in the area of Italy passed as input. Accepted values for the area parameter are the following:Friuli, Venezia-Giulia, Veneto, Trentino Alto-Adige, Lombardia, Piemonte, Valle d'Aosta, Liguria, Emilia Romagna, Toscana, Umbria, Marche, Abruzzo, Molise, Puglia, Basilicata, Campania, Calabria, Sicilia, Sardegna, Lazio, Italy, Dolomites
+#' @param area A string containing one area of Italy.
+#' @return A dataframe containing the checklist of the lichen species present in the area of Italy passed as input.
 #' @examples
 #' lich_checklist('Molise')
 #'

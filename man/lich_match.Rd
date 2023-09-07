@@ -2,18 +2,18 @@
 % Please edit documentation in R/lich_match.R
 \name{lich_match}
 \alias{lich_match}
-\title{Align lichen names}
+\title{Lichen match}
 \usage{
 lich_match(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
 \arguments{
-\item{sp_names}{a character vector of scientific names}
+\item{sp_names}{A character vector of scientific names}
 
-\item{subsp_marks}{an optional character vector of markers to match at the subspecies level}
+\item{subsp_marks}{An optional character vector of markers to match at the subspecies level}
 
-\item{var_marks}{an optional character vector of markers to match at the variety level}
+\item{var_marks}{An optional character vector of markers to match at the variety level}
 
-\item{form_marks}{an optional character vector of markers to match at the form level}
+\item{form_marks}{An optional character vector of markers to match at the form level}
 }
 \value{
 a list of matched names, with the original names as the names of the list and the matched names as the values
@@ -21,9 +21,7 @@ with seven columns, \code{input_name}, \code{matched_name},
 .    \code{status}, \code{accepted_name}, \code{score}, \code{name_score}, \code{auth_score}
 }
 \description{
-Align scientific names names against the Checklist of the Lichens of Italy (Nimis, 2016)
-The function attempts to find the best matching name against the Checklist
-of the Lichens of Italy
+This function aligns scientific names against the Checklist of the Lichens of Italy
 }
 \examples{
 lich_match(c("Cetraria islandica", "Lecanora ciliata"))
