@@ -12,14 +12,15 @@
 #' @export
 lich_data <- function(sp_names) {
 
-
+  overview_bar = define_progress_bar(4)
   classification <- lich_classification(sp_names)
-
+  utils::setTxtProgressBar(overview_bar, 1)
   description <- lich_description(sp_names)
-
+  utils::setTxtProgressBar(overview_bar, 2)
   ecology <- lich_ecology(sp_names)
-
+  utils::setTxtProgressBar(overview_bar, 3)
   rarity <- lich_rarity(sp_names)
+  utils::setTxtProgressBar(overview_bar, 4)
   
   # in each dataset remove the first and last column
   classification2 <- classification[, 1:ncol(classification) - 1]
