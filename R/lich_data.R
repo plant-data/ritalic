@@ -12,23 +12,23 @@
 #' @export
 lich_data <- function(sp_names) {
 
-  print('classification')
+
   classification <- lich_classification(sp_names)
-  print('description')
+
   description <- lich_description(sp_names)
-  print('ecology')
+
   ecology <- lich_ecology(sp_names)
-  print('rarity')
+
   rarity <- lich_rarity(sp_names)
   
   # in each dataset remove the first and last column
-  classification <- classification[, 1:ncol(classification) - 1]
-  description <- description[, 2:ncol(description) - 1]
-  ecology <- ecology[, 2:ncol(ecology) - 1]
-  rarity <- rarity[, 2:ncol(rarity) - 1]
+  classification2 <- classification[, 1:ncol(classification) - 1]
+  description2 <- description[, 3:ncol(description) - 1]
+  ecology2 <- ecology[, 3:ncol(ecology) - 1]
+  rarity2 <- rarity[, 3:ncol(rarity) - 1]
 
   # merge the datasets with cbind
-  result <- cbind(classification, description, ecology, rarity)
+  result <- cbind(classification2, description2, ecology2, rarity2)
 
   return(result)
 }
