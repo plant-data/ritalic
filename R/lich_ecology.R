@@ -1,4 +1,3 @@
-# write the documentation
 #' @title Lichen ecology
 #' @description This function returns the ecology parameters of the lichen species passed as input. For more info about the ecology parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
 #' @param sp_names A vector containing scientific names of lichens.
