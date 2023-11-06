@@ -63,7 +63,8 @@ lich_traits <-function(sp_names) {
     
     input <- as.data.frame(data[1])
     traits <- data[2]
-    traits <- as.data.frame(traits$traits)
+    traits <- lapply(traits$traits, function(x) if (is.null(x)) NA else x)
+    traits <- as.data.frame(traits)
     warnings <-  as.data.frame(data[3])
     
     result <- cbind(input,traits,warnings)
