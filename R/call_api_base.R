@@ -1,17 +1,14 @@
-#' @title Lichen traits
-#' @description This function returns the functional traits of the lichen species passed as input.
+#' @title Call api for base function
+#' @description Call the api endpoint for basic function and orgaize the result 
 #' @param sp_names A vector containing scientific names of lichens.
-#' @return A dataframe containing the ecology of the lichen species passed as input.
-#' 
-#' @examples
-#' lich_traits(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' @param api_endpoint The api endpoint to call
+#' @return A dataframe containing the data from the api endpoint
 #'
 #' @import utils
 #' @import httr
 #' @import jsonlite
 #'
-#' @export
-lich_traits <-function(sp_names) {
+call_api_base <-function(sp_names, api_endpoint) {
   
   # sp_names must be a vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {
@@ -37,7 +34,7 @@ lich_traits <-function(sp_names) {
       sp_name <- unique_sp_names[i];
       sp_name <- URLencode(sp_name)
       
-      url <- "https://italic.units.it/api/v1/traits/"
+      url <- api_endpoint
       url <- paste(url, sp_name, sep = '')
       
       response <- GET(url)
@@ -59,15 +56,15 @@ lich_traits <-function(sp_names) {
     }
     
     # If status_code = 200 everything is fine
-    data <- fromJSON(rawToChar(response$content))
+    json_data <- fromJSON(rawToChar(response$content))
     
-    input <- as.data.frame(data[1])
-    traits <- data[2]
-    traits <- lapply(traits$traits, function(x) if (is.null(x)) NA else x)
-    traits <- as.data.frame(traits)
-
+    input <- as.data.frame(json_data[1])
+    data <- json_data[2]
+    data <- lapply(data$data, function(x) if (is.null(x)) NA else x)
+    data <- as.data.frame(data)
     
-    result <- cbind(input,traits)
+    
+    result <- cbind(input,data)
     
     if (i == 1) {
       result_merged <- result
