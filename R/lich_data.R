@@ -5,8 +5,6 @@
 #' @examples
 #' lich_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #' @import utils
-#' @import httr
-#' @import jsonlite
 #'
 #' @export
 lich_data <- function(sp_names) {
