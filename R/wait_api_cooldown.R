@@ -1,7 +1,7 @@
 #' Wait for a specified number of seconds
 #'
 #' This function waits for a specified number of seconds before continuing.
-#' This match the rate limit on the server
+#' NOTE: the rate limit is server-side, changing this value won't speed up the functions
 #'
 #' @param seconds The number of seconds to wait
 #' @keywords wait time
