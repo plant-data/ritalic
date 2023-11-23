@@ -11,7 +11,7 @@ wait_api_cooldown(seconds = 10)
 }
 \description{
 This function waits for a specified number of seconds before continuing.
-This match the rate limit on the server
+NOTE: the rate limit is server-side, changing this value won't speed up the functions
 }
 \keyword{time}
 \keyword{wait}
