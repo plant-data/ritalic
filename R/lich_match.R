@@ -42,7 +42,7 @@ lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks =
       
       sp_name <- unique_sp_names[i];
  
-      url <- "https://italic.units.it/api/v1/match"
+      url <- "https://italic.units.it/api/v2/match"
       headers <- c('Content-Type' = 'application/json')
       body <-
         list(
@@ -86,7 +86,7 @@ lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks =
 
     input <-  as.data.frame(data[1])
     match <-  data[2]
-    match <- match$match
+    match <- lapply(match$match, function(x) if (is.null(x)) NA else x)
     result <- 
       cbind(input, match)
     if (i == 1) {
