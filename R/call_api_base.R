@@ -8,7 +8,7 @@
 #' @import httr
 #' @import jsonlite
 #'
-call_api_base <-function(sp_names, api_endpoint) {
+call_api_base <- function(sp_names, api_endpoint) {
   
   # sp_names must be a vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {

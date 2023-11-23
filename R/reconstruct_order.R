@@ -16,8 +16,12 @@ reconstruct_order <-  function(original_vector, dataframe, column_with_vector_va
   colnames(ordered_dataframe) <- colnames(dataframe)
 
   # Copy values for duplicates
-  for(i in 1:length(original_vector)) {
-    ordered_dataframe[i,] <- dataframe[dataframe[,column_with_vector_values] == original_vector[i],]
+  for (i in 1:length(original_vector)) {
+    ordered_dataframe[i, ] <- dataframe[dataframe[, column_with_vector_values] == original_vector[i], ]
   }
+  
+  # change column names to snake_case
+  ordered_dataframe <- colnames_to_snake_case(ordered_dataframe)
+  
   return(ordered_dataframe)
 }
