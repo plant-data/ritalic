@@ -59,7 +59,7 @@ call_api_base <- function(sp_names, api_endpoint) {
     json_data <- fromJSON(rawToChar(response$content))
     
     input <- as.data.frame(json_data[1])
-    data <- json_data[2]
+    data <- json_data[3]
     data <- lapply(data$data, function(x) if (is.null(x)) NA else x)
     data <- as.data.frame(data)
     
