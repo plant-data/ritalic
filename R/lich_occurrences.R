@@ -51,7 +51,7 @@ lich_occurrences <- function(sp_name, only_genus = FALSE) {
     
     input <- as.data.frame(data[1])
     occurrences <- data[3]
-    occurrences <- as.data.frame(occurrences$occurrences)
+    occurrences <- as.data.frame(occurrences$data)
     #warnings <-  as.data.frame(data[4])
     
   return(occurrences)
