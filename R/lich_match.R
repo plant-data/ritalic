@@ -98,7 +98,9 @@ lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks =
     utils::setTxtProgressBar(progress_bar, i)
 
   }
-
+  print(sp_names)
+  shs <- result_merged[1][1]
+  hjgsdfghj <- result_merged[2][1]
   # at the end of the cycle, the original array is rebuilt
   ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
   return(ordered_dataframe)

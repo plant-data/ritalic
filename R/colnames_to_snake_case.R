@@ -8,6 +8,12 @@
 #' @return A dataframe with column names written in snake_case
 
 colnames_to_snake_case <- function(dataframe) {
+  
+  # Remove duplicated whitespaces
+  colnames(dataframe) <- gsub("\\s+", " ", colnames(dataframe))
+  # Remove leading and trailing whitespaces
+  colnames(dataframe) <- trimws(colnames(dataframe))
+  
   colnames(dataframe) <- tolower(colnames(dataframe))
   colnames(dataframe) <- gsub(" ", "_", colnames(dataframe))
   colnames(dataframe) <- gsub("\\.", "_", colnames(dataframe))
