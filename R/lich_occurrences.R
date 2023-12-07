@@ -50,9 +50,9 @@ lich_occurrences <- function(sp_name, only_genus = FALSE) {
     data <- fromJSON(rawToChar(response$content))
     
     input <- as.data.frame(data[1])
-    occurrences <- data[2]
+    occurrences <- data[3]
     occurrences <- as.data.frame(occurrences$occurrences)
-    warnings <-  as.data.frame(data[3])
+    #warnings <-  as.data.frame(data[4])
     
   return(occurrences)
   
