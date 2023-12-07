@@ -13,6 +13,8 @@
 #' @export
 lich_occurrences <- function(sp_name, only_genus = FALSE) {
   
+  # change to a post function (the api stays the same)
+  
   # sp_names must be a vector
   if (!is.character(sp_name)) {
     stop("sp_string must be a string")
