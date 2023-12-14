@@ -4,18 +4,15 @@
 \alias{lich_checklist}
 \title{Lichen checklist}
 \usage{
-lich_checklist(sp_names)
-}
-\arguments{
-\item{sp_names}{A vector containing scientific names of lichens.}
+lich_checklist()
 }
 \value{
-A dataframe with the presence/absence of the lichen species passed as input in each administrative region of Italy
+A vector containing the names of the lichen species present in Italy.
 }
 \description{
-This function returns the presence/absence (1 or 0 ) of the lichen species passed as input in each administrative region of Italy.
+This function returns the checklist of the lichen species present in Italy.
 }
 \examples{
-lich_checklist(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+lich_checklist()
 
 }
