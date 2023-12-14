@@ -16,6 +16,8 @@ colnames_to_snake_case <- function(dataframe) {
   
   colnames(dataframe) <- tolower(colnames(dataframe))
   colnames(dataframe) <- gsub(" ", "_", colnames(dataframe))
+  colnames(dataframe) <- gsub("-", "_", colnames(dataframe))
+  colnames(dataframe) <- gsub("'", "_", colnames(dataframe))
   colnames(dataframe) <- gsub("\\.", "_", colnames(dataframe))
   return(dataframe)
 }

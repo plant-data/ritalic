@@ -6,18 +6,18 @@
 #' @param form_marks An optional character vector of markers to match at the form level
 #'
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
-#' with seven columns, \code{input_name}, \code{matched_name}, 
-#'.    \code{status}, \code{accepted_name}, \code{score}, \code{name_score}, \code{auth_score}
+#' with six columns, \code{input_name}, \code{matched_name}, 
+#'.    \code{status}, \code{accepted_name}, \code{name_score}, \code{auth_score}
 #'
 #' @examples
-#' lich_match(c("Cetraria islandica", "Lecanora ciliata"))
+#' italic_match(c("Cetraria islandica", "Lecanora ciliata"))
 #'
 #' @import utils
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c()) {
+italic_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c()) {
 
   # sp_names must be a vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {
@@ -42,7 +42,7 @@ lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks =
       
       sp_name <- unique_sp_names[i];
  
-      url <- "https://italic.units.it/api/v2/match"
+      url <- "https://italic.units.it/api/v1/match"
       headers <- c('Content-Type' = 'application/json')
       body <-
         list(
@@ -98,9 +98,6 @@ lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks =
     utils::setTxtProgressBar(progress_bar, i)
 
   }
-  print(sp_names)
-  shs <- result_merged[1][1]
-  hjgsdfghj <- result_merged[2][1]
   # at the end of the cycle, the original array is rebuilt
   ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
   return(ordered_dataframe)

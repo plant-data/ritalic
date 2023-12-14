@@ -4,10 +4,10 @@
 #' @return A dataframe containing the ecology of the lichen species passed as input.
 #' 
 #' @examples
-#' lich_traits(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#'italic_traits(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #' 
 #' @export
-lich_traits <-function(sp_names) {
+italic_traits <-function(sp_names) {
   
   data <- call_api_base(sp_names, "https://italic.units.it/api/v1/traits/")
   return(data)
