@@ -1,7 +1,6 @@
 #' @title Lichen occurrences
 #' @description This function returns the occurrences of the lichen species passed as input.
-#' @param sp_name A string containing the scientific name of the lichen.
-#' @param only_genus A boolean value, if TRUE the occurrences of all the species of the input genus are returned.
+#' @param sp_names A string containing the scientific name of the lichen.
 #' @return A dataframe containing the occurrences of the lichen species passed as input.
 #' @examples
 #' lich_occurrences("Cetraria ericetorum Opiz")
@@ -11,51 +10,88 @@
 #' @import jsonlite
 #'
 #' @export
-lich_occurrences <- function(sp_name, only_genus = FALSE) {
+
+lich_occurrences <-function(sp_names) {
   
-  # change to a post function (the api stays the same)
-  
-  # sp_names must be a vector
-  if (!is.character(sp_name)) {
-    stop("sp_string must be a string")
-  }
-  # replace Na with empty values
-  sp_name <- ifelse(is.na(sp_name), "", sp_name)
-  
- 
-      sp_name <- URLencode(sp_name)
+    # sp_names must be a vector
+    if (!is.character(sp_names) && !is.vector(sp_names)) {
+      stop("sp_string must be a string or a vector")
+    } else if (is.character(sp_names)) {
+      sp_names <- 
+        c(sp_names)
+    }
+    # replace Na with empty values
+    sp_names <- ifelse(is.na(sp_names), "", sp_names)
+    
+    # create a vector with only unique species names
+    unique_sp_names <- unique(sp_names)
+    
+    # for each unique name call the match api the result is put in a dataframe
+    progress_bar <- define_progress_bar(length(unique_sp_names))
+    
+    # a value to handle potential emty results later
+    is_table_yet <- FALSE
+    for (i in 1:length(unique_sp_names)) {
+      # these parameters are used to retry the iteration after a 429 code
       
-      url <- "https://italic.units.it/api/v1/occurrences/"
-      parameters <- '?points-only=true'
-      if (only_genus) {
-        parameters <- paste(parameters, '&is-genus=true', sep = '')
+      success <- FALSE
+      while (!success) {
+        
+        sp_name <- unique_sp_names[i];
+        sp_name <- URLencode(sp_name)
+        
+        url <- "https://italic.units.it/api/v1/occurrences/"
+        url <- paste(url, sp_name, sep = '')
+        
+        response <- GET(url)
+        
+        # Deal with api errors
+        # 500 server not available (blocks the function)
+        # 429 API usage limit exceeded
+        if (response$status_code == 500) {
+          stop("Impossible to connect to the server, please try again later")
+        } else if (response$status_code == 429) {
+          # wait the end of the api cooldown and retry
+          wait_api_cooldown()
+        } else if (response$status_code == 200) {
+          success <- TRUE
+        } else {
+          stop("An unknown error occurred, please try again later")
+        }
+        
       }
-      url <- paste(url, sp_name, sep = '')
-      url <- paste(url, parameters, sep = '')
       
-      response <- GET(url)
+      # If status_code = 200 everything is fine
+      json_data <- fromJSON(rawToChar(response$content))
       
-      # Deal with api errors
-      # 500 server not available (blocks the function)
-      # 429 API usage limit exceeded
-      if (response$status_code == 500) {
-        stop("Impossible to connect to the server, please try again later")
-      } else if (response$status_code == 429) {
-        stop("Impossible to connect to the server, please try again later")
-      } else if (response$status_code == 200) {
-        success <- TRUE
+      input <- as.data.frame(json_data[1])
+      data <- json_data[3]
+      data <- data$data
+      
+      # if the result is empty move to the next name
+      # if there are only invalid names, return an empty dataframe
+      if (is.list(data) && length(data) == 0) {
+        if (is_table_yet == FALSE) {
+          result_merged = data.frame()
+        }
+        
+        next
       } else {
-        stop("An unknown error occurred, please try again later")
-      }
+        
+      result <- as.data.frame(data)
       
-    # If status_code = 200 everything is fine
-    data <- fromJSON(rawToChar(response$content))
+      if (is_table_yet == FALSE) {
+        
+        result_merged <- result
+        is_table_yet <- TRUE
+        
+      } else {
+        result_merged <- rbind(result_merged, result)
+      }
+      utils::setTxtProgressBar(progress_bar, i)
+      }
+    }
     
-    input <- as.data.frame(data[1])
-    occurrences <- data[3]
-    occurrences <- as.data.frame(occurrences$data)
-    #warnings <-  as.data.frame(data[4])
+    return(result_merged)
     
-  return(occurrences)
-  
 }

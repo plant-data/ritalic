@@ -4,12 +4,10 @@
 \alias{lich_occurrences}
 \title{Lichen occurrences}
 \usage{
-lich_occurrences(sp_name, only_genus = FALSE)
+lich_occurrences(sp_names)
 }
 \arguments{
-\item{sp_name}{A string containing the scientific name of the lichen.}
-
-\item{only_genus}{A boolean value, if TRUE the occurrences of all the species of the input genus are returned.}
+\item{sp_names}{A string containing the scientific name of the lichen.}
 }
 \value{
 A dataframe containing the occurrences of the lichen species passed as input.
