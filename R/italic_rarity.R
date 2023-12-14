@@ -3,10 +3,10 @@
 #' @param sp_names A vector containing scientific names of lichens.
 #' @return A dataframe containing the rarity of the lichen species passed as input.
 #' @examples
-#' lich_rarity(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' italic_rarity(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #'
 #' @export
-lich_rarity <-function(sp_names) {
+italic_rarity <-function(sp_names) {
   
   data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/")
   return(data)

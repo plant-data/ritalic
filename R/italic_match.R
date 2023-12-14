@@ -6,18 +6,18 @@
 #' @param form_marks An optional character vector of markers to match at the form level
 #'
 #' @return a list of matched names, with the original names as the names of the list and the matched names as the values
-#' with seven columns, \code{input_name}, \code{matched_name}, 
-#'.    \code{status}, \code{accepted_name}, \code{score}, \code{name_score}, \code{auth_score}
+#' with six columns, \code{input_name}, \code{matched_name}, 
+#'.    \code{status}, \code{accepted_name}, \code{name_score}, \code{auth_score}
 #'
 #' @examples
-#' lich_match(c("Cetraria islandica", "Lecanora ciliata"))
+#' italic_match(c("Cetraria islandica", "Lecanora ciliata"))
 #'
 #' @import utils
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-lich_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c()) {
+italic_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c()) {
 
   # sp_names must be a vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {

@@ -3,7 +3,7 @@
 #' @param sp_names A string containing the scientific name of the lichen.
 #' @return A dataframe containing the occurrences of the lichen species passed as input.
 #' @examples
-#' lich_occurrences("Cetraria ericetorum Opiz")
+#' italic_occurrences("Cetraria ericetorum Opiz")
 #'
 #' @import utils
 #' @import httr
@@ -11,7 +11,7 @@
 #'
 #' @export
 
-lich_occurrences <-function(sp_names) {
+italic_occurrences <-function(sp_names) {
   
     # sp_names must be a vector
     if (!is.character(sp_names) && !is.vector(sp_names)) {
