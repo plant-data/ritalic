@@ -1,9 +1,9 @@
 #' @title Lichen data
-#' @description This function returns a dataframe containing the classification, description, ecology and rarity of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
+#' @description This function returns a dataframe containing the classification, description, taxon_data and rarity of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
 #' @param sp_names A vector containing the scientific names of the lichen species.
 #' @return A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
 #' @examples
-#' italic_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' italic_all_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #' @import utils
 #'
 #' @export
