@@ -4,18 +4,18 @@
 \alias{lich_checklist}
 \title{Lichen checklist}
 \usage{
-lich_checklist(area)
+lich_checklist(sp_names)
 }
 \arguments{
-\item{area}{A string containing one area of Italy.}
+\item{sp_names}{A vector containing scientific names of lichens.}
 }
 \value{
-A dataframe containing the checklist of the lichen species present in the area of Italy passed as input.
+A dataframe with the presence/absence of the lichen species passed as input in each administrative region of Italy
 }
 \description{
-This function returns the checklist of the lichen species present in the area of Italy passed as input. Accepted values for the area parameter are the following:Friuli, Venezia-Giulia, Veneto, Trentino Alto-Adige, Lombardia, Piemonte, Valle d'Aosta, Liguria, Emilia Romagna, Toscana, Umbria, Marche, Abruzzo, Molise, Puglia, Basilicata, Campania, Calabria, Sicilia, Sardegna, Lazio, Italy, Dolomites
+This function returns the presence/absence (1 or 0 ) of the lichen species passed as input in each administrative region of Italy.
 }
 \examples{
-lich_checklist('Molise')
+lich_checklist(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 
 }
