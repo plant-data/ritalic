@@ -3,13 +3,13 @@
 #' @param sp_names A vector containing scientific names of lichens.
 #' @return A dataframe with the presence/absence of the lichen species passed as input in each administrative region of Italy
 #' @examples
-#' lich_distribution(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' italic_distribution(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #'
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-lich_distribution <- function(sp_names) {
+italic_distribution <- function(sp_names) {
   data <- call_api_base(sp_names, "https://italic.units.it/api/v1/distribution/")
   return(data)
 }

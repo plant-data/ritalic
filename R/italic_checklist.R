@@ -2,13 +2,13 @@
 #' @description This function returns the checklist of the lichen species present in Italy.
 #' @return A vector containing the names of the lichen species present in Italy.
 #' @examples
-#' lich_checklist()
+#' italic_checklist()
 #'
 #' @import httr
 #' @import jsonlite
 #'
 #' @export
-lich_checklist <- function() {
+italic_checklist <- function() {
  
   url <- "https://italic.units.it/api/v1/checklist/"
   response <- GET(url)
