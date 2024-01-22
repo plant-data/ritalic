@@ -32,7 +32,7 @@ call_api_base <- function(sp_names, api_endpoint) {
     while (!success) {
       
       sp_name <- unique_sp_names[i];
-      sp_name <- URLencode(sp_name)
+      sp_name <- URLencode(sp_name, reserved = TRUE)
       
       url <- api_endpoint
       url <- paste(url, sp_name, sep = '')

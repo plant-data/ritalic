@@ -38,7 +38,7 @@ italic_occurrences <-function(sp_names) {
       while (!success) {
         
         sp_name <- unique_sp_names[i];
-        sp_name <- URLencode(sp_name)
+        sp_name <- URLencode(sp_name, reserved = TRUE)
         
         url <- "https://italic.units.it/api/v1/occurrences/"
         url <- paste(url, sp_name, sep = '')
