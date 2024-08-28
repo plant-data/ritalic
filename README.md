@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 **ritalic** is an R package which gives you access to
-[ITALIC](https://italic.units.it/) mediated data via its [REST
+[ITALIC](https://italic.units.it/) mediated data via its [RESTful
 API](https://italic.units.it/index.php?procedure=api).
 
 **ITALIC** the Information System on Italian Lichens, makes available
@@ -28,7 +28,7 @@ available on CRAN:
 ```
 
 Or you can install the development version of the package from
-[GitHub](https://github.com/Mattciao96/ritalic):
+[GitHub](https://github.com/plant-data/ritalic):
 
 ``` r
 # install devtools package
@@ -36,7 +36,7 @@ install.packages("devtools")
 # load devtools
 library(devtools)
 # install ritalic
-devtools::install_github("Mattciao96/ritalic")
+devtools::install_github("plant-data/ritalic")
 # load ritalic
 library(ritalic)
 
