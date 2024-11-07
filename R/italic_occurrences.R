@@ -1,9 +1,11 @@
 #' @title Lichen occurrences
 #' @description This function returns the occurrences of the lichen species passed as input.
 #' @param sp_names A string containing the scientific name of the lichen.
+#' @param result_data Optional parameter specifying the type of data to return. Can be either "simple" (default) or "extended". If set to "extended", the returned dataframe will contain addictional data: locality, catalogNumber, substratum
 #' @return A dataframe containing the occurrences of the lichen species passed as input.
 #' @examples
 #' italic_occurrences("Cetraria ericetorum Opiz")
+#' italic_occurrences("Cetraria ericetorum Opiz", result_data="extended")
 #'
 #' @import utils
 #' @import httr
@@ -11,7 +13,7 @@
 #'
 #' @export
 
-italic_occurrences <-function(sp_names) {
+italic_occurrences <-function(sp_names, result_data='simple') {
   
     # sp_names must be a vector
     if (!is.character(sp_names) && !is.vector(sp_names)) {
@@ -39,6 +41,9 @@ italic_occurrences <-function(sp_names) {
         
         sp_name <- unique_sp_names[i];
         sp_name <- URLencode(sp_name, reserved = TRUE)
+        if (result_data == 'extended') {
+          sp_name <- paste(sp_name, '&result_data=extended', sep = '')
+        }
         
         url <- "https://italic.units.it/api/v1/occurrences/"
         url <- paste(url, sp_name, sep = '')

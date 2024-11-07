@@ -4,10 +4,12 @@
 \alias{italic_occurrences}
 \title{Lichen occurrences}
 \usage{
-italic_occurrences(sp_names)
+italic_occurrences(sp_names, result_data = "simple")
 }
 \arguments{
 \item{sp_names}{A string containing the scientific name of the lichen.}
+
+\item{result_data}{Optional parameter specifying the type of data to return. Can be either "simple" (default) or "extended". If set to "extended", the returned dataframe will contain addictional data: locality, catalogNumber, substratum}
 }
 \value{
 A dataframe containing the occurrences of the lichen species passed as input.
@@ -17,5 +19,6 @@ This function returns the occurrences of the lichen species passed as input.
 }
 \examples{
 italic_occurrences("Cetraria ericetorum Opiz")
+italic_occurrences("Cetraria ericetorum Opiz", result_data="extended")
 
 }

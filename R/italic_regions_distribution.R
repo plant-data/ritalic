@@ -10,7 +10,6 @@
 #'
 #' @export
 italic_distribution <- function(sp_names) {
-  .Deprecated("italic_regions_distribution")
   data <- call_api_base(sp_names, "https://italic.units.it/api/v1/distribution/")
   return(data)
 }

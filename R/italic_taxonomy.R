@@ -7,7 +7,8 @@
 #'
 #' @export
 italic_classification <-function(sp_names) {
-  .Deprecated("italic_taxonomy")
+  
   data <- call_api_base(sp_names, "https://italic.units.it/api/v1/classification/")
   return(data)
+  
 }

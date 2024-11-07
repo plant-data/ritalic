@@ -7,7 +7,7 @@
 #'
 #' @export
 italic_rarity <-function(sp_names) {
-  
+  .Deprecated("italic_ecoregions_distribution")
   data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/")
   return(data)
   

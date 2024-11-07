@@ -3,11 +3,11 @@
 #' @param sp_names A vector containing the scientific names of the lichen species.
 #' @return A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
 #' @examples
-#' italic_all_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' italic_taxon_data_all(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #' @import utils
 #'
 #' @export
-italic_all_data <- function(sp_names) {
+italic_taxon_data_all <- function(sp_names) {
 
   overview_bar = define_progress_bar(4)
   classification <- italic_classification(sp_names)
