@@ -7,4 +7,11 @@ clean_species_names <- function(sp_names) {
     stop("sp_names must be a character vector", call. = FALSE)
   }
   replace(sp_names, is.na(sp_names), "")
+  
+  # Regular expression to match common Unicode invisible characters
+  invisible_char_regex <- "[\u00AD\u034F\u200B-\u200F\u2028-\u202E\u2060-\u206F\uFEFF]"
+  
+  # Remove invisible characters using gsub
+  cleaned_names <- gsub(invisible_char_regex, "", sp_names, perl = TRUE)
+
 }

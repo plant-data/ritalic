@@ -27,7 +27,8 @@ italic_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
   }
   
   # replace Na with empty values
-  sp_names <- ifelse(is.na(sp_names), "", sp_names)
+  #sp_names <- ifelse(is.na(sp_names), "", sp_names)
+  sp_names <- clean_species_names(sp_names)
 
   # create a vector with only unique species names
   unique_sp_names <- unique(sp_names)
