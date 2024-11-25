@@ -100,7 +100,9 @@ italic_match <-function(sp_names, subsp_marks = c(), var_marks = c(), form_marks
 
   }
   # at the end of the cycle, the original array is rebuilt
-  ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
+  
+  #ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
+  ordered_dataframe <- result_merged
   return(ordered_dataframe)
 
 }
