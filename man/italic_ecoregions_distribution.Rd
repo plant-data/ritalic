@@ -18,6 +18,6 @@ A dataframe containing the distribution in ecoregions of the lichen species pass
 This function returns the distribution in ecoregions of the lichen species passed as input. For more info about the function see https://italic.units.it/?procedure=base&t=59&c=60#commonness
 }
 \examples{
-italic_rarity(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+italic_ecoregions_distribution(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 
 }

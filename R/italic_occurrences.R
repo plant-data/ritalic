@@ -1,102 +1,88 @@
-#' @title Lichen occurrences
-#' @description This function returns the occurrences of the lichen species passed as input.
-#' @param sp_names A string containing the scientific name of the lichen.
-#' @param result_data Optional parameter specifying the type of data to return. Can be either "simple" (default) or "extended". If set to "extended", the returned dataframe will contain addictional data: locality, catalogNumber, substratum
-#' @return A dataframe containing the occurrences of the lichen species passed as input.
-#' @examples
-#' italic_occurrences("Cetraria ericetorum Opiz")
-#' italic_occurrences("Cetraria ericetorum Opiz", result_data="extended")
-#'
-#' @import utils
-#' @import httr
-#' @import jsonlite
-#'
+#' Get lichen occurrences
+#' @description Returns the occurrences of the lichen species passed as input
+#' @param sp_names A vector of scientific names of lichens
+#' @param result_data Type of data to return: "simple" (default) or "extended"
+#' @return A dataframe containing the occurrences data
+#' @importFrom jsonlite fromJSON
+#' @importFrom utils URLencode
 #' @export
-
-italic_occurrences <-function(sp_names, result_data='simple') {
+italic_occurrences <- function(sp_names, result_data = 'simple') {
+  # Prepare and validate input
+  sp_names <- prepare_species_names(sp_names)
+  unique_sp_names <- unique(sp_names)
   
-    # sp_names must be a vector
-    if (!is.character(sp_names) && !is.vector(sp_names)) {
-      stop("sp_string must be a string or a vector")
-    } else if (is.character(sp_names)) {
-      sp_names <- 
-        c(sp_names)
-    }
-    # replace Na with empty values
-    sp_names <- ifelse(is.na(sp_names), "", sp_names)
+  # Initialize progress bar
+  pb <- create_progress_bar(
+    length(unique_sp_names), 
+    "Processing occurrences..."
+  )
+  
+  # Pre-allocate results list
+  results_list <- vector("list", length(unique_sp_names))
+  has_results <- FALSE
+  
+  # Process each unique species
+  for (i in seq_along(unique_sp_names)) {
+    # Prepare URL
+    sp_name <- URLencode(unique_sp_names[i], reserved = TRUE)
+    url <- paste0(
+      "https://italic.units.it/api/v1/occurrences/",
+      sp_name,
+      if(result_data == 'extended') '&result_data=extended' else ''
+    )
     
-    # create a vector with only unique species names
-    unique_sp_names <- unique(sp_names)
+    # Make API request
+    response <- make_request(
+      method = "GET",
+      url = url
+    )
     
-    # for each unique name call the match api the result is put in a dataframe
-    progress_bar <- define_progress_bar(length(unique_sp_names))
+    # Parse response
+    result <- parse_occurrences_response(response)
     
-    # a value to handle potential emty results later
-    is_table_yet <- FALSE
-    for (i in 1:length(unique_sp_names)) {
-      # these parameters are used to retry the iteration after a 429 code
-      
-      success <- FALSE
-      while (!success) {
-        
-        sp_name <- unique_sp_names[i];
-        sp_name <- URLencode(sp_name, reserved = TRUE)
-        if (result_data == 'extended') {
-          sp_name <- paste(sp_name, '&result_data=extended', sep = '')
-        }
-        
-        url <- "https://italic.units.it/api/v1/occurrences/"
-        url <- paste(url, sp_name, sep = '')
-        
-        response <- GET(url)
-        
-        # Deal with api errors
-        # 500 server not available (blocks the function)
-        # 429 API usage limit exceeded
-        if (response$status_code == 500) {
-          stop("Impossible to connect to the server, please try again later")
-        } else if (response$status_code == 429) {
-          # wait the end of the api cooldown and retry
-          wait_api_cooldown()
-        } else if (response$status_code == 200) {
-          success <- TRUE
-        } else {
-          stop("An unknown error occurred, please try again later")
-        }
-        
-      }
-      
-      # If status_code = 200 everything is fine
-      json_data <- fromJSON(rawToChar(response$content))
-      
-      input <- as.data.frame(json_data[1])
-      data <- json_data[3]
-      data <- data$data
-      
-      # if the result is empty move to the next name
-      # if there are only invalid names, return an empty dataframe
-      if (is.list(data) && length(data) == 0) {
-        if (is_table_yet == FALSE) {
-          result_merged = data.frame()
-        }
-        
-        next
-      } else {
-        
-      result <- as.data.frame(data)
-      
-      if (is_table_yet == FALSE) {
-        
-        result_merged <- result
-        is_table_yet <- TRUE
-        
-      } else {
-        result_merged <- rbind(result_merged, result)
-      }
-      utils::setTxtProgressBar(progress_bar, i)
-      }
+    # Store result if not empty
+    if (!is.null(result) && nrow(result) > 0) {
+      results_list[[i]] <- result
+      has_results <- TRUE
     }
     
-    return(result_merged)
-    
+    # Update progress
+    update_progress(pb, i)
+  }
+  
+  # Close progress bar
+  close_progress_bar(pb)
+  
+  # Handle results
+  if (!has_results) {
+    return(data.frame())  # Return empty dataframe if no results
+  }
+  
+  # Remove NULL entries and combine results
+  valid_results <- Filter(Negate(is.null), results_list)
+  result_merged <- do.call(rbind, valid_results)
+  row.names(result_merged) <- NULL  # Reset row names
+  
+  return(result_merged)
+}
+
+#' Parse occurrences API response
+#' @param response API response object
+#' @return Parsed dataframe or NULL if empty
+parse_occurrences_response <- function(response) {
+  # Parse JSON response
+  json_data <- fromJSON(rawToChar(response$content))
+  
+  # Extract data
+  input <- as.data.frame(json_data[1])
+  data <- json_data[3]$data
+  
+  # Handle empty results
+  if (is.list(data) && length(data) == 0) {
+    return(NULL)
+  }
+  
+  # Convert to dataframe
+  result <- as.data.frame(data)
+  return(result)
 }

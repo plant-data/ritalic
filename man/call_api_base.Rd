@@ -2,18 +2,18 @@
 % Please edit documentation in R/call_api_base.R
 \name{call_api_base}
 \alias{call_api_base}
-\title{Call api for base function}
+\title{Call API for base function}
 \usage{
 call_api_base(sp_names, api_endpoint)
 }
 \arguments{
-\item{sp_names}{A vector containing scientific names of lichens.}
+\item{sp_names}{A vector containing scientific names of lichens}
 
-\item{api_endpoint}{The api endpoint to call}
+\item{api_endpoint}{The API endpoint to call}
 }
 \value{
-A dataframe containing the data from the api endpoint
+A dataframe containing the data from the API endpoint
 }
 \description{
-Call the api endpoint for basic function and orgaize the result
+Call the API endpoint for basic function and organize the result
 }

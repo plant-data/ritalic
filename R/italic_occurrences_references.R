@@ -1,49 +1,100 @@
-#' @title References for the occurrences datasets
-#' @description This function returns the references of the scientific publications about the retrieved occurrences from italic_occurrences()
-#' @param occurrences_dataframe The dataframe resulting from italic_occurrences()
-#' @return A dataframe containing the references and the doi of the scientific publications of the retrieved occurrences
-#'
-#' @import httr
-#' @import jsonlite
-#'
+#' Get references for occurrences datasets
+#' @description Returns references of scientific publications about retrieved occurrences
+#' @param occurrences_dataframe Dataframe from italic_occurrences()
+#' @return Dataframe containing references and DOIs
+#' @importFrom jsonlite fromJSON
+#' @importFrom utils URLencode
 #' @export
 italic_occurrences_references <- function(occurrences_dataframe) {
-  # Input validation
-  if (!"institutionCode" %in% names(occurrences_dataframe)) {
+  # Validate input
+  validate_occurrences_input(occurrences_dataframe)
+  
+  # Process herbaria codes
+  herbaria <- process_herbaria_codes(occurrences_dataframe$institutionCode)
+  
+  # Make API request
+  response <- make_request(
+    method = "GET",
+    url = construct_references_url(herbaria)
+  )
+  
+  # Parse and return results
+  references <- parse_references_response(response)
+  return(references)
+}
+
+#' Validate occurrences dataframe input
+#' @param df Input dataframe to validate
+#' @return NULL, throws error if invalid
+validate_occurrences_input <- function(df) {
+  if (!is.data.frame(df)) {
+    stop("Input must be a dataframe")
+  }
+  if (!"institutionCode" %in% names(df)) {
     stop("The dataframe must contain an 'institutionCode' column")
   }
+  if (nrow(df) == 0) {
+    stop("The dataframe is empty")
+  }
+}
+
+#' Process herbaria codes from institution codes
+#' @param institution_codes Vector of institution codes
+#' @return Processed herbaria codes
+process_herbaria_codes <- function(institution_codes) {
+  # Get unique codes
+  herbaria <- unique(institution_codes)
   
-  # Get unique institution codes and remove 'herbarium ' prefix
-  herbaria <- unique(occurrences_dataframe$institutionCode)
+  # Remove 'herbarium ' prefix
   herbaria <- gsub("^herbarium ", "", herbaria, ignore.case = TRUE)
   
-  # Prepare the API URL with herbaria codes
-  base_url <- "https://italic.units.it/api/v1/references/"
-  url <- paste0(base_url, URLencode(paste0(herbaria, collapse = ";")), reserved = TRUE)
-  # Make API request and handle response
-  response <- GET(url)
+  # Remove empty or NA values
+  herbaria <- herbaria[!is.na(herbaria) & nchar(herbaria) > 0]
   
-  if (status_code(response) == 200) {
-    # Parse JSON response
-    content <- fromJSON(rawToChar(response$content))
-    
-    
-    if (length(content$references) > 0) {
-      data <- data.frame(
-        reference = unlist(content$references$reference),
-        doi = unlist(content$references$doi),
-        stringsAsFactors = FALSE
-      )
-      data <- data[!is.na(data$reference), ]
-      return(data)
-    } else {
-      return(data.frame(
-        reference = character(),
-        doi = character(),
-        stringsAsFactors = FALSE
-      ))
-    }
-  } else {
-    stop("Impossible to retrieve data")
+  if (length(herbaria) == 0) {
+    stop("No valid herbaria codes found")
   }
+  
+  return(herbaria)
+}
+
+#' Construct references API URL
+#' @param herbaria Vector of herbaria codes
+#' @return Constructed URL
+construct_references_url <- function(herbaria) {
+  base_url <- "https://italic.units.it/api/v1/references/"
+  encoded_herbaria <- URLencode(paste0(herbaria, collapse = ";"), reserved = TRUE)
+  paste0(base_url, encoded_herbaria)
+}
+
+#' Parse references API response
+#' @param response API response object
+#' @return Dataframe of references and DOIs
+parse_references_response <- function(response) {
+  # Parse JSON response
+  content <- fromJSON(rawToChar(response$content))
+  
+  # Handle empty response
+  if (length(content$references) == 0) {
+    return(data.frame(
+      reference = character(),
+      doi = character(),
+      stringsAsFactors = FALSE
+    ))
+  }
+  
+  # Create references dataframe
+  refs <- data.frame(
+    reference = unlist(content$references$reference),
+    doi = unlist(content$references$doi),
+    stringsAsFactors = FALSE
+  )
+  
+  # Remove rows with NA references
+  refs <- refs[!is.na(refs$reference), ]
+  
+  # Reset row names
+  row.names(refs) <- NULL
+  
+  return(refs)
 }

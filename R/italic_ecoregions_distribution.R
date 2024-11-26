@@ -4,7 +4,7 @@
 #' @param result_data Optional parameter specifying the type of data to return. Can be either "rarity" (default) or "presence-absence". If set to "presence-absence", the returned dataframe will contain binary values (0 for 'absent', 1 for present).
 #' @return A dataframe containing the distribution in ecoregions of the lichen species passed as input.
 #' @examples
-#' italic_rarity(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' italic_ecoregions_distribution(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 #'
 #' @export
 italic_ecoregions_distribution <-function(sp_names, result_data="rarity") {

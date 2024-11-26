@@ -9,24 +9,20 @@
 #' @export
 italic_taxon_data_all <- function(sp_names) {
 
-  overview_bar = define_progress_bar(4)
-  classification <- italic_classification(sp_names)
-  utils::setTxtProgressBar(overview_bar, 1)
+
+  classification <- italic_taxonomy(sp_names)
+
   description <- italic_description(sp_names)
-  utils::setTxtProgressBar(overview_bar, 2)
+
   ecology <- italic_taxon_data(sp_names)
-  utils::setTxtProgressBar(overview_bar, 3)
-  rarity <- italic_rarity(sp_names)
-  utils::setTxtProgressBar(overview_bar, 4)
   
   # in each dataset remove the first and last column
   classification2 <- classification[, 1:ncol(classification) - 1]
   description2 <- description[, 3:ncol(description) - 1]
   ecology2 <- ecology[, 3:ncol(ecology) - 1]
-  rarity2 <- rarity[, 3:ncol(rarity) - 1]
 
   # merge the datasets with cbind
-  result <- cbind(classification2, description2, ecology2, rarity2)
+  result <- cbind(classification2, description2, ecology2)
 
   return(result)
 }

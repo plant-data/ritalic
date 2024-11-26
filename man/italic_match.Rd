@@ -2,28 +2,22 @@
 % Please edit documentation in R/italic_match.R
 \name{italic_match}
 \alias{italic_match}
-\title{Lichen match}
+\title{Match scientific names against the Checklist of the Lichens of Italy}
 \usage{
 italic_match(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
 \arguments{
 \item{sp_names}{A character vector of scientific names}
 
-\item{subsp_marks}{An optional character vector of markers to match at the subspecies level}
+\item{subsp_marks}{Markers to match at the subspecies level}
 
-\item{var_marks}{An optional character vector of markers to match at the variety level}
+\item{var_marks}{Markers to match at the variety level}
 
-\item{form_marks}{An optional character vector of markers to match at the form level}
+\item{form_marks}{Markers to match at the form level}
 }
 \value{
-a list of matched names, with the original names as the names of the list and the matched names as the values
-with six columns, \code{input_name}, \code{matched_name},
-.    \code{status}, \code{accepted_name}, \code{name_score}, \code{auth_score}
+Dataframe with matched names and scores
 }
 \description{
-This function aligns scientific names against the Checklist of the Lichens of Italy
-}
-\examples{
-italic_match(c("Cetraria islandica", "Lecanora ciliata"))
-
+Aligns scientific names against the Checklist of the Lichens of Italy
 }

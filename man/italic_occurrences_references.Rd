@@ -2,16 +2,16 @@
 % Please edit documentation in R/italic_occurrences_references.R
 \name{italic_occurrences_references}
 \alias{italic_occurrences_references}
-\title{References for the occurrences datasets}
+\title{Get references for occurrences datasets}
 \usage{
 italic_occurrences_references(occurrences_dataframe)
 }
 \arguments{
-\item{occurrences_dataframe}{The dataframe resulting from italic_occurrences()}
+\item{occurrences_dataframe}{Dataframe from italic_occurrences()}
 }
 \value{
-A dataframe containing the references and the doi of the scientific publications of the retrieved occurrences
+Dataframe containing references and DOIs
 }
 \description{
-This function returns the references of the scientific publications about the retrieved occurrences from italic_occurrences()
+Returns references of scientific publications about retrieved occurrences
 }
