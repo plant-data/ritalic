@@ -1,4 +1,10 @@
 ^ritalic\.Rproj$
+^\.git
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$
+^\.DS_Store$
+^\.RData$
+^\.Rhistory$
+^\.gitignore$
+
