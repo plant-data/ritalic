@@ -2,20 +2,36 @@
 % Please edit documentation in R/italic_description.R
 \name{italic_description}
 \alias{italic_description}
-\title{Lichen description}
+\title{Get Descriptions of Lichen Taxa}
 \usage{
 italic_description(sp_names)
 }
 \arguments{
-\item{sp_names}{A vector containing scientific names of lichens.}
+\item{sp_names}{Character vector of accepted names}
 }
 \value{
-A dataframe containing the description of the lichen species passed as input.
+A data frame with columns:
+\describe{
+\item{scientific_name}{Scientific name}
+\item{description}{Morphological description}
+\item{notes}{Additional taxonomic or ecological information}
+}
 }
 \description{
-This function returns the description of the lichen species passed as input.
+Retrieves the morphological description and dditional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy.
+Only accepts names that exist in the database of ITALIC.
+}
+\note{
+Before using this function with a list of names, first obtain their accepted names
+using \code{italic_match()}.
+Example workflow:
+names_matched <- italic_match(your_names)
+descriptions <- italic_description(names_matched$accepted_name)
 }
 \examples{
-italic_description(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+\dontrun{
+italic_description("Cetraria islandica (L.) Ach. subsp. islandica")
+}
+
 
 }

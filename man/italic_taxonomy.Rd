@@ -2,20 +2,38 @@
 % Please edit documentation in R/italic_taxonomy.R
 \name{italic_taxonomy}
 \alias{italic_taxonomy}
-\title{Lichen taxonomy}
+\title{Get taxonomic classification of lichen taxa}
 \usage{
 italic_taxonomy(sp_names)
 }
 \arguments{
-\item{sp_names}{A vector containing scientific names of lichens.}
+\item{sp_names}{Character vector of accepted names}
 }
 \value{
-A dataframe containing the classification of the lichen species passed as input.
+A data frame with:
+\describe{
+\item{scientific_name}{Scientific name}
+\item{phylum}
+\item{class}
+\item{order}
+\item{family}
+\item{genus}
+}
 }
 \description{
-This function returns the classification of the lichen species passed as input.
+Retrieves the complete taxonomic hierarchy for lichen taxa from the ITALIC database.
+Only accepts names that exist in the database of ITALIC.
+}
+\note{
+Before using this function with a list of names, first obtain their accepted names
+using \code{italic_match()}.
+Example workflow:
+names_matched <- italic_match(your_names)
+taxonomy <- italic_taxonomy(names_matched$accepted_name)
 }
 \examples{
-italic_taxonomy(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+\dontrun{
+taxonomy <- italic_taxonomy("Cetraria islandica (L.) Ach. subsp. islandica")
+}
 
 }

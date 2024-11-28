@@ -2,16 +2,32 @@
 % Please edit documentation in R/italic_occurrences_references.R
 \name{italic_occurrences_references}
 \alias{italic_occurrences_references}
-\title{Get references for occurrences datasets}
+\title{Get scientific references for occurrence data}
 \usage{
 italic_occurrences_references(occurrences_dataframe)
 }
 \arguments{
-\item{occurrences_dataframe}{Dataframe from italic_occurrences()}
+\item{occurrences_dataframe}{Data frame containing occurrence records, must include
+an 'institutionCode' column}
 }
 \value{
-Dataframe containing references and DOIs
+A data frame with two columns:
+\describe{
+\item{reference}{Full bibliographic citation of the publication}
+\item{doi}{Digital Object Identifier URL}
+}
 }
 \description{
-Returns references of scientific publications about retrieved occurrences
+Retrieves bibliographic references and DOIs for scientific publications describing
+occurrence datasets from specific herbarium collections.
+}
+\examples{
+\dontrun{
+# Get occurrences first
+occ <- italic_occurrences("Cetraria ericetorum Opiz")
+
+# Then get associated references
+refs <- italic_occurrences_references(occ)
+}
+
 }

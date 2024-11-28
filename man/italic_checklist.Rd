@@ -2,17 +2,28 @@
 % Please edit documentation in R/italic_checklist.R
 \name{italic_checklist}
 \alias{italic_checklist}
-\title{Lichen checklist}
+\title{Get the list of species names in the Checklist of the Lichens of Italy}
 \usage{
 italic_checklist()
 }
 \value{
-A vector containing the names of the lichen species present in Italy.
+A character vector containing all accepted scientific names from the checklist of ITALIC.
 }
 \description{
-This function returns the checklist of the lichen species present in Italy.
+Retrieves the complete list of accepted scientific names from the Checklist of
+the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy and in bordering countries
 }
 \examples{
-italic_checklist()
+\dontrun{
+# Get the complete checklist
+checklist <- italic_checklist()
 
+# View the first few names
+head(checklist)
+}
+
+}
+\references{
+ITALIC - The Information System on Italian Lichens: National Checklist
+\url{https://italic.units.it/index.php?procedure=checklist}
 }

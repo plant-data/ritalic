@@ -1,9 +1,27 @@
-#' Get references for occurrences datasets
-#' @description Returns references of scientific publications about retrieved occurrences
-#' @param occurrences_dataframe Dataframe from italic_occurrences()
-#' @return Dataframe containing references and DOIs
-#' @importFrom jsonlite fromJSON
-#' @importFrom utils URLencode
+#' Get scientific references for occurrence data
+#'
+#' @description
+#' Retrieves bibliographic references and DOIs for scientific publications describing
+#' occurrence datasets from specific herbarium collections.
+#'
+#' @param occurrences_dataframe Data frame containing occurrence records, must include
+#'        an 'institutionCode' column
+#'
+#' @return A data frame with two columns:
+#'   \describe{
+#'     \item{reference}{Full bibliographic citation of the publication}
+#'     \item{doi}{Digital Object Identifier URL}
+#'   }
+#'
+#' @examples
+#' \dontrun{
+#' # Get occurrences first
+#' occ <- italic_occurrences("Cetraria ericetorum Opiz")
+#' 
+#' # Then get associated references
+#' refs <- italic_occurrences_references(occ)
+#' }
+#'
 #' @export
 italic_occurrences_references <- function(occurrences_dataframe) {
   # Validate input
@@ -26,6 +44,7 @@ italic_occurrences_references <- function(occurrences_dataframe) {
 #' Validate occurrences dataframe input
 #' @param df Input dataframe to validate
 #' @return NULL, throws error if invalid
+#' @noRd
 validate_occurrences_input <- function(df) {
   if (!is.data.frame(df)) {
     stop("Input must be a dataframe")
@@ -41,6 +60,7 @@ validate_occurrences_input <- function(df) {
 #' Process herbaria codes from institution codes
 #' @param institution_codes Vector of institution codes
 #' @return Processed herbaria codes
+#' @noRd
 process_herbaria_codes <- function(institution_codes) {
   # Get unique codes
   herbaria <- unique(institution_codes)
@@ -61,6 +81,7 @@ process_herbaria_codes <- function(institution_codes) {
 #' Construct references API URL
 #' @param herbaria Vector of herbaria codes
 #' @return Constructed URL
+#' @noRd
 construct_references_url <- function(herbaria) {
   base_url <- "https://italic.units.it/api/v1/references/"
   encoded_herbaria <- URLencode(paste0(herbaria, collapse = ";"), reserved = TRUE)
@@ -70,6 +91,7 @@ construct_references_url <- function(herbaria) {
 #' Parse references API response
 #' @param response API response object
 #' @return Dataframe of references and DOIs
+#' @noRd
 parse_references_response <- function(response) {
   # Parse JSON response
   content <- fromJSON(rawToChar(response$content))

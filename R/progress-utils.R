@@ -4,6 +4,7 @@
 #' @param title Optional title for the progress bar (default: "")
 #' @return Progress bar object or NULL if non-interactive
 #' @importFrom utils txtProgressBar
+#' @noRd
 create_progress_bar <- function(total_items, title = "") {
   if (!interactive()) {
     return(NULL)
@@ -24,6 +25,7 @@ create_progress_bar <- function(total_items, title = "") {
 #' @param pb Progress bar object
 #' @param value Current progress value
 #' @importFrom utils setTxtProgressBar
+#' @noRd
 update_progress <- function(pb, value) {
   if (!is.null(pb) && interactive()) {
     setTxtProgressBar(pb, value)
@@ -32,6 +34,7 @@ update_progress <- function(pb, value) {
 
 #' Close progress bar
 #' @param pb Progress bar object
+#' @noRd
 close_progress_bar <- function(pb) {
   if (!is.null(pb) && interactive()) {
     close(pb)

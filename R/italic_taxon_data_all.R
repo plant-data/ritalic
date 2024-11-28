@@ -10,19 +10,19 @@
 italic_taxon_data_all <- function(sp_names) {
 
 
-  classification <- italic_taxonomy(sp_names)
+  taxonomy <- italic_taxonomy(sp_names)
 
   description <- italic_description(sp_names)
 
-  ecology <- italic_taxon_data(sp_names)
+  data <- italic_taxon_data(sp_names)
   
   # in each dataset remove the first and last column
-  classification2 <- classification[, 1:ncol(classification) - 1]
+  taxonomy2 <- taxonomy[, 1:ncol(taxonomy) - 1]
   description2 <- description[, 3:ncol(description) - 1]
-  ecology2 <- ecology[, 3:ncol(ecology) - 1]
+  data2 <- data[, 3:ncol(data) - 1]
 
   # merge the datasets with cbind
-  result <- cbind(classification2, description2, ecology2)
+  result <- cbind(taxonomy2, description2, data2)
 
   return(result)
 }

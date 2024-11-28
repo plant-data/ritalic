@@ -5,6 +5,7 @@
 #' @param ... Additional arguments passed to httr functions
 #' @return HTTP response object
 #' @importFrom httr GET POST add_headers
+#' @noRd
 make_request <- function(method, url, body = NULL, ...) {
   MAX_RETRIES <- 99
   retry_count <- 0
@@ -42,6 +43,7 @@ make_request <- function(method, url, body = NULL, ...) {
 
 #' Handle API error responses
 #' @param status_code HTTP status code
+#' @noRd
 handle_api_error <- function(status_code) {
   if (status_code == 500) {
     stop("Server error - please try again later")
@@ -50,8 +52,9 @@ handle_api_error <- function(status_code) {
   }
 }
 
-#' Wait for API cooldown
-#' NOTE: the rate limit is server-side, changing this value won't speed up the data retrival proccess
+#' Wait for API rate limit refresh
+#' @description NOTE: the rate limit is server-side, changing this value won't speed up the data retrieval process
+#' @noRd
 wait_api_cooldown <- function() {
-  Sys.sleep(60)  # Wait 60 seconds for rate limit reset
+  Sys.sleep(10)  # Wait 10 seconds for rate limit reset
 }

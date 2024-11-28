@@ -1,6 +1,7 @@
 #' Prepare species names for API requests
 #' @param sp_names Vector of species names
 #' @return Cleaned vector of species names
+#' @noRd
 prepare_species_names <- function(sp_names) {
   # Input validation
   if (!is.character(sp_names) && !is.vector(sp_names)) {
@@ -32,6 +33,7 @@ prepare_species_names <- function(sp_names) {
 #' that contains the values to be ordered and duplicated.
 #'
 #' @return A dataframe with the same order and duplicates as the original vector.
+#' @noRd
 reconstruct_order <-  function(original_vector, result_dataframe, column_with_vector_values) {
   # Use match() function to get indices of original values in vector
   ordered_dataframe <- data.frame(matrix(nrow = length(original_vector), ncol = ncol(result_dataframe)))
@@ -53,6 +55,7 @@ reconstruct_order <-  function(original_vector, result_dataframe, column_with_ve
 #' this function turn the column names to snake_case
 #' @param dataframe A dataframe
 #' @return A dataframe with column names written in snake_case
+#' @noRd
 
 colnames_to_snake_case <- function(dataframe) {
   

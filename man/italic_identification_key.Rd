@@ -2,20 +2,37 @@
 % Please edit documentation in R/italic_identification_key.R
 \name{italic_identification_key}
 \alias{italic_identification_key}
-\title{Lichen identification key}
+\title{Generate interactive identification keys for lichen taxa}
 \usage{
 italic_identification_key(sp_names)
 }
 \arguments{
-\item{sp_names}{A vector containing scientific names of lichens.}
+\item{sp_names}{Character vector of accepted names}
 }
 \value{
-A link to the online key of italic
+Character string containing URL to a web-based interactive identification key.
+The key is uniquely generated for the input taxa and allows step-by-step
+identification through dichotomous choices.
 }
 \description{
-This function returns a identification key to the lichen species passed as input.
+Creates a custom interactive dichotomous key for identifying the specified lichen taxa using
+the KeyMaker system of ITALIC. Only accepts names that exist in the database of ITALIC.
+}
+\note{
+Before using this function with a list of names, first obtain their accepted names
+using \code{italic_match()}.
+Example workflow:
+names_matched <- italic_match(your_names)
+key_url <- italic_identification_key(names_matched$accepted_name)
 }
 \examples{
+\dontrun{
+# Generate key for two species
 italic_identification_key(c("Cetraria ericetorum Opiz","Xanthoria parietina (L.) Th. Fr."))
+}
 
+}
+\references{
+ITALIC - The KeyMaker
+\url{https://italic.units.it/key-maker/}
 }

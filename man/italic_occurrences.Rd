@@ -2,18 +2,56 @@
 % Please edit documentation in R/italic_occurrences.R
 \name{italic_occurrences}
 \alias{italic_occurrences}
-\title{Get lichen occurrences}
+\title{Get occurrence records for lichen taxa}
 \usage{
 italic_occurrences(sp_names, result_data = "simple")
 }
 \arguments{
-\item{sp_names}{A vector of scientific names of lichens}
+\item{sp_names}{Character vector of accepted names}
 
-\item{result_data}{Type of data to return: "simple" (default) or "extended"}
+\item{result_data}{Character string specifying output detail level:
+"simple" (default) or "extended"}
 }
 \value{
-A dataframe containing the occurrences data
+A data frame with occurrence records. For simple output:
+\describe{
+\item{scientificName}{Full scientific name}
+\item{decimalLatitude}{Latitude in decimal degrees}
+\item{decimalLongitude}{Longitude in decimal degrees}
+\item{coordinatesUncertaintyInMeters}{Spatial uncertainty of the coordinates}
+\item{substratum}{Substrate on which the specimen was found}
+\item{institutionCode}{Code of the herbarium holding the specimen}
+\item{eventDate}{Collection date}
+}
+
+Extended output adds:
+\describe{
+\item{locality}{Collection locality}
+\item{catalogNumber}{Specimen identifier in the collection}
+}
 }
 \description{
-Returns the occurrences of the lichen species passed as input
+Retrieves occurrence records from Italian herbarium collections for specified lichen taxa.
+Only accepts names that exist in the database of ITALIC.
+}
+\note{
+Before using this function with a list of names, first obtain their accepted names
+using \code{italic_match()}.
+Example workflow:
+names_matched <- italic_match(your_names)
+occ <- italic_occurrences(names_matched$accepted_name)
+}
+\examples{
+\dontrun{
+# Get simple occurrence data
+occ <- italic_occurrences("Cetraria islandica")
+
+# Get extended occurrence data
+occ_ext <- italic_occurrences("Cetraria islandica", result_data = "extended")
+}
+
+}
+\references{
+ITALIC - The Information System on Italian Lichens
+\url{https://italic.units.it}
 }

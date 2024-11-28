@@ -1,9 +1,31 @@
-#' @title Lichen taxonomy
-#' @description This function returns the classification of the lichen species passed as input.
-#' @param sp_names A vector containing scientific names of lichens.
-#' @return A dataframe containing the classification of the lichen species passed as input.
+#' Get taxonomic classification of lichen taxa
+#'
+#' @description
+#' Retrieves the complete taxonomic hierarchy for lichen taxa from the ITALIC database.
+#' Only accepts names that exist in the database of ITALIC.
+#'
+#' @note Before using this function with a list of names, first obtain their accepted names
+#'       using `italic_match()`. 
+#'       Example workflow:
+#'       names_matched <- italic_match(your_names)
+#'       taxonomy <- italic_taxonomy(names_matched$accepted_name)
+#'
+#' @param sp_names Character vector of accepted names
+#'
+#' @return A data frame with:
+#'   \describe{
+#'     \item{scientific_name}{Scientific name}
+#'     \item{phylum}
+#'     \item{class}
+#'     \item{order}
+#'     \item{family}
+#'     \item{genus}
+#'   }
+#'
 #' @examples
-#' italic_taxonomy(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' \dontrun{
+#' taxonomy <- italic_taxonomy("Cetraria islandica (L.) Ach. subsp. islandica")
+#' }
 #'
 #' @export
 italic_taxonomy <-function(sp_names) {

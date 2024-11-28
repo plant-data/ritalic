@@ -7,7 +7,7 @@ Authors@R: c(
     person("Luana", "Francesconi", , "matt.ciao@gmail.com", role = c("aut"),
            comment = c(ORCID = "0009-0003-4917-2639"))
            )
-Author: Matteo Conti [aut, cre] (<https://orcid.org/0009-0003-4917-2639>), Luana Francesconi [aut] (ORCID = "0009-0003-4917-2639")
+Author: Matteo Conti [aut, cre] (<https://orcid.org/0009-0003-4917-2639>), Luana Francesconi [aut] ("0009-0003-4917-2639")
 Maintainer: Matteo Conti <matt.ciao@gmail.com>
 Description: Get all data available about lichens in the database of ITALIC. More information about the data can be found at
   <https://italic.units.it/?procedure=base&t=59&c=60>. The API documentation is available at <https://italic.units.it/?procedure=api>.

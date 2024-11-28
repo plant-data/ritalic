@@ -1,5 +1,5 @@
 ^ritalic\.Rproj$
-^\.git
+^\.git$
 ^\.Rproj\.user$
 ^LICENSE\.md$
 ^README\.Rmd$

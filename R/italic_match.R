@@ -1,64 +1,104 @@
-#' Match scientific names against the Checklist of the Lichens of Italy
-#' @description Aligns scientific names against the Checklist of the Lichens of Italy
-#' @param sp_names A character vector of scientific names
-#' @param subsp_marks Markers to match at the subspecies level
-#' @param var_marks Markers to match at the variety level
-#' @param form_marks Markers to match at the form level
-#' @return Dataframe with matched names and scores
+#' Match Lichen Scientific Names Against the Database of ITALIC
+#'
+#' @description
+#' Aligns scientific names of lichens against the Checklist of the Lichens of Italy available in ITALIC
+#' database. The function handles infraspecific ranks (subspecies, varieties, forms) and
+#' returns detailed matching information including nomenclatural status and matching scores.
+#'
+#' @param sp_names A character vector of scientific names to match
+#' @param subsp_marks Character vector of markers used to indicate uncommon subspecies rank in the input names
+#'        (different from "subsp.", "ssp."). For example, to match "Pseudevernia furfuracea b) ceratea",
+#'        you need to pass "b)" as subsp_mark
+#' @param var_marks Character vector of markers used to indicate uncommon variety rank in the input names
+#'        (different from "var.", "v."). For example, to match "Acarospora sulphurata varietas rubescens",
+#'        you need to pass "varietas" as var_mark
+#' @param form_marks Character vector of markers used to indicate uncommon form rank in the input names
+#'        (different from "f.", "form"). For example, to match "Verrucaria nigrescens fo. tectorum",
+#'        you need to pass "fo." as form_mark
+#'
+#' @return A data frame with the following columns:
+#'   \describe{
+#'     \item{input_name}{Original scientific name provided}
+#'     \item{matched_name}{Name matched in ITALIC database}
+#'     \item{status}{Nomenclatural status ("accepted" or "synonym")}
+#'     \item{accepted_name}{Currently accepted name in ITALIC}
+#'     \item{name_score}{Matching score for the name part (0-100)}
+#'     \item{auth_score}{Matching score for the authority part (0-100)}
+#'   }
+#'  
+#' @examples
+#' \dontrun{
+#' # Simple name matching
+#' result <- italic_match("Cetraria islandica")
+#' 
+#' # Name matching with spelling mistakes 
+#' result <- italic_match("Xantoria parietina")
+#'
+#' # Matching with uncommon marker
+#' result <- italic_match("Acarospora sulphurata varietas rubescens",
+#'                       var_marks = "varietas")
+#'
+#' # Matching multiple names 
+#' result <- c("Cetraria islandica", "Xanthoria parietina")
+#' }  
 #' @importFrom jsonlite fromJSON
 #' @export
-italic_match <- function(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c()) {
-  # Prepare and validate input
-  sp_names <- prepare_species_names(sp_names)
-  unique_sp_names <- unique(sp_names)
-  
-  # Initialize progress bar
-  pb <- create_progress_bar(length(unique_sp_names), "Processing species matches...")
-  
-  # Pre-allocate results list
-  results_list <- vector("list", length(unique_sp_names))
-  
-  # Process each species
-  for (i in seq_along(unique_sp_names)) {
-    # Prepare request body
-    body <- list(
-      'sp' = unique_sp_names[i],
-      'subsp-mark' = subsp_marks,
-      'var-mark' = var_marks,
-      'form-mark' = form_marks
-    )
+italic_match <-
+  function(sp_names,
+           subsp_marks = c(),
+           var_marks = c(),
+           form_marks = c()) {
+    # Prepare and validate input
+    sp_names <- prepare_species_names(sp_names)
+    unique_sp_names <- unique(sp_names)
     
-    # Make API request
-    response <- make_request(
-      method = "POST",
-      url = "https://italic.units.it/api/v1/match",
-      body = body
-    )
+    # Initialize progress bar
+    pb <-
+      create_progress_bar(length(unique_sp_names), "Processing species matches...")
     
-    # Parse response
-    results_list[[i]] <- parse_italic_response(response)
+    # Pre-allocate results list
+    results_list <- vector("list", length(unique_sp_names))
     
-    # Update progress
-    update_progress(pb, i)
+    # Process each species
+    for (i in seq_along(unique_sp_names)) {
+      # Prepare request body
+      body <- list(
+        'sp' = unique_sp_names[i],
+        'subsp-mark' = subsp_marks,
+        'var-mark' = var_marks,
+        'form-mark' = form_marks
+      )
+      
+      # Make API request
+      response <- make_request(method = "POST",
+                               url = "https://italic.units.it/api/v1/match",
+                               body = body)
+      
+      # Parse response
+      results_list[[i]] <- parse_match_response(response)
+      
+      # Update progress
+      update_progress(pb, i)
+    }
+    
+    # Close progress bar
+    close_progress_bar(pb)
+    
+    # Combine results using do.call(rbind, ...)
+    result_merged <- do.call(rbind, results_list)
+    row.names(result_merged) <- NULL  # Reset row names
+    
+    # Restore original order
+    ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
+    
+    return(ordered_dataframe)
   }
-  
-  # Close progress bar
-  close_progress_bar(pb)
-  
-  # Combine results using do.call(rbind, ...)
-  result_merged <- do.call(rbind, results_list)
-  row.names(result_merged) <- NULL  # Reset row names
-  
-  # Restore original order
-  ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
-  
-  return(ordered_dataframe)
-}
 
-#' Parse italic API response
+#' Parse italic match API response
 #' @param response API response object
 #' @return Parsed dataframe
-parse_italic_response <- function(response) {
+#' @noRd
+parse_match_response <- function(response) {
   # Parse JSON response
   data <- fromJSON(rawToChar(response$content))
   
@@ -67,7 +107,12 @@ parse_italic_response <- function(response) {
   
   # Extract and process match data
   match <- data[2]
-  match <- lapply(match$match, function(x) if (is.null(x)) NA else x)
+  match <-
+    lapply(match$match, function(x)
+      if (is.null(x))
+        NA
+      else
+        x)
   
   # Combine input and match data
   result <- cbind(input, match)

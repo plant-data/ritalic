@@ -1,12 +1,33 @@
-#' @title Lichen identification key
-#' @description This function returns a identification key to the lichen species passed as input.
-#' @param sp_names A vector containing scientific names of lichens.
-#' @return A link to the online key of italic
-#' @import httr
-#' @import jsonlite
-#' @examples
-#' italic_identification_key(c("Cetraria ericetorum Opiz","Xanthoria parietina (L.) Th. Fr."))
+#' Generate interactive identification keys for lichen taxa
 #'
+#' @description
+#' Creates a custom interactive dichotomous key for identifying the specified lichen taxa using
+#' the KeyMaker system of ITALIC. Only accepts names that exist in the database of ITALIC.
+#'
+#' @note Before using this function with a list of names, first obtain their accepted names
+#'       using `italic_match()`. 
+#'       Example workflow:
+#'       names_matched <- italic_match(your_names)
+#'       key_url <- italic_identification_key(names_matched$accepted_name)
+#'
+#' @param sp_names Character vector of accepted names 
+#'
+#' @return Character string containing URL to a web-based interactive identification key.
+#'        The key is uniquely generated for the input taxa and allows step-by-step
+#'        identification through dichotomous choices.
+#'
+#' @examples
+#' \dontrun{
+#' # Generate key for two species
+#' italic_identification_key(c("Cetraria ericetorum Opiz","Xanthoria parietina (L.) Th. Fr."))
+#' }
+#'
+#' @references
+#' ITALIC - The KeyMaker
+#' \url{https://italic.units.it/key-maker/}
+#'
+#' @importFrom httr POST add_headers http_error http_status
+#' @importFrom jsonlite toJSON
 #' @export
 
 italic_identification_key <- function(sp_names) {
@@ -36,7 +57,7 @@ italic_identification_key <- function(sp_names) {
   }
   
   # Parse the JSON response
-  parsed_response <- content(response, "parsed")
+  parsed_response <- fromJSON(rawToChar(response$content))
   
   if (!is.null(parsed_response$`key-id`)) {
     unique_id <- parsed_response$`key-id`

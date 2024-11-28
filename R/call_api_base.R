@@ -5,6 +5,7 @@
 #' @return A dataframe containing the data from the API endpoint
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils URLencode
+#' @noRd
 call_api_base <- function(sp_names, api_endpoint) {
   # Prepare and validate input
   sp_names <- prepare_species_names(sp_names)
@@ -53,6 +54,7 @@ call_api_base <- function(sp_names, api_endpoint) {
 #' Parse API response for base function
 #' @param response API response object
 #' @return Parsed dataframe
+#' @noRd
 parse_api_response <- function(response) {
   # Parse JSON response
   json_data <- fromJSON(rawToChar(response$content))

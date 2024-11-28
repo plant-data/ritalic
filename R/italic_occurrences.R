@@ -1,8 +1,49 @@
-#' Get lichen occurrences
-#' @description Returns the occurrences of the lichen species passed as input
-#' @param sp_names A vector of scientific names of lichens
-#' @param result_data Type of data to return: "simple" (default) or "extended"
-#' @return A dataframe containing the occurrences data
+#' Get occurrence records for lichen taxa
+#'
+#' @description
+#' Retrieves occurrence records from Italian herbarium collections for specified lichen taxa.
+#' Only accepts names that exist in the database of ITALIC.
+#'
+#' @note Before using this function with a list of names, first obtain their accepted names
+#'       using `italic_match()`. 
+#'       Example workflow:
+#'       names_matched <- italic_match(your_names)
+#'       occ <- italic_occurrences(names_matched$accepted_name)
+#'
+#' @param sp_names Character vector of accepted names
+#' @param result_data Character string specifying output detail level:
+#'        "simple" (default) or "extended"
+#'
+#' @return A data frame with occurrence records. For simple output:
+#'   \describe{
+#'     \item{scientificName}{Full scientific name}
+#'     \item{decimalLatitude}{Latitude in decimal degrees}
+#'     \item{decimalLongitude}{Longitude in decimal degrees}
+#'     \item{coordinatesUncertaintyInMeters}{Spatial uncertainty of the coordinates}
+#'     \item{substratum}{Substrate on which the specimen was found}
+#'     \item{institutionCode}{Code of the herbarium holding the specimen}
+#'     \item{eventDate}{Collection date}
+#'   }
+#'   
+#'   Extended output adds:
+#'   \describe{
+#'     \item{locality}{Collection locality}
+#'     \item{catalogNumber}{Specimen identifier in the collection}
+#'   }
+#'
+#' @examples
+#' \dontrun{
+#' # Get simple occurrence data
+#' occ <- italic_occurrences("Cetraria islandica")
+#'
+#' # Get extended occurrence data
+#' occ_ext <- italic_occurrences("Cetraria islandica", result_data = "extended")
+#' }
+#'
+#' @references
+#' ITALIC - The Information System on Italian Lichens
+#' \url{https://italic.units.it}
+#'
 #' @importFrom jsonlite fromJSON
 #' @importFrom utils URLencode
 #' @export
@@ -69,6 +110,7 @@ italic_occurrences <- function(sp_names, result_data = 'simple') {
 #' Parse occurrences API response
 #' @param response API response object
 #' @return Parsed dataframe or NULL if empty
+#' @noRd
 parse_occurrences_response <- function(response) {
   # Parse JSON response
   json_data <- fromJSON(rawToChar(response$content))

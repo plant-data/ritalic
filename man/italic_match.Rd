@@ -2,22 +2,54 @@
 % Please edit documentation in R/italic_match.R
 \name{italic_match}
 \alias{italic_match}
-\title{Match scientific names against the Checklist of the Lichens of Italy}
+\title{Match Lichen Scientific Names Against the Database of ITALIC}
 \usage{
 italic_match(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
 \arguments{
-\item{sp_names}{A character vector of scientific names}
+\item{sp_names}{A character vector of scientific names to match}
 
-\item{subsp_marks}{Markers to match at the subspecies level}
+\item{subsp_marks}{Character vector of markers used to indicate uncommon subspecies rank in the input names
+(different from "subsp.", "ssp."). For example, to match "Pseudevernia furfuracea b) ceratea",
+you need to pass "b)" as subsp_mark}
 
-\item{var_marks}{Markers to match at the variety level}
+\item{var_marks}{Character vector of markers used to indicate uncommon variety rank in the input names
+(different from "var.", "v."). For example, to match "Acarospora sulphurata varietas rubescens",
+you need to pass "varietas" as var_mark}
 
-\item{form_marks}{Markers to match at the form level}
+\item{form_marks}{Character vector of markers used to indicate uncommon form rank in the input names
+(different from "f.", "form"). For example, to match "Verrucaria nigrescens fo. tectorum",
+you need to pass "fo." as form_mark}
 }
 \value{
-Dataframe with matched names and scores
+A data frame with the following columns:
+\describe{
+\item{input_name}{Original scientific name provided}
+\item{matched_name}{Name matched in ITALIC database}
+\item{status}{Nomenclatural status ("accepted" or "synonym")}
+\item{accepted_name}{Currently accepted name in ITALIC}
+\item{name_score}{Matching score for the name part (0-100)}
+\item{auth_score}{Matching score for the authority part (0-100)}
+}
 }
 \description{
-Aligns scientific names against the Checklist of the Lichens of Italy
+Aligns scientific names of lichens against the Checklist of the Lichens of Italy available in ITALIC
+database. The function handles infraspecific ranks (subspecies, varieties, forms) and
+returns detailed matching information including nomenclatural status and matching scores.
+}
+\examples{
+\dontrun{
+# Simple name matching
+result <- italic_match("Cetraria islandica")
+
+# Name matching with spelling mistakes 
+result <- italic_match("Xantoria parietina")
+
+# Matching with uncommon marker
+result <- italic_match("Acarospora sulphurata varietas rubescens",
+                      var_marks = "varietas")
+
+# Matching multiple names 
+result <- c("Cetraria islandica", "Xanthoria parietina")
+}  
 }
