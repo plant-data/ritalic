@@ -44,11 +44,11 @@
 #' # First match names
 #' matched <- italic_match("Cetraria islandica")
 #' # Then get distribution in administrative regions
-#' italic_distribution(matched$accepted_name)
+#' italic_regions_distribution(matched$accepted_name)
 #' }
 #'
 #' @export
-italic_distribution <- function(sp_names) {
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/distribution/")
+italic_regions_distribution <- function(sp_names) {
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/distribution/", "Retrieving distribution in regions...")
   return(data)
 }

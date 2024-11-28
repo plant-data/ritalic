@@ -13,11 +13,11 @@ italic_taxonomy(sp_names)
 A data frame with:
 \describe{
 \item{scientific_name}{Scientific name}
-\item{phylum}
-\item{class}
-\item{order}
-\item{family}
-\item{genus}
+\item{phylum}{Phylum}
+\item{class}{Class}
+\item{order}{Order}
+\item{family}{Family}
+\item{genus}{Genus}
 }
 }
 \description{

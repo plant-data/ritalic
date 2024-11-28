@@ -3,15 +3,12 @@
 #' @return Cleaned vector of species names
 #' @noRd
 prepare_species_names <- function(sp_names) {
-  # Input validation
+  # Input is a character vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {
     stop("sp_names must be a character vector")
   }
   
-  # Replace NA with empty strings
-  sp_names <- replace(sp_names, is.na(sp_names), "")
-  
-  # Remove invisible characters
+  # remove invisible characters
   invisible_char_regex <- "[\u00AD\u034F\u200B-\u200F\u2028-\u202E\u2060-\u206F\uFEFF]"
   sp_names <- gsub(invisible_char_regex, "", sp_names, perl = TRUE)
   
@@ -21,7 +18,7 @@ prepare_species_names <- function(sp_names) {
   return(sp_names)
 }
 
-#' Reconstruct a Dataframe with Same Order and Duplicates as a Vector
+#' Reconstruct a dataframe with same order and duplicates as a vector
 #'
 #' Given a vector with repeated values and a dataframe with a column of original
 #' values, reconstruct the dataframe to have the same order and duplicates as the vector.
@@ -35,16 +32,15 @@ prepare_species_names <- function(sp_names) {
 #' @return A dataframe with the same order and duplicates as the original vector.
 #' @noRd
 reconstruct_order <-  function(original_vector, result_dataframe, column_with_vector_values) {
-  # Use match() function to get indices of original values in vector
+  
+
   ordered_dataframe <- data.frame(matrix(nrow = length(original_vector), ncol = ncol(result_dataframe)))
   colnames(ordered_dataframe) <- colnames(result_dataframe)
   
-  # Copy values for duplicates
   for (i in 1:length(original_vector)) {
     ordered_dataframe[i, ] <- result_dataframe[result_dataframe[, column_with_vector_values] == original_vector[i], ]
   }
   
-  # change column names to snake_case
   ordered_dataframe <- colnames_to_snake_case(ordered_dataframe)
   
   return(ordered_dataframe)
@@ -59,9 +55,7 @@ reconstruct_order <-  function(original_vector, result_dataframe, column_with_ve
 
 colnames_to_snake_case <- function(dataframe) {
   
-  # Remove duplicated whitespaces
   colnames(dataframe) <- gsub("\\s+", " ", colnames(dataframe))
-  # Remove leading and trailing whitespaces
   colnames(dataframe) <- trimws(colnames(dataframe))
   
   colnames(dataframe) <- tolower(colnames(dataframe))

@@ -46,9 +46,9 @@
 #' @export
 italic_ecoregions_distribution <-function(sp_names, result_data="rarity") {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/")
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/", "Retrieving distribution in ecoregions...")
 
-  # Convert all columns except the first one to binary values if result_data == "presence-absence"
+  # convert all columns except the first one to binary values if result_data == "presence-absence"
   if (result_data == "presence-absence") {
         for (col in names(data)[-1]) {
             data[[col]] <- ifelse(data[[col]] == "absent", 0, 1)

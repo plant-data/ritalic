@@ -10,9 +10,6 @@
 #' \dontrun{
 #' # Get the complete checklist
 #' checklist <- italic_checklist()
-#'
-#' # View the first few names
-#' head(checklist)
 #' }
 #'
 #' @references
@@ -36,7 +33,6 @@ italic_checklist <- function() {
     stop("An unknown error occurred, please try again later")
   }
   
-
   data <- fromJSON(rawToChar(response$content))
   
   checklist <- data[2]

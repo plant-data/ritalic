@@ -28,7 +28,7 @@
 #' @export
 italic_description <- function(sp_names) {
   data <-
-    call_api_base(sp_names, "https://italic.units.it/api/v1/description/")
+    call_api_base(sp_names, "https://italic.units.it/api/v1/description/", "Retrieving descriptions...")
   return(data)
   
 }

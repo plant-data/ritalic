@@ -17,9 +17,6 @@ the Lichens of Italy in ITALIC. The function returns all accepted names of speci
 \dontrun{
 # Get the complete checklist
 checklist <- italic_checklist()
-
-# View the first few names
-head(checklist)
 }
 
 }

@@ -48,7 +48,7 @@
 #' @export
 italic_taxon_data <-function(sp_names) {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/data/")
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/data/", "Retrieving ecology and traits...")
   return(data)
   
 }

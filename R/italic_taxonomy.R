@@ -15,11 +15,11 @@
 #' @return A data frame with:
 #'   \describe{
 #'     \item{scientific_name}{Scientific name}
-#'     \item{phylum}
-#'     \item{class}
-#'     \item{order}
-#'     \item{family}
-#'     \item{genus}
+#'     \item{phylum}{Phylum}
+#'     \item{class}{Class}
+#'     \item{order}{Order}
+#'     \item{family}{Family}
+#'     \item{genus}{Genus}
 #'   }
 #'
 #' @examples
@@ -30,7 +30,7 @@
 #' @export
 italic_taxonomy <-function(sp_names) {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/classification/")
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/classification/", "Retrieving taxonomic classification...")
   return(data)
   
 }

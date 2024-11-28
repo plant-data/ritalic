@@ -48,20 +48,19 @@ italic_match <-
            subsp_marks = c(),
            var_marks = c(),
            form_marks = c()) {
-    # Prepare and validate input
+    
+    # prepare and validate input
     sp_names <- prepare_species_names(sp_names)
     unique_sp_names <- unique(sp_names)
     
-    # Initialize progress bar
+
     pb <-
-      create_progress_bar(length(unique_sp_names), "Processing species matches...")
+      create_progress_bar(length(unique_sp_names), "Processing name match...")
     
-    # Pre-allocate results list
     results_list <- vector("list", length(unique_sp_names))
     
-    # Process each species
+    # match each species
     for (i in seq_along(unique_sp_names)) {
-      # Prepare request body
       body <- list(
         'sp' = unique_sp_names[i],
         'subsp-mark' = subsp_marks,
@@ -69,26 +68,21 @@ italic_match <-
         'form-mark' = form_marks
       )
       
-      # Make API request
       response <- make_request(method = "POST",
                                url = "https://italic.units.it/api/v1/match",
                                body = body)
       
-      # Parse response
       results_list[[i]] <- parse_match_response(response)
-      
-      # Update progress
       update_progress(pb, i)
     }
     
-    # Close progress bar
+ 
     close_progress_bar(pb)
     
-    # Combine results using do.call(rbind, ...)
     result_merged <- do.call(rbind, results_list)
     row.names(result_merged) <- NULL  # Reset row names
     
-    # Restore original order
+    # restore original order
     ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
     
     return(ordered_dataframe)
@@ -99,13 +93,11 @@ italic_match <-
 #' @return Parsed dataframe
 #' @noRd
 parse_match_response <- function(response) {
-  # Parse JSON response
+
   data <- fromJSON(rawToChar(response$content))
   
-  # Extract and process input data
+
   input <- as.data.frame(data[1])
-  
-  # Extract and process match data
   match <- data[2]
   match <-
     lapply(match$match, function(x)
@@ -114,7 +106,6 @@ parse_match_response <- function(response) {
       else
         x)
   
-  # Combine input and match data
   result <- cbind(input, match)
   return(result)
 }

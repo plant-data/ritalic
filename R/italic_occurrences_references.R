@@ -24,19 +24,16 @@
 #'
 #' @export
 italic_occurrences_references <- function(occurrences_dataframe) {
-  # Validate input
+
   validate_occurrences_input(occurrences_dataframe)
-  
-  # Process herbaria codes
+
   herbaria <- process_herbaria_codes(occurrences_dataframe$institutionCode)
   
-  # Make API request
+  # make API request
   response <- make_request(
     method = "GET",
     url = construct_references_url(herbaria)
   )
-  
-  # Parse and return results
   references <- parse_references_response(response)
   return(references)
 }
@@ -62,13 +59,9 @@ validate_occurrences_input <- function(df) {
 #' @return Processed herbaria codes
 #' @noRd
 process_herbaria_codes <- function(institution_codes) {
-  # Get unique codes
+  
   herbaria <- unique(institution_codes)
-  
-  # Remove 'herbarium ' prefix
   herbaria <- gsub("^herbarium ", "", herbaria, ignore.case = TRUE)
-  
-  # Remove empty or NA values
   herbaria <- herbaria[!is.na(herbaria) & nchar(herbaria) > 0]
   
   if (length(herbaria) == 0) {
@@ -93,10 +86,9 @@ construct_references_url <- function(herbaria) {
 #' @return Dataframe of references and DOIs
 #' @noRd
 parse_references_response <- function(response) {
-  # Parse JSON response
+
   content <- fromJSON(rawToChar(response$content))
   
-  # Handle empty response
   if (length(content$references) == 0) {
     return(data.frame(
       reference = character(),
@@ -105,17 +97,14 @@ parse_references_response <- function(response) {
     ))
   }
   
-  # Create references dataframe
   refs <- data.frame(
     reference = unlist(content$references$reference),
     doi = unlist(content$references$doi),
     stringsAsFactors = FALSE
   )
   
-  # Remove rows with NA references
+
   refs <- refs[!is.na(refs$reference), ]
-  
-  # Reset row names
   row.names(refs) <- NULL
   
   return(refs)

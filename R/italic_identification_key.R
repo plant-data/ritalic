@@ -34,7 +34,7 @@ italic_identification_key <- function(sp_names) {
   
   sp_names <- sp_names[!is.na(sp_names) & nzchar(trimws(sp_names))]
   
-  # Check if the resulting vector is empty
+
   if (length(sp_names) == 0) {
     stop("Error: Vector is empty after removing NA and empty strings")
   }
@@ -56,7 +56,6 @@ italic_identification_key <- function(sp_names) {
     return(NULL)
   }
   
-  # Parse the JSON response
   parsed_response <- fromJSON(rawToChar(response$content))
   
   if (!is.null(parsed_response$`key-id`)) {

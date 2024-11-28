@@ -1,5 +1,4 @@
-# R/progress-utils.R
-#' Create simple progress bar
+#' Create a progress bar
 #' @param total_items Total number of items to process
 #' @param title Optional title for the progress bar (default: "")
 #' @return Progress bar object or NULL if non-interactive
@@ -38,6 +37,6 @@ update_progress <- function(pb, value) {
 close_progress_bar <- function(pb) {
   if (!is.null(pb) && interactive()) {
     close(pb)
-    message("\nCompleted!")
+    message("Completed!")
   }
 }

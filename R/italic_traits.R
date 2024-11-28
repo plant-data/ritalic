@@ -9,7 +9,7 @@
 #' @export
 italic_traits <-function(sp_names) {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/traits/")
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/traits/", "Retrieving pa matrix of traits")
   return(data)
   
 }

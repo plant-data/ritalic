@@ -11,18 +11,18 @@ italic_taxon_data_all <- function(sp_names) {
 
 
   taxonomy <- italic_taxonomy(sp_names)
-
-  description <- italic_description(sp_names)
-
   data <- italic_taxon_data(sp_names)
+  regions <- italic_regions_distribution(sp_names)
+  ecoregions <- italic_ecoregions_distribution(sp_names)
   
-  # in each dataset remove the first and last column
+  # in each dataframe remove the first and last column 
+  # scientific name is alwais the same and warning is not needed
   taxonomy2 <- taxonomy[, 1:ncol(taxonomy) - 1]
-  description2 <- description[, 3:ncol(description) - 1]
   data2 <- data[, 3:ncol(data) - 1]
+  regions2 <- regions[, 3:ncol(regions) - 1]
+  ecoregions2 <- ecoregions[, 3:ncol(ecoregions) - 1]
 
-  # merge the datasets with cbind
-  result <- cbind(taxonomy2, description2, data2)
+  result <- cbind(taxonomy2, data2, regions2, ecoregions2)
 
   return(result)
 }
