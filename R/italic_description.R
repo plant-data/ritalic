@@ -1,11 +1,11 @@
 #' Get Descriptions of Lichen Taxa
 #'
 #' @description
-#' Retrieves the morphological description and dditional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy. 
+#' Retrieves the morphological description and dditional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy.
 #' Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names
-#'       using `italic_match()`. 
+#'       using `italic_match()`.
 #'       Example workflow:
 #'       names_matched <- italic_match(your_names)
 #'       descriptions <- italic_description(names_matched$accepted_name)
@@ -28,7 +28,14 @@
 #' @export
 italic_description <- function(sp_names) {
   data <-
-    call_api_base(sp_names, "https://italic.units.it/api/v1/description/", "Retrieving descriptions...")
-  return(data)
-  
+    call_api_base(
+      sp_names,
+      api_endpoint = "https://italic.units.it/api/v1/description/",
+      loading_text = "Retrieving descriptions...",
+      parse_function = parse_api_response,
+      request_method = "GET",
+      reorder_result = TRUE
+    )
+return(data)
+
 }
