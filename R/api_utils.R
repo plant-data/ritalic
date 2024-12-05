@@ -52,6 +52,28 @@ handle_api_error <- function(status_code) {
   }
 }
 
+#' Parse API response for base function
+#' Valid for most api in ITALIC
+#' @param response API response object
+#' @return Parsed dataframe
+#' @noRd
+parse_api_response <- function(response) {
+  json_data <- fromJSON(rawToChar(response$content))
+  input <- as.data.frame(json_data[1])
+  
+  # for common api the data needed is in the third value
+  data <- json_data[3]
+  data <- lapply(data$data, function(x)
+    if (is.null(x))
+      NA
+    else
+      x)
+  data <- as.data.frame(data)
+  
+  result <- cbind(input, data)
+  return(result)
+}
+
 #' Wait for API rate limit refresh
 #' @description NOTE: the rate limit is server-side, changing this value won't speed up the data retrieval process
 #' @noRd
