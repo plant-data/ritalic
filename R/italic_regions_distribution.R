@@ -49,7 +49,7 @@
 #'
 #' @export
 italic_regions_distribution <- function(sp_names) {
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/distribution/", "Retrieving distribution in regions...",
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/regions-distribution/", "Retrieving distribution in regions...",
                         parse_function = parse_api_response,
                         request_method = "GET",
                         reorder_result = TRUE)

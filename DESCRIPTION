@@ -1,5 +1,5 @@
 Package: ritalic
-Title: Get Lichen Data from Italic Database
+Title: Get Lichen Data from the database of ITALIC
 Version: 1.0.0
 Authors@R:
     person("Matteo", "Conti", , "matt.ciao@gmail.com", role = c("aut", "cre"),

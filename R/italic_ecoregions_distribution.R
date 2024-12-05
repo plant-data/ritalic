@@ -46,7 +46,7 @@
 #' @export
 italic_ecoregions_distribution <-function(sp_names, result_data="rarity") {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/", "Retrieving distribution in ecoregions...",
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/ecoregions-distribution/", "Retrieving distribution in ecoregions...",
                         parse_function = parse_api_response,
                         request_method = "GET",
                         reorder_result = TRUE)

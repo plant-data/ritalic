@@ -47,7 +47,7 @@
 #' @export
 italic_ecology_traits <-function(sp_names) {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/data/", "Retrieving ecology and traits...", parse_function = parse_api_response,
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/ecology-traits/", "Retrieving ecology and traits...", parse_function = parse_api_response,
                         request_method = "GET",
                         reorder_result = TRUE)
   return(data)
