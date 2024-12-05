@@ -7,7 +7,7 @@
 #' @importFrom httr GET POST add_headers
 #' @noRd
 make_request <- function(method, url, body = NULL, ...) {
-  MAX_RETRIES <- 99
+  MAX_RETRIES <- 5
   retry_count <- 0
   
   while (retry_count < MAX_RETRIES) {
