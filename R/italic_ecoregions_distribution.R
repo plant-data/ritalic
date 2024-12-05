@@ -36,7 +36,7 @@
 #' ecodist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz")
 #'
 #' # Get presence/absence data
-#' ecodist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz", result_data="presence-absence")
+#' edist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz", "presence-absence")
 #' }
 #'
 #' @references
@@ -46,7 +46,10 @@
 #' @export
 italic_ecoregions_distribution <-function(sp_names, result_data="rarity") {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/", "Retrieving distribution in ecoregions...")
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/rarity/", "Retrieving distribution in ecoregions...",
+                        parse_function = parse_api_response,
+                        request_method = "GET",
+                        reorder_result = TRUE)
 
   # convert all columns except the first one to binary values if result_data == "presence-absence"
   if (result_data == "presence-absence") {

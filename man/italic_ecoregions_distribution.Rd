@@ -46,7 +46,7 @@ ecoregions_distribution <- italic_ecoregions_distribution(names_matched$accepted
 ecodist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz")
 
 # Get presence/absence data
-ecodist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz", result_data="presence-absence")
+edist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz", "presence-absence")
 }
 
 }

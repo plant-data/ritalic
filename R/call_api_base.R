@@ -31,19 +31,29 @@ call_api_base <-
     
     # get data
     for (i in seq_along(unique_sp_names)) {
-      sp_name <- URLencode(unique_sp_names[i], reserved = TRUE)
-      if (extra_param != "") {
-        url <- paste0(api_endpoint, sp_name, extra_param)
-      } else {
-        url <- paste0(api_endpoint, sp_name)
-      }
+      sp_name <- unique_sp_names[i]
       
-      response <- make_request(method = request_method,
-                               url = url,
-                               body = if (!is.null(body)) {
-                                   body
-                               } else
-                                 NULL)
+      if (!is.null(body)) {
+        # When body is not null, modify body to include species name
+        body_with_sp <- body
+        body_with_sp$sp <- sp_name
+        
+        response <- make_request(method = request_method,
+                                 url = api_endpoint,
+                                 body = body_with_sp)
+      } else {
+        # When body is null, encode species name in URL
+        sp_encoded <- URLencode(sp_name, reserved = TRUE)
+        url <- if (extra_param != "") {
+          paste0(api_endpoint, sp_encoded, extra_param)
+        } else {
+          paste0(api_endpoint, sp_encoded)
+        }
+        
+        response <- make_request(method = request_method,
+                                 url = url,
+                                 body = NULL)
+      }
       
       results_list[[i]] <- parse_function(response)
       update_progress(pb, i)

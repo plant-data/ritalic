@@ -1,54 +1,35 @@
-#' Get ecology data and morphological traits of lichen taxa
-#'
-#' @description
-#' Retrieves morpho-functional traits, ecological indicators, altitudinal distribution,
-#' and poleotolerance data for lichen taxa. Only accepts names that exist in the database of ITALIC.
+#' @title Get data of lichen taxa
+#' @description This function returns a dataframe containing taxonomy, ecology_traits, regions_distribution, ecoregions_distribution of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
+#' Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names
-#'       using `italic_match()`. 
+#'       using `italic_match()`.
 #'       Example workflow:
 #'       names_matched <- italic_match(your_names)
-#'       data <- italic_taxon_data(names_matched$accepted_name)
-#'       
-#' @param sp_names Character vector of accepted names
-#'
-#' @return A data frame with:
-#'   \describe{
-#'     \item{scientific_name}{Scientific name}
-#'     \item{substrata}{Substrate}
-#'     \item{photobiont}{Type of photosynthetic partner}
-#'     \item{growth_form}{Growth form}
-#'     \item{phytoclimatic_range}{Distribution in vegetation zones}
-#'     \item{special_requirements_for_water}{Water requirements}
-#'     \item{reproductive_strategy}{Main reproductive methods}
-#'     \item{ph_of_the_substrata_min}{Minimum pH value (1-5 scale)}
-#'     \item{ph_of_the_substrata_max}{Maximum pH value (1-5 scale)}
-#'     \item{solar_irradiation_min}{Minimum light requirements (1-5 scale)}
-#'     \item{solar_irradiation_max}{Maximum light tolerance (1-5 scale)}
-#'     \item{aridity_min}{Minimum aridity tolerance (1-5 scale)}
-#'     \item{aridity_max}{Maximum aridity tolerance (1-5 scale)}
-#'     \item{eutrophication_min}{Minimum nutrient requirements (1-5 scale)}
-#'     \item{eutrophication_max}{Maximum nutrient tolerance (1-5 scale)}
-#'     \item{altitudinal_distribution_min}{Minimum altitude zone (1-6 scale)}
-#'     \item{altitudinal_distribution_max}{Maximum altitude zone (1-6 scale)}
-#'     \item{poleotolerance_min}{Minimum poleotolerance level (1-5 scale)}
-#'     \item{poleotolerance_max}{Maximum poleotolerance level (1-5 scale)}
-#'   }
-#'
+#'       descriptions <- italic_taxon_data(names_matched$accepted_name)
+#' @param sp_names A vector containing the scientific names of the lichen species.
+#' @return A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
 #' @examples
-#' \dontrun{
-#' # Get taxon data for a species
-#' traits <- italic_taxon_data("Cetraria islandica (L.) Ach. subsp. islandica")
-#' }
-#'
-#' @references
-#' ITALIC - The Information System on Italian Lichens: data about taxa
-#' \url{https://italic.units.it/?procedure=base&t=59&c=60#otherdata}
+#' italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+#' @import utils
 #'
 #' @export
-italic_taxon_data <-function(sp_names) {
+italic_taxon_data <- function(sp_names) {
+
+
+  taxonomy <- italic_taxonomy(sp_names)
+  data <- italic_ecology_traits(sp_names)
+  regions <- italic_regions_distribution(sp_names)
+  ecoregions <- italic_ecoregions_distribution(sp_names)
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/data/", "Retrieving ecology and traits...")
-  return(data)
-  
+  # in each dataframe remove the first and last column 
+  # scientific name is alwais the same and warning is not needed
+  taxonomy2 <- taxonomy[, 1:ncol(taxonomy) - 1]
+  data2 <- data[, 3:ncol(data) - 1]
+  regions2 <- regions[, 3:ncol(regions) - 1]
+  ecoregions2 <- ecoregions[, 3:ncol(ecoregions) - 1]
+
+  result <- cbind(taxonomy2, data2, regions2, ecoregions2)
+
+  return(result)
 }

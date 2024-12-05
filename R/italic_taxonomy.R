@@ -30,7 +30,10 @@
 #' @export
 italic_taxonomy <-function(sp_names) {
   
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/classification/", "Retrieving taxonomic classification...")
+  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/classification/", "Retrieving taxonomic classification...",
+                        parse_function = parse_api_response,
+                        request_method = "GET",
+                        reorder_result = TRUE)
   return(data)
   
 }

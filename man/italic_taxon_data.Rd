@@ -2,56 +2,27 @@
 % Please edit documentation in R/italic_taxon_data.R
 \name{italic_taxon_data}
 \alias{italic_taxon_data}
-\title{Get ecology data and morphological traits of lichen taxa}
+\title{Get data of lichen taxa}
 \usage{
 italic_taxon_data(sp_names)
 }
 \arguments{
-\item{sp_names}{Character vector of accepted names}
+\item{sp_names}{A vector containing the scientific names of the lichen species.}
 }
 \value{
-A data frame with:
-\describe{
-\item{scientific_name}{Scientific name}
-\item{substrata}{Substrate}
-\item{photobiont}{Type of photosynthetic partner}
-\item{growth_form}{Growth form}
-\item{phytoclimatic_range}{Distribution in vegetation zones}
-\item{special_requirements_for_water}{Water requirements}
-\item{reproductive_strategy}{Main reproductive methods}
-\item{ph_of_the_substrata_min}{Minimum pH value (1-5 scale)}
-\item{ph_of_the_substrata_max}{Maximum pH value (1-5 scale)}
-\item{solar_irradiation_min}{Minimum light requirements (1-5 scale)}
-\item{solar_irradiation_max}{Maximum light tolerance (1-5 scale)}
-\item{aridity_min}{Minimum aridity tolerance (1-5 scale)}
-\item{aridity_max}{Maximum aridity tolerance (1-5 scale)}
-\item{eutrophication_min}{Minimum nutrient requirements (1-5 scale)}
-\item{eutrophication_max}{Maximum nutrient tolerance (1-5 scale)}
-\item{altitudinal_distribution_min}{Minimum altitude zone (1-6 scale)}
-\item{altitudinal_distribution_max}{Maximum altitude zone (1-6 scale)}
-\item{poleotolerance_min}{Minimum poleotolerance level (1-5 scale)}
-\item{poleotolerance_max}{Maximum poleotolerance level (1-5 scale)}
-}
+A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
 }
 \description{
-Retrieves morpho-functional traits, ecological indicators, altitudinal distribution,
-and poleotolerance data for lichen taxa. Only accepts names that exist in the database of ITALIC.
+This function returns a dataframe containing taxonomy, ecology_traits, regions_distribution, ecoregions_distribution of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
+Only accepts names that exist in the database of ITALIC.
 }
 \note{
 Before using this function with a list of names, first obtain their accepted names
 using \code{italic_match()}.
 Example workflow:
 names_matched <- italic_match(your_names)
-data <- italic_taxon_data(names_matched$accepted_name)
+descriptions <- italic_taxon_data(names_matched$accepted_name)
 }
 \examples{
-\dontrun{
-# Get taxon data for a species
-traits <- italic_taxon_data("Cetraria islandica (L.) Ach. subsp. islandica")
-}
-
-}
-\references{
-ITALIC - The Information System on Italian Lichens: data about taxa
-\url{https://italic.units.it/?procedure=base&t=59&c=60#otherdata}
+italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
 }

@@ -49,43 +49,24 @@ italic_match <-
            var_marks = c(),
            form_marks = c()) {
     
-    # prepare and validate input
-    sp_names <- prepare_species_names(sp_names)
-    unique_sp_names <- unique(sp_names)
+    body <- list(
+      'subsp-mark' = subsp_marks,
+      'var-mark' = var_marks,
+      'form-mark' = form_marks
+    )
     
-
-    pb <-
-      create_progress_bar(length(unique_sp_names), "Processing name match...")
-    
-    results_list <- vector("list", length(unique_sp_names))
-    
-    # match each species
-    for (i in seq_along(unique_sp_names)) {
-      body <- list(
-        'sp' = unique_sp_names[i],
-        'subsp-mark' = subsp_marks,
-        'var-mark' = var_marks,
-        'form-mark' = form_marks
+    data <-
+      call_api_base(
+        sp_names,
+        api_endpoint = "https://italic.units.it/api/v1/match",
+        loading_text = "Matching names ...",
+        parse_function = parse_match_response,
+        request_method = "POST",
+        body = body,
+        reorder_result = TRUE
       )
-      
-      response <- make_request(method = "POST",
-                               url = "https://italic.units.it/api/v1/match",
-                               body = body)
-      
-      results_list[[i]] <- parse_match_response(response)
-      update_progress(pb, i)
-    }
+    return(data)
     
- 
-    close_progress_bar(pb)
-    
-    result_merged <- do.call(rbind, results_list)
-    row.names(result_merged) <- NULL  # Reset row names
-    
-    # restore original order
-    ordered_dataframe <- reconstruct_order(sp_names, result_merged, 1)
-    
-    return(ordered_dataframe)
   }
 
 #' Parse italic match API response

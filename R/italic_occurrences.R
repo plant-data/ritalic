@@ -34,10 +34,10 @@
 #' @examples
 #' \dontrun{
 #' # Get simple occurrence data
-#' occ <- italic_occurrences("Cetraria islandica")
+#' occ <- italic_occurrences("Cetraria ericetorum Opiz")
 #'
 #' # Get extended occurrence data
-#' occ_ext <- italic_occurrences("Cetraria islandica", result_data = "extended")
+#' occ_ext <- italic_occurrences("Cetraria ericetorum Opiz", result_data = "extended")
 #' }
 #'
 #' @references
@@ -48,54 +48,21 @@
 #' @importFrom utils URLencode
 #' @export
 italic_occurrences <- function(sp_names, result_data = 'simple') {
+  
+  extra_params <- if (result_data == "extended") "&result_data=extended" else ""
 
-  sp_names <- prepare_species_names(sp_names)
-  unique_sp_names <- unique(sp_names)
-  
-  pb <- create_progress_bar(
-    length(unique_sp_names), 
-    "Retrieving occurrences..."
-  )
-  
-  results_list <- vector("list", length(unique_sp_names))
-  has_results <- FALSE
-  
-  # call API for each species
-  for (i in seq_along(unique_sp_names)) {
-
-    sp_name <- URLencode(unique_sp_names[i], reserved = TRUE)
-    url <- paste0(
-      "https://italic.units.it/api/v1/occurrences/",
-      sp_name,
-      if(result_data == 'extended') '&result_data=extended' else ''
+  data <-
+    call_api_base(
+      sp_names,
+      api_endpoint = "https://italic.units.it/api/v1/occurrences/",
+      loading_text = "Retrieving occurrences...",
+      parse_function = parse_occurrences_response,
+      extra_param = extra_params,
+      request_method = "GET",
+      reorder_result = FALSE
     )
-    
-    response <- make_request(
-      method = "GET",
-      url = url
-    )
-    
-    result <- parse_occurrences_response(response)
-    
-    if (!is.null(result) && nrow(result) > 0) {
-      results_list[[i]] <- result
-      has_results <- TRUE
-    }
-    
-    update_progress(pb, i)
-  }
   
-  close_progress_bar(pb)
-  
-  if (!has_results) {
-    return(data.frame())  # Return empty dataframe if no results
-  }
-  
-  valid_results <- Filter(Negate(is.null), results_list)
-  result_merged <- do.call(rbind, valid_results)
-  row.names(result_merged) <- NULL  # Reset row names
-  
-  return(result_merged)
+  return(data)
 }
 
 #' Parse occurrences API response

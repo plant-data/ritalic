@@ -44,10 +44,10 @@ occ <- italic_occurrences(names_matched$accepted_name)
 \examples{
 \dontrun{
 # Get simple occurrence data
-occ <- italic_occurrences("Cetraria islandica")
+occ <- italic_occurrences("Cetraria ericetorum Opiz")
 
 # Get extended occurrence data
-occ_ext <- italic_occurrences("Cetraria islandica", result_data = "extended")
+occ_ext <- italic_occurrences("Cetraria ericetorum Opiz", result_data = "extended")
 }
 
 }
