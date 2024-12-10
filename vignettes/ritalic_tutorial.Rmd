@@ -1,204 +1,456 @@
 ---
-title: "Using ritalic to Access Lichen Data from ITALIC"
-author: "Matteo Conti"
-date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Using ritalic to Access Lichen Data from ITALIC}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+title: "ritalic tutorial"
+output:
+  html_document:
+    df_print: paged
+    toc: true
+  pdf_document: default
+  
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "man/figures/README-",
-  out.width = "100%"
-)
+#knitr::opts_chunk$set(
+#  collapse = TRUE,
+#  comment = "#>",
+#  fig.path = "man/figures/README-",
+#  out.width = "100%"
+#)
 ```
 
-# Introduction
+ritalic is a library designed to provide an easy way to get the data of [ITALIC](https://italic.units.it) from R."
 
-The `ritalic` package provides an R interface to [ITALIC](https://italic.units.it/), the Information System on Italian Lichens. ITALIC is a comprehensive database containing information about lichen species found in Italy and neighboring European countries. It's maintained by the research group of Professor Pier Luigi Nimis at the University of Trieste.
+<ul>
 
-`ritalic` allows you to access a wealth of lichen data directly from R, including:
+<li>The package can be installed from github using the library devtools</li>
 
--   **Taxonomic information:** Classification, accepted names, synonyms, etc.
--   **Geographic distribution:** Presence/absence in Italian regions and ecoregions.
--   **Ecological data:** Substrate preferences, photobiont types, growth forms, etc.
--   **Morphological traits:** Descriptions, indicator values, reproductive strategies.
--   **Occurrence records:** Herbarium specimen data, including coordinates, dates, and collectors.
--   **Identification keys:** Generate interactive keys for specific sets of species.
+<li>Soon the library will be avalilable in cran too!</li>
 
-This vignette will guide you through the main functions of `ritalic`, demonstrating how to use them to retrieve and analyze lichen data for your research.
+</ul>
 
-# Installation
-
-```{r, eval = FALSE}
-# Install the development version from GitHub:
-install.packages("devtools")
-devtools::install_github("plant-data/ritalic")
-```
-
-```{r}
-# Load the package
+```{r, message=FALSE}
+# install and load devtools
+# install.packages('devtools') # if not already installed
+library(devtools)
+# install and load ritalic
+devtools::install_github("Mattciao96/ritalic")
 library(ritalic)
 ```
 
-# Matching Scientific Names: `italic_match()`
+Load some other utility libraries
 
-Before retrieving data for specific lichens, it's essential to ensure you're using the correct, accepted names according to ITALIC. The `italic_match()` function helps with this. It takes a character vector of scientific names and matches them against the ITALIC database, handling synonyms and infraspecific taxa.
+```{r, message=FALSE}
+# dplyer for easier data wrangling
+library(dplyr)
+# leaflet for interactive maps
+library(leaflet)
+```
+
+# Exploring the library
+
+structure of the library: ![Alt text](images/api.png)
+
+<br/><br/>
+
+## italic_match
+
+-   italic_match is the core function of ritalic:
+-   takes a list of scientific names as input, aligns them to checklist of ITALIC and retrieves the corresponding accepted names
+-   accepted names can later be passed to the other functions of the package
+
+```{r, results='hide'}
+match <- ritalic::italic_match(c('Cetraria islandica L. subsp. islandica', 'Lecanora albela','Parmelia caperata (L.) Ach', 'Ramalina americana Hal' ))
+
+```
 
 ```{r}
-# Example: Matching a few names
-my_names <- c("Cetraria islandica", "Xantoria parietina", "Cladonia rangiferina", "Pseudevernia furfuracea b) ceratea")
-matched_names <- italic_match(my_names, subsp_marks = "b)")
-print(matched_names)
+match
+accepted_names <- match$accepted_name
 ```
 
-**Explanation:**
-
--   `sp_names`: The vector of names you want to match.
--   `subsp_marks`, `var_marks`, `form_marks`: Optional arguments to specify uncommon infraspecific rank markers (if not using the standard "subsp.", "var.", "f.").
--   The output is a data frame with the original input name, the matched name, the nomenclatural status ("accepted" or "synonym"), the currently accepted name (if it's a synonym), and matching scores for the name and authority parts.
-
-**Best Practice:** Always use `italic_match()` first to validate and obtain accepted names before using them in other `ritalic` functions.
-
-# Retrieving Data
-
-The following sections describe functions for retrieving different types of data from ITALIC. We'll use the accepted names obtained from `italic_match()` in the examples.
-
-## 1. National Checklist: `italic_checklist()`
-
-This function retrieves the complete list of accepted scientific names in the ITALIC checklist.
+now we can store the accepted names into a variable to easily pass them to the next functions
 
 ```{r}
-# Get the entire checklist
-all_lichens <- italic_checklist()
-
-# Display the first few names
-head(all_lichens)
+accepted_names <- match$accepted_name
 ```
 
-**Note:** The checklist is large, so it's often more practical to work with subsets of species.
+<br/><br/>
 
-## 2. Taxonomic Classification: `italic_taxonomy()`
+## italic_description
 
-Get the taxonomic hierarchy (phylum, class, order, family, genus) for a set of accepted names.
+return the description and the additional notes of a taxon
+
+```{r, results='hide'}
+descriptions <- ritalic::italic_description(accepted_names)
+```
 
 ```{r}
-# Get taxonomy for our matched names
-taxonomy <- italic_taxonomy(matched_names$accepted_name)
-print(taxonomy)
+descriptions
 ```
 
-## 3. Descriptions: `italic_description()`
+<br/><br/>
 
-Retrieve morphological descriptions and taxonomic/ecological notes.
+## italic_taxon_data
+
+returns data related to the taxon:
+
+<details>
+
+<summary>Substrata and morpho-functional traits:</summary>
+
+<br/> <b>substrata</b>
+
+<ul>
+
+<li>saxicolous</li>
+
+<li>on lignum</li>
+
+<li>epiphytic</li>
+
+<li>on soil, terricolous mosses, plant debris</li>
+
+<li>foliicolous</li>
+
+</ul>
+
+<b>photobiont</b>
+
+<ul>
+
+<li>green algae other than Trentepohlia</li>
+
+<li>trentepohlia</li>
+
+<li>cyanobacteria, filamentous form, e.g. Nostoc, Scytonema</li>
+
+<li>cyanobacteria, coccaceous form, e.g. Gloeocapsa, Xanthocapsa</li>
+
+</ul>
+
+<b>growth_form</b>
+
+<ul>
+
+<li>fruticose</li>
+
+<li>fruticose filamentous</li>
+
+<li>foliose</li>
+
+<li>foliose broad-lobed, Parmelia type</li>
+
+<li>foliose narrow-lobed, Physcia type</li>
+
+<li>foliose umbilicate</li>
+
+<li>crustose</li>
+
+<li>crustose endolithic</li>
+
+<li>crustose placodiomorph</li>
+
+<li>leprose</li>
+
+<li>squamulose</li>
+
+<li>lichenicolous fungus</li>
+
+<li>non-lichenized, non-lichenicolous fungus</li>
+
+</ul>
+
+<b>phytoclimatic_range</b>
+
+<ul>
+
+<li>oceanic</li>
+
+<li>suboceanic</li>
+
+<li>subcontinental</li>
+
+</ul>
+
+<b>special_requirements_for_water</b>
+
+<ul>
+
+<li>on otherwise dry surfaces with periodical seepage of water after rain</li>
+
+<li>periodical submerged, e.g. in creeks or on coastal maritime rocks</li>
+
+<li>on surface seldom wetted by rain, e.g. underhangs</li>
+
+</ul>
+
+<b>reproductive_strategy</b>
+
+<ul>
+
+<li>mainly sexual</li>
+
+<li>mainly asexual, by soredia or soredia-like structures, e.g. blastidia</li>
+
+<li>mainly asexual, by isidia or isidia-like structures, e.g. schizidia</li>
+
+<li>mainly asexual, by thallus fragmentation</li>
+
+</ul>
+
+</details>
+
+<details>
+
+<summary>Ecological indicators, poleotolerance and altitudinal distribution:</summary>
+
+<br/> <b>ph_of_the_substrata</b>
+
+<ul>
+
+<li>1 - on very acid substrata, such as lignum and conifer bark</li>
+
+<li>2 - on acid substrata, such as on non-eutrophicated bark of Quercus</li>
+
+<li>3 - on subacid to subneutral substrata (e.g. on bark of Sambucus)</li>
+
+<li>4 - on slightly basic substrata, such as dust-covered bark</li>
+
+<li>5 - on basic substrata, e.g. pure limestone</li>
+
+</ul>
+
+<b>solar_irradiation</b>
+
+<ul>
+
+<li>1 - in very shaded situations, e.g. deep gorges, closed evergreen forests</li>
+
+<li>2 - in shaded situations, such as on the northern side of boles in close-canopied deciduous forests</li>
+
+<li>3 - in sites with plenty of diffuse light but scarce direct solar irradiation, such as in rather open-canopied deciduous woodlands</li>
+
+<li>4 - in sun-exposed sites, but avoiding extreme solar irradiation</li>
+
+<li>5 - in sites with very high direct solar irradiation, such as on the southern side of isolated boles</li>
+
+</ul>
+
+<b>aridity</b>
+
+<ul>
+
+<li>1 - hydro- and hygrophytic, in aquatic or marine situations, or in sites with a very high frequency of fog</li>
+
+<li>2 - rather hygrophytic, intermediate between 1 and 2</li>
+
+<li>3 - mesophytic</li>
+
+<li>4 - xerophytic, but absent from extremely arid stands</li>
+
+<li>5 - very xerophytic</li>
+
+</ul>
+
+<b>eutrophication</b>
+
+<ul>
+
+<li>1 - not resistant to eutrophication</li>
+
+<li>2 - resistant to a very weak eutrophication</li>
+
+<li>3 - resistant to a weak eutrophication</li>
+
+<li>4 - occurring in rather eutrophicated situations</li>
+
+<li>5 - occurring in highly eutrophicated situations</li>
+
+</ul>
+
+<b>altitudinal_distribution</b>
+
+<ul>
+
+<li>1 - eu-Mediterranean belt (potential vegetation: evergreen Quercus ilex forest)</li>
+
+<li>2 - submediterranean belt (deciduous Quercus-Carpinus forests)</li>
+
+<li>3 - montane belt (Fagus forests, marking treeline in the Apennines)</li>
+
+<li>4 - subalpine and oroboreal belts of the Alps (natural Picea abies, and Larix-Pinus cembra stands)</li>
+
+<li>5 - above treeline (both Alpine and oromediterranean)</li>
+
+<li>6 - nival belt of the Alps</li>
+
+</ul>
+
+<b>poleotolerance</b> This value points to the tendency of a lichen to occur in areas with different degrees of human disturbance. It is expressed on 4 classes, as follows:
+
+<ul>
+
+<li>3 - species occurring also in heavily disturbed areas, incl. large towns</li>
+
+<li>2 - species occurring also in moderately disturbed areas (agricultural areas, small settlements etc.).</li>
+
+<li>1 - species mostly occurring in natural or semi-natural habitats</li>
+
+<li>0 - species which exclusively occur on old trees in ancient, undisturbed forests.</li>
+
+</ul>
+
+</details>
+
+```{r, results='hide'}
+taxon_data <-  ritalic::italic_taxon_data(accepted_names)
+```
 
 ```{r}
-# Get descriptions
-descriptions <- italic_description(matched_names$accepted_name)
-print(descriptions)
+taxon_data
 ```
 
-## 4. Ecology and Traits: `italic_ecology_traits()`
+<br/><br/>
 
-Access a wide range of ecological and trait data, including substrate, photobiont, growth form, indicator values, and more.
+## italic_classification
+
+returns the taxonomical classification of a taxon
+
+```{r, results='hide'}
+systematics <- ritalic::italic_classification(accepted_names)
+```
 
 ```{r}
-# Get ecology and traits
-ecology_traits <- italic_ecology_traits(matched_names$accepted_name)
-print(ecology_traits)
+systematics
 ```
 
-## 5. Distribution in Italian Regions: `italic_regions_distribution()`
+<br/><br/>
 
-Get presence/absence data for each species in the administrative regions of Italy.
+## italic_rarity
+
+returns the commonness-rarity for each ecoregion of Italy
+
+<details>
+
+<summary>How to read and understand the values:</summary>
+
+![ecoregions in Italy](./images/ecoregions.jpg)
+
+<h2>
+
+Ecoregions in italy
+
+</h1>
+
+<ul>
+
+<li>A: Alpine (above treeline in the Alps and in Abruzzo)</li>
+
+<li>A1: Subalpine (near treeline in the Alps, oroboreal belt)</li>
+
+<li>B: Oromediterranean (above treeline outside the Alps except Abruzzo)</li>
+
+<li>C: Montane (beech forests)</li>
+
+<li>D: Dry submediterranean (deciduous oaks, excluding SmedH)</li>
+
+<li>E: Padanian (the plains of the North): this is the only OGU which was not separated on the basis of climatical-biogeographical characters; it is the most heavily anthropised part of Italy, where several species do not occur because of pollution and/or almost total deforestation</li>
+
+<li>F: Humid submediterranean (as SmedD, but restricted to areas with a warm-humid climate, mostly Tyrrhenian)</li>
+
+<li>G: Humid Mediterranean (mostly Tyrrhenian)</li>
+
+<li>H: Dry Mediterranean</li>
+
+<ul>
+
+</details>
+
+```{r, results='hide'}
+rarity <- ritalic::italic_rarity(accepted_names)
+```
 
 ```{r}
-# Get regional distribution
-regions_dist <- italic_regions_distribution(matched_names$accepted_name)
-print(regions_dist)
+rarity
 ```
 
-## 6. Distribution in Ecoregions: `italic_ecoregions_distribution()`
+<br/><br/>
 
-Get distribution data across Italian ecoregions, either as commonness/rarity categories or as presence/absence (0/1).
+## italic_distribution
+
+returns the presence / absence (1 / 0) of a taxon in each of the 20 administrative regions of Italy
+
+<details>
+
+<summary>Administrative regions:</summary>
+
+<img src="./images/regions.png" width="500"/>
+
+</details>
+
+```{r, results='hide'}
+distribution <- ritalic::italic_distribution(accepted_names)
+```
 
 ```{r}
-# Get ecoregion distribution (commonness/rarity)
-ecoregions_dist_rarity <- italic_ecoregions_distribution(matched_names$accepted_name)
-print(ecoregions_dist_rarity)
-
-# Get ecoregion distribution (presence/absence)
-ecoregions_dist_pa <- italic_ecoregions_distribution(matched_names$accepted_name, result_data = "presence-absence")
-print(ecoregions_dist_pa)
+distribution
 ```
 
-## 7. Occurrence Records: `italic_occurrences()`
+<br/><br/>
 
-Retrieve herbarium specimen data, including coordinates, collection date, substrate, and institution code. You can get either "simple" or "extended" output (the latter includes locality and catalog number).
+## italic_occurrences
+
+returns all the georeferenced occurrences of a taxon
+
+```{r, results='hide'}
+occurrences <- ritalic::italic_occurrences(accepted_names[1])
+```
 
 ```{r}
-# Get occurrence records (simple)
-occurrences_simple <- italic_occurrences(matched_names$accepted_name)
-head(occurrences_simple) # Display the first few records
-
-# Get occurrence records (extended)
-occurrences_extended <- italic_occurrences(matched_names$accepted_name, result_data = "extended")
-head(occurrences_extended)
+occurrences <- occurrences %>%
+  mutate(decimalLatitude = as.numeric(decimalLatitude)) %>%
+  mutate(decimalLongitude = as.numeric(decimalLongitude)) %>%
+  mutate(coordinatesUncertaintyInMeters = as.numeric(coordinatesUncertaintyInMeters))
+nrow(occurrences)
+head(occurrences)
 ```
 
-## 8. Occurrence References: `italic_occurrences_references()`
-
-Get bibliographic references and DOIs for the publications associated with occurrence datasets. You need to first retrieve occurrence data using `italic_occurrences()`.
+The occurrences can be displayed in a nice map with leaflet:
 
 ```{r}
-# Get references for the occurrence records
-references <- italic_occurrences_references(occurrences_simple)
-print(references)
+occurrences %>%
+  leaflet() %>%
+  addTiles() %>%
+  setView(lng = 9.0, lat = 42.0, zoom = 5) %>%
+  #addMarkers(~decimalLongitude, ~decimalLatitude, popup = ~scientificName)
+  addCircleMarkers(~decimalLongitude, ~decimalLatitude,
+    radius = 3,
+    color = "red",
+    stroke = FALSE, fillOpacity = 1
+  )
 ```
 
-## 9. Interactive Identification Keys: `italic_identification_key()`
+<br/><br/>
 
-Generate a unique URL to an interactive dichotomous key for a set of species. This uses the KeyMaker system on the ITALIC website.
-
-```{r, eval = FALSE}
-# Generate an identification key URL
-key_url <- italic_identification_key(matched_names$accepted_name)
-print(key_url) # This will print the URL. You can open it in a browser.
-```
-
-Note: the link generated by this function has an expiration time.
-
-## 10. Get all taxon data: `italic_taxon_data()`
-
-This function returns taxonomy, ecology, and distribution data of the lichen species passed as input.
+## italic_checklist
 
 ```{r}
-taxon_data <- italic_taxon_data(matched_names$accepted_name)
-print(taxon_data)
+checklist <- ritalic::italic_checklist()
+head(checklist)
 ```
 
-## 11. Get a presence-absence matrix of traits: `italic_traits_pa()`
+<br/><br/>
 
-This function returns a presence-absence matrix of the functional traits of the lichen species passed as input.
+## italic_traits
+
+!!! function in development retuns a the traits assigned based on the identification keys in ITALIC
+
+```{r, results='hide'}
+traits <- ritalic::italic_traits(accepted_names)
+```
 
 ```{r}
-traits_pa <- italic_traits_pa(matched_names$accepted_name)
-print(traits_pa)
+traits
 ```
-
-# Advanced Usage
-
-## Handling API Errors and Rate Limits
-
-The ITALIC API may return errors if there are issues with the request or if you exceed the rate limit (requests per unit of time). `ritalic` functions handle these gracefully:
-
--   **Error Handling:** If the API returns an error (e.g., status code 500), the functions will stop and display an informative message.
--   **Rate Limiting:** If you hit the rate limit (status code 429), the functions will automatically pause for 10 seconds before retrying (up to 5 attempts). You'll see a message indicating the pause.
 
 ## Progress Bars
 
