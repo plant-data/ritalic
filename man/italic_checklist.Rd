@@ -4,7 +4,24 @@
 \alias{italic_checklist}
 \title{Get the list of species names in the Checklist of the Lichens of Italy}
 \usage{
-italic_checklist()
+italic_checklist(
+  genus = NULL,
+  family = NULL,
+  order = NULL,
+  class = NULL,
+  phylum = NULL
+)
+}
+\arguments{
+\item{genus}{Optional. A genus name to filter the checklist.}
+
+\item{family}{Optional. A family name to filter the checklist.}
+
+\item{order}{Optional. An order name to filter the checklist.}
+
+\item{class}{Optional. A class name to filter the checklist.}
+
+\item{phylum}{Optional. A phylum name to filter the checklist.}
 }
 \value{
 A character vector containing all accepted scientific names from the checklist of ITALIC.
@@ -17,6 +34,8 @@ the Lichens of Italy in ITALIC. The function returns all accepted names of speci
 \dontrun{
 # Get the complete checklist
 checklist <- italic_checklist()
+# Get the checklist of the species of genus Lecanora
+check_lecanora <- italic_checklist(genus ="Lecanora")
 }
 
 }

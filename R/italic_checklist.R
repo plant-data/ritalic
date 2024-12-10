@@ -4,12 +4,20 @@
 #' Retrieves the complete list of accepted scientific names from the Checklist of
 #' the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy and in bordering countries
 #'
+#' @param genus Optional. A genus name to filter the checklist.
+#' @param family Optional. A family name to filter the checklist.
+#' @param order Optional. An order name to filter the checklist.
+#' @param class Optional. A class name to filter the checklist.
+#' @param phylum Optional. A phylum name to filter the checklist.
+#' 
 #' @return A character vector containing all accepted scientific names from the checklist of ITALIC.
 #'
 #' @examples
 #' \dontrun{
 #' # Get the complete checklist
 #' checklist <- italic_checklist()
+#' # Get the checklist of the species of genus Lecanora
+#' check_lecanora <- italic_checklist(genus ="Lecanora")
 #' }
 #'
 #' @references
@@ -19,8 +27,22 @@
 #' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #' @export
-italic_checklist <- function() {
-  url <- "https://italic.units.it/api/v1/checklist/"
+italic_checklist <- function(genus = NULL, family = NULL, order = NULL, class = NULL, phylum = NULL) {
+  url <- "https://italic.units.it/api/v2/checklist/"
+  
+
+  params <- list()
+  if (!is.null(genus)) params$genus <- URLencode(genus, reserved = TRUE)
+  if (!is.null(family)) params$family <- URLencode(family, reserved = TRUE)
+  if (!is.null(order)) params$order <- URLencode(order, reserved = TRUE)
+  if (!is.null(class)) params$class <- URLencode(class, reserved = TRUE)
+  if (!is.null(phylum)) params$phylum <- URLencode(phylum, reserved = TRUE)
+  
+  
+  if (length(params) > 0) {
+    query_string <- paste(names(params), params, sep = "=", collapse = "&")
+    url <- paste0(url, "?", query_string)
+  }
   response <- GET(url)
   
   if (response$status_code == 500) {
@@ -35,7 +57,7 @@ italic_checklist <- function() {
   
   data <- fromJSON(rawToChar(response$content))
   
-  checklist <- data[2]
+  checklist <- data[1]
   checklist <- checklist$checklist
   
   return(checklist)
