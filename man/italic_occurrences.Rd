@@ -13,7 +13,7 @@ italic_occurrences(sp_names, result_data = "simple")
 "simple" (default) or "extended"}
 }
 \value{
-A data frame with occurrence records. For simple output:
+A data frame with occurrence records. Column names follow the Darwin Core standard, with the additional column substratum, which is particularly relevant for lichens. For simple output:
 \describe{
 \item{scientificName}{Full scientific name}
 \item{decimalLatitude}{Latitude in decimal degrees}
@@ -28,6 +28,10 @@ Extended output adds:
 \describe{
 \item{locality}{Collection locality}
 \item{catalogNumber}{Specimen identifier in the collection}
+\item{minimumElevationInMeters}{Lower limit of the elevation range}
+\item{maximumElevationInMeters}{Upper limit of the elevation range}
+\item{verbatimIdentification}{Scientific name reported on the original label}
+\item{identifiedBy}{Person who identified the specimen}
 }
 }
 \description{
