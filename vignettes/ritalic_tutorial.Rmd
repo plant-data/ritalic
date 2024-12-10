@@ -1,0 +1,211 @@
+---
+title: "Using ritalic to Access Lichen Data from ITALIC"
+author: "Matteo Conti"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using ritalic to Access Lichen Data from ITALIC}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Introduction
+
+The `ritalic` package provides an R interface to [ITALIC](https://italic.units.it/), the Information System on Italian Lichens. ITALIC is a comprehensive database containing information about lichen species found in Italy and neighboring European countries. It's maintained by the research group of Professor Pier Luigi Nimis at the University of Trieste.
+
+`ritalic` allows you to access a wealth of lichen data directly from R, including:
+
+-   **Taxonomic information:** Classification, accepted names, synonyms, etc.
+-   **Geographic distribution:** Presence/absence in Italian regions and ecoregions.
+-   **Ecological data:** Substrate preferences, photobiont types, growth forms, etc.
+-   **Morphological traits:** Descriptions, indicator values, reproductive strategies.
+-   **Occurrence records:** Herbarium specimen data, including coordinates, dates, and collectors.
+-   **Identification keys:** Generate interactive keys for specific sets of species.
+
+This vignette will guide you through the main functions of `ritalic`, demonstrating how to use them to retrieve and analyze lichen data for your research.
+
+# Installation
+
+```{r, eval = FALSE}
+# Install the development version from GitHub:
+install.packages("devtools")
+devtools::install_github("plant-data/ritalic")
+```
+
+```{r}
+# Load the package
+library(ritalic)
+```
+
+# Matching Scientific Names: `italic_match()`
+
+Before retrieving data for specific lichens, it's essential to ensure you're using the correct, accepted names according to ITALIC. The `italic_match()` function helps with this. It takes a character vector of scientific names and matches them against the ITALIC database, handling synonyms and infraspecific taxa.
+
+```{r}
+# Example: Matching a few names
+my_names <- c("Cetraria islandica", "Xantoria parietina", "Cladonia rangiferina", "Pseudevernia furfuracea b) ceratea")
+matched_names <- italic_match(my_names, subsp_marks = "b)")
+print(matched_names)
+```
+
+**Explanation:**
+
+-   `sp_names`: The vector of names you want to match.
+-   `subsp_marks`, `var_marks`, `form_marks`: Optional arguments to specify uncommon infraspecific rank markers (if not using the standard "subsp.", "var.", "f.").
+-   The output is a data frame with the original input name, the matched name, the nomenclatural status ("accepted" or "synonym"), the currently accepted name (if it's a synonym), and matching scores for the name and authority parts.
+
+**Best Practice:** Always use `italic_match()` first to validate and obtain accepted names before using them in other `ritalic` functions.
+
+# Retrieving Data
+
+The following sections describe functions for retrieving different types of data from ITALIC. We'll use the accepted names obtained from `italic_match()` in the examples.
+
+## 1. National Checklist: `italic_checklist()`
+
+This function retrieves the complete list of accepted scientific names in the ITALIC checklist.
+
+```{r}
+# Get the entire checklist
+all_lichens <- italic_checklist()
+
+# Display the first few names
+head(all_lichens)
+```
+
+**Note:** The checklist is large, so it's often more practical to work with subsets of species.
+
+## 2. Taxonomic Classification: `italic_taxonomy()`
+
+Get the taxonomic hierarchy (phylum, class, order, family, genus) for a set of accepted names.
+
+```{r}
+# Get taxonomy for our matched names
+taxonomy <- italic_taxonomy(matched_names$accepted_name)
+print(taxonomy)
+```
+
+## 3. Descriptions: `italic_description()`
+
+Retrieve morphological descriptions and taxonomic/ecological notes.
+
+```{r}
+# Get descriptions
+descriptions <- italic_description(matched_names$accepted_name)
+print(descriptions)
+```
+
+## 4. Ecology and Traits: `italic_ecology_traits()`
+
+Access a wide range of ecological and trait data, including substrate, photobiont, growth form, indicator values, and more.
+
+```{r}
+# Get ecology and traits
+ecology_traits <- italic_ecology_traits(matched_names$accepted_name)
+print(ecology_traits)
+```
+
+## 5. Distribution in Italian Regions: `italic_regions_distribution()`
+
+Get presence/absence data for each species in the administrative regions of Italy.
+
+```{r}
+# Get regional distribution
+regions_dist <- italic_regions_distribution(matched_names$accepted_name)
+print(regions_dist)
+```
+
+## 6. Distribution in Ecoregions: `italic_ecoregions_distribution()`
+
+Get distribution data across Italian ecoregions, either as commonness/rarity categories or as presence/absence (0/1).
+
+```{r}
+# Get ecoregion distribution (commonness/rarity)
+ecoregions_dist_rarity <- italic_ecoregions_distribution(matched_names$accepted_name)
+print(ecoregions_dist_rarity)
+
+# Get ecoregion distribution (presence/absence)
+ecoregions_dist_pa <- italic_ecoregions_distribution(matched_names$accepted_name, result_data = "presence-absence")
+print(ecoregions_dist_pa)
+```
+
+## 7. Occurrence Records: `italic_occurrences()`
+
+Retrieve herbarium specimen data, including coordinates, collection date, substrate, and institution code. You can get either "simple" or "extended" output (the latter includes locality and catalog number).
+
+```{r}
+# Get occurrence records (simple)
+occurrences_simple <- italic_occurrences(matched_names$accepted_name)
+head(occurrences_simple) # Display the first few records
+
+# Get occurrence records (extended)
+occurrences_extended <- italic_occurrences(matched_names$accepted_name, result_data = "extended")
+head(occurrences_extended)
+```
+
+## 8. Occurrence References: `italic_occurrences_references()`
+
+Get bibliographic references and DOIs for the publications associated with occurrence datasets. You need to first retrieve occurrence data using `italic_occurrences()`.
+
+```{r}
+# Get references for the occurrence records
+references <- italic_occurrences_references(occurrences_simple)
+print(references)
+```
+
+## 9. Interactive Identification Keys: `italic_identification_key()`
+
+Generate a unique URL to an interactive dichotomous key for a set of species. This uses the KeyMaker system on the ITALIC website.
+
+```{r, eval = FALSE}
+# Generate an identification key URL
+key_url <- italic_identification_key(matched_names$accepted_name)
+print(key_url) # This will print the URL. You can open it in a browser.
+```
+
+Note: the link generated by this function has an expiration time.
+
+## 10. Get all taxon data: `italic_taxon_data()`
+
+This function returns taxonomy, ecology, and distribution data of the lichen species passed as input.
+
+```{r}
+taxon_data <- italic_taxon_data(matched_names$accepted_name)
+print(taxon_data)
+```
+
+## 11. Get a presence-absence matrix of traits: `italic_traits_pa()`
+
+This function returns a presence-absence matrix of the functional traits of the lichen species passed as input.
+
+```{r}
+traits_pa <- italic_traits_pa(matched_names$accepted_name)
+print(traits_pa)
+```
+
+# Advanced Usage
+
+## Handling API Errors and Rate Limits
+
+The ITALIC API may return errors if there are issues with the request or if you exceed the rate limit (requests per unit of time). `ritalic` functions handle these gracefully:
+
+-   **Error Handling:** If the API returns an error (e.g., status code 500), the functions will stop and display an informative message.
+-   **Rate Limiting:** If you hit the rate limit (status code 429), the functions will automatically pause for 10 seconds before retrying (up to 5 attempts). You'll see a message indicating the pause.
+
+## Progress Bars
+
+For functions that may take some time to retrieve data (especially when dealing with many species), `ritalic` displays progress bars in the console so you can monitor the progress. These progress bars are only shown in interactive R sessions.
+
+# Conclusion
+
+`ritalic` provides a powerful and user-friendly way to access the rich lichen biodiversity data available in ITALIC. By combining the functions described in this vignette, you can perform a wide range of analyses, from basic taxonomic queries to complex ecological and biogeographic studies. Remember to consult the function documentation (`?function_name`) for more details on specific parameters and options.
+
+If you encounter any bugs or have suggestions for improvements, please feel free to open an issue on the [GitHub repository](https://github.com/plant-data/ritalic). Happy lichen exploring!
