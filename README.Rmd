@@ -54,9 +54,7 @@ library(ritalic)
 
 ## Usage
 
-Italic has different pages designed to help users:
-- Basic function usage: [link] - guide for utilizing the main functions of the package
-- Advanced features: [link] - detailed documentation for more complex implementations
+Italic has a guide designed to help users: (function and examples)[https://italic.units.it/ritalic-basic/]
 
 ## Citation
 
