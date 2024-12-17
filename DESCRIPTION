@@ -1,13 +1,15 @@
 Package: ritalic
 Title: Interface to the ITALIC Database of Lichen Biodiversity
-Version: 1.0.0
-Authors@R:
-    person("Matteo", "Conti", , "matt.ciao@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "0009-0003-4917-2639"))
-Author: Matteo Conti [aut, cre] (<https://orcid.org/0009-0003-4917-2639>)
+Version: 0.9.0
+Authors@R:c(
+    person("Matteo", "Conti", email="matt.ciao@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0009-0003-4917-2639")),
+    person("Luana", "Francesconi", role = "aut"),
+    person("Alice", "Musina", role = "aut")
+           )
 Maintainer: Matteo Conti <matt.ciao@gmail.com>
 Description: A programmatic interface to the Web Service methods provided by the ITALIC (<https://italic.units.it>).
-    ITALIC is a database of lichen data in Italy and neighbouring european countries. ritalic includes functions for retrieving information
+    ITALIC is a database of lichen data in Italy and bordering European countries. ritalic includes functions for retrieving information
     on lichen scientific names, geographic distribution, ecological data, morpho-functional traits and identification keys. 
     The API documentation is available at <https://italic.units.it/?procedure=api>.
 License: MIT + file LICENSE
@@ -27,4 +29,3 @@ Imports:
   httr,
   jsonlite,
   utils
-VignetteBuilder: knitr

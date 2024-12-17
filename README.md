@@ -11,12 +11,12 @@
 API](https://italic.units.it/index.php?procedure=api).
 
 **ITALIC** the Information System on Italian Lichens, makes available
-information and resources about the lichens known to occur in Italy. It
-is maintained and updated by the Research Unit of Professor Pier Luigi
-Nimis, at the University of Trieste (NE Italy), Department of Life
-Sciences. Most of the data are derived from the Checklist of the Lichens
-of Italy by Nimis (2016), but nomenclatural and distributional data are
-being continuously updated.
+information and resources about the lichens known to occur in Italy and
+bordering countries. It is maintained and updated by the Research Unit
+of Professor Pier Luigi Nimis, at the University of Trieste (NE Italy),
+Department of Life Sciences. Most of the data are derived from the
+Checklist of the Lichens of Italy by Nimis (2016), but nomenclatural and
+distributional data are being continuously updated.
 
 ## Installation
 
@@ -45,10 +45,9 @@ library(ritalic)
 
 ## Usage
 
-The package includes a vignette designed to help users. This vignette
-serves as a basic guide for utilizing the main functions of the package.
-To access it, simply enter the following command in the R console (after
-loading the package):
+Italic has a guide designed to help users: (function and
+examples)\[<https://italic.units.it/ritalic-basic/>\] or you can view at
+the vignette in r
 
 ``` r
 vignette("ritalic")
