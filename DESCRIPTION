@@ -1,7 +1,7 @@
 Package: ritalic
 Title: Interface to the ITALIC Database of Lichen Biodiversity
-Version: 0.9.0
-Authors@R:c(
+Version: 0.10.0
+Authors@R: c(
     person("Matteo", "Conti", email="matt.ciao@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0003-4917-2639")),
     person("Luana", "Francesconi", role = "aut"),
