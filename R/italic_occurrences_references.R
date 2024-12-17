@@ -17,23 +17,20 @@
 #' \dontrun{
 #' # Get occurrences first
 #' occ <- italic_occurrences("Cetraria ericetorum Opiz")
-#' 
+#'
 #' # Then get associated references
 #' refs <- italic_occurrences_references(occ)
 #' }
 #'
 #' @export
 italic_occurrences_references <- function(occurrences_dataframe) {
-
   validate_occurrences_input(occurrences_dataframe)
-
-  herbaria <- process_herbaria_codes(occurrences_dataframe$institutionCode)
   
-  # make API request
-  response <- make_request(
-    method = "GET",
-    url = construct_references_url(herbaria)
-  )
+  herbaria <-
+    process_herbaria_codes(occurrences_dataframe$institutionCode)
+  
+  response <- make_request(method = "GET",
+                           url = construct_references_url(herbaria))
   references <- parse_references_response(response)
   return(references)
 }
@@ -59,7 +56,6 @@ validate_occurrences_input <- function(df) {
 #' @return Processed herbaria codes
 #' @noRd
 process_herbaria_codes <- function(institution_codes) {
-  
   herbaria <- unique(institution_codes)
   herbaria <- gsub("^herbarium ", "", herbaria, ignore.case = TRUE)
   herbaria <- herbaria[!is.na(herbaria) & nchar(herbaria) > 0]
@@ -77,7 +73,8 @@ process_herbaria_codes <- function(institution_codes) {
 #' @noRd
 construct_references_url <- function(herbaria) {
   base_url <- "https://italic.units.it/api/v1/references/"
-  encoded_herbaria <- URLencode(paste0(herbaria, collapse = ";"), reserved = TRUE)
+  encoded_herbaria <-
+    URLencode(paste0(herbaria, collapse = ";"), reserved = TRUE)
   paste0(base_url, encoded_herbaria)
 }
 
@@ -86,7 +83,6 @@ construct_references_url <- function(herbaria) {
 #' @return Dataframe of references and DOIs
 #' @noRd
 parse_references_response <- function(response) {
-
   content <- fromJSON(rawToChar(response$content))
   
   if (length(content$references) == 0) {
@@ -103,8 +99,8 @@ parse_references_response <- function(response) {
     stringsAsFactors = FALSE
   )
   
-
-  refs <- refs[!is.na(refs$reference), ]
+  
+  refs <- refs[!is.na(refs$reference),]
   row.names(refs) <- NULL
   
   return(refs)

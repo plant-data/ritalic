@@ -36,6 +36,6 @@ italic_description <- function(sp_names) {
       request_method = "GET",
       reorder_result = TRUE
     )
-return(data)
-
+  return(data)
+  
 }

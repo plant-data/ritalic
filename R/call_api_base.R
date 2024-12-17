@@ -34,7 +34,7 @@ call_api_base <-
       sp_name <- unique_sp_names[i]
       
       if (!is.null(body)) {
-        # When body is not null, modify body to include species name
+        # when body is not null, modify body to include species name
         body_with_sp <- body
         body_with_sp$sp <- sp_name
         
@@ -42,7 +42,7 @@ call_api_base <-
                                  url = api_endpoint,
                                  body = body_with_sp)
       } else {
-        # When body is null, encode species name in URL
+        # when body is null, encode species name in URL
         sp_encoded <- URLencode(sp_name, reserved = TRUE)
         url <- if (extra_param != "") {
           paste0(api_endpoint, sp_encoded, extra_param)

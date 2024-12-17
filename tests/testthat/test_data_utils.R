@@ -1,11 +1,5 @@
 library(testthat)
 
-# mock colnames_to_snake_case function
-colnames_to_snake_case <- function(df) {
-  colnames(df) <- tolower(gsub("\\.", "_", colnames(df)))
-  df
-}
-
 describe("prepare_species_names function", {
   test_that("handles normal character vector", {
     input <- c("Species1", "Species2")
@@ -33,22 +27,20 @@ describe("prepare_species_names function", {
 describe("reconstruct_order function", {
   test_that("maintains original order of input vector", {
     original_vector <- c("Species3", "Species1", "Species2")
-    result_dataframe <- data.frame(
-      species = c("Species1", "Species2", "Species3")
-    )
+    result_dataframe <- data.frame(species = c("Species1", "Species2", "Species3"))
     
-    result <- reconstruct_order(original_vector, result_dataframe, "species")
+    result <-
+      reconstruct_order(original_vector, result_dataframe, "species")
     
     expect_equal(result$species, original_vector)
   })
   
   test_that("handles repeated species names", {
     original_vector <- c("Species1", "Species1", "Species2")
-    result_dataframe <- data.frame(
-      species = c("Species2", "Species1")
-    )
+    result_dataframe <- data.frame(species = c("Species2", "Species1"))
     
-    result <- reconstruct_order(original_vector, result_dataframe, "species")
+    result <-
+      reconstruct_order(original_vector, result_dataframe, "species")
     
     expect_equal(result$species, original_vector)
   })

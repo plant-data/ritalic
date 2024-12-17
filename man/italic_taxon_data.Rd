@@ -24,5 +24,5 @@ names_matched <- italic_match(your_names)
 descriptions <- italic_taxon_data(names_matched$accepted_name)
 }
 \examples{
-italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora ciliata"))
+italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora cenisia Ach."))
 }

@@ -15,11 +15,16 @@ make_request <- function(method, url, body = NULL, ...) {
       response <- if (method == "GET") {
         GET(url, ...)
       } else {
-        POST(url,
-             body = if (!is.null(body)) jsonlite::toJSON(body) else NULL,
-             encode = "json",
-             add_headers('Content-Type' = 'application/json'),
-             ...)
+        POST(
+          url,
+          body = if (!is.null(body))
+            jsonlite::toJSON(body)
+          else
+            NULL,
+          encode = "json",
+          add_headers('Content-Type' = 'application/json'),
+          ...
+        )
       }
       
       if (response$status_code == 200) {
@@ -78,5 +83,5 @@ parse_api_response <- function(response) {
 #' @description NOTE: the rate limit is server-side, changing this value won't speed up the data retrieval process
 #' @noRd
 wait_api_cooldown <- function() {
-  Sys.sleep(10)  # Wait 10 seconds for rate limit reset
+  Sys.sleep(10)  # Wait 10 seconds for the soft rate limit reset
 }

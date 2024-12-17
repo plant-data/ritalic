@@ -1,11 +1,11 @@
 #' Get distribution of lichen taxa across Italian ecoregions
 #'
 #' @description
-#' Returns the distribution and commonness status of lichen taxa across Italian 
+#' Returns the distribution and commonness status of lichen taxa across Italian
 #' ecoregions. Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names
-#'       using `italic_match()`. 
+#'       using `italic_match()`.
 #'       Example workflow:
 #'       names_matched <- italic_match(your_names)
 #'       ecoregions_distribution <- italic_ecoregions_distribution(names_matched$accepted_name)
@@ -44,19 +44,24 @@
 #' \url{https://italic.units.it/?procedure=base&t=59&c=60#commonness}
 #'
 #' @export
-italic_ecoregions_distribution <-function(sp_names, result_data="rarity") {
-  
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/ecoregions-distribution/", "Retrieving distribution in ecoregions...",
-                        parse_function = parse_api_response,
-                        request_method = "GET",
-                        reorder_result = TRUE)
-
-  # convert all columns except the first one to binary values if result_data == "presence-absence"
-  if (result_data == "presence-absence") {
-        for (col in names(data)[-1]) {
-            data[[col]] <- ifelse(data[[col]] == "absent", 0, 1)
-        }
+italic_ecoregions_distribution <-
+  function(sp_names, result_data = "rarity") {
+    data <-
+      call_api_base(
+        sp_names,
+        "https://italic.units.it/api/v1/ecoregions-distribution/",
+        "Retrieving distribution in ecoregions...",
+        parse_function = parse_api_response,
+        request_method = "GET",
+        reorder_result = TRUE
+      )
+    
+    # convert all columns except the first one to binary values if result_data == "presence-absence"
+    if (result_data == "presence-absence") {
+      for (col in names(data)[-1]) {
+        data[[col]] <- ifelse(data[[col]] == "absent", 0, 1)
+      }
     }
-
-  return(data)
-}
+    
+    return(data)
+  }

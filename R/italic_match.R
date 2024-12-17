@@ -25,22 +25,22 @@
 #'     \item{name_score}{Matching score for the name part (0-100)}
 #'     \item{auth_score}{Matching score for the authority part (0-100)}
 #'   }
-#'  
+#'
 #' @examples
 #' \dontrun{
 #' # Simple name matching
 #' result <- italic_match("Cetraria islandica")
-#' 
-#' # Name matching with spelling mistakes 
+#'
+#' # Name matching with spelling mistakes
 #' result <- italic_match("Xantoria parietina")
 #'
 #' # Matching with uncommon marker
 #' result <- italic_match("Acarospora sulphurata varietas rubescens",
 #'                       var_marks = "varietas")
 #'
-#' # Matching multiple names 
+#' # Matching multiple names
 #' result <- c("Cetraria islandica", "Xanthoria parietina")
-#' }  
+#' }
 #' @importFrom jsonlite fromJSON
 #' @export
 italic_match <-
@@ -48,7 +48,6 @@ italic_match <-
            subsp_marks = c(),
            var_marks = c(),
            form_marks = c()) {
-    
     body <- list(
       'subsp-mark' = subsp_marks,
       'var-mark' = var_marks,
@@ -74,10 +73,9 @@ italic_match <-
 #' @return Parsed dataframe
 #' @noRd
 parse_match_response <- function(response) {
-
   data <- fromJSON(rawToChar(response$content))
   
-
+  
   input <- as.data.frame(data[1])
   match <- data[2]
   match <-

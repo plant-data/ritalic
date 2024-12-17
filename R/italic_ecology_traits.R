@@ -5,11 +5,11 @@
 #' and poleotolerance data for lichen taxa. Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names
-#'       using `italic_match()`. 
+#'       using `italic_match()`.
 #'       Example workflow:
 #'       names_matched <- italic_match(your_names)
 #'       data <- italic_ecology_traits(names_matched$accepted_name)
-#'       
+#'
 #' @param sp_names Character vector of accepted names
 #'
 #' @return A data frame with:
@@ -45,11 +45,16 @@
 #' \url{https://italic.units.it/?procedure=base&t=59&c=60#otherdata}
 #'
 #' @export
-italic_ecology_traits <-function(sp_names) {
-  
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/ecology-traits/", "Retrieving ecology and traits...", parse_function = parse_api_response,
-                        request_method = "GET",
-                        reorder_result = TRUE)
+italic_ecology_traits <- function(sp_names) {
+  data <-
+    call_api_base(
+      sp_names,
+      "https://italic.units.it/api/v1/ecology-traits/",
+      "Retrieving ecology and traits...",
+      parse_function = parse_api_response,
+      request_method = "GET",
+      reorder_result = TRUE
+    )
   return(data)
   
 }

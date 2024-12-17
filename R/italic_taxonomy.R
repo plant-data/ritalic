@@ -5,7 +5,7 @@
 #' Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names
-#'       using `italic_match()`. 
+#'       using `italic_match()`.
 #'       Example workflow:
 #'       names_matched <- italic_match(your_names)
 #'       taxonomy <- italic_taxonomy(names_matched$accepted_name)
@@ -28,12 +28,16 @@
 #' }
 #'
 #' @export
-italic_taxonomy <-function(sp_names) {
-  
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/taxonomy/", "Retrieving taxonomic classification...",
-                        parse_function = parse_api_response,
-                        request_method = "GET",
-                        reorder_result = TRUE)
+italic_taxonomy <- function(sp_names) {
+  data <-
+    call_api_base(
+      sp_names,
+      "https://italic.units.it/api/v1/taxonomy/",
+      "Retrieving taxonomic classification...",
+      parse_function = parse_api_response,
+      request_method = "GET",
+      reorder_result = TRUE
+    )
   return(data)
   
 }

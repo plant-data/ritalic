@@ -9,17 +9,21 @@
 #'       descriptions <- italic_taits_pa(names_matched$accepted_name)
 #' @param sp_names A vector containing scientific names of lichens.
 #' @return A dataframe containing the ecology of the lichen species passed as input.
-#' 
+#'
 #' @examples
 #'italic_traits_pa("Cetraria ericetorum Opiz")
-#' 
+#'
 #' @export
-italic_traits_pa <-function(sp_names) {
-  
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/traits-pa/", "Retrieving pa matrix of traits...",
-                        parse_function = parse_api_response,
-                        request_method = "GET",
-                        reorder_result = TRUE)
+italic_traits_pa <- function(sp_names) {
+  data <-
+    call_api_base(
+      sp_names,
+      "https://italic.units.it/api/v1/traits-pa/",
+      "Retrieving pa matrix of traits...",
+      parse_function = parse_api_response,
+      request_method = "GET",
+      reorder_result = TRUE
+    )
   return(data)
   
 }

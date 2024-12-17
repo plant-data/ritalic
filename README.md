@@ -45,13 +45,8 @@ library(ritalic)
 
 ## Usage
 
-Italic has a guide designed to help users: (function and
-examples)\[<https://italic.units.it/ritalic-basic/>\] or you can view at
-the vignette in r
-
-``` r
-vignette("ritalic")
-```
+Italic has a guide designed to help users: [function and
+examples](https://italic.units.it/ritalic-basic/)
 
 ## Citation
 

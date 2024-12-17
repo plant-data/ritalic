@@ -9,7 +9,8 @@ prepare_species_names <- function(sp_names) {
   }
   
   # remove invisible characters
-  invisible_char_regex <- "[\u00AD\u034F\u200B-\u200F\u2028-\u202E\u2060-\u206F\uFEFF]"
+  invisible_char_regex <-
+    "[\u00AD\u034F\u200B-\u200F\u2028-\u202E\u2060-\u206F\uFEFF]"
   sp_names <- gsub(invisible_char_regex, "", sp_names, perl = TRUE)
   
   # Replace NA with empty strings
@@ -31,20 +32,26 @@ prepare_species_names <- function(sp_names) {
 #'
 #' @return A dataframe with the same order and duplicates as the original vector.
 #' @noRd
-reconstruct_order <-  function(original_vector, result_dataframe, column_with_vector_values) {
-  
-
-  ordered_dataframe <- data.frame(matrix(nrow = length(original_vector), ncol = ncol(result_dataframe)))
-  colnames(ordered_dataframe) <- colnames(result_dataframe)
-  
-  for (i in 1:length(original_vector)) {
-    ordered_dataframe[i, ] <- result_dataframe[result_dataframe[, column_with_vector_values] == original_vector[i], ]
+reconstruct_order <-
+  function(original_vector,
+           result_dataframe,
+           column_with_vector_values) {
+    ordered_dataframe <-
+      data.frame(matrix(
+        nrow = length(original_vector),
+        ncol = ncol(result_dataframe)
+      ))
+    colnames(ordered_dataframe) <- colnames(result_dataframe)
+    
+    for (i in 1:length(original_vector)) {
+      ordered_dataframe[i,] <-
+        result_dataframe[result_dataframe[, column_with_vector_values] == original_vector[i],]
+    }
+    
+    ordered_dataframe <- colnames_to_snake_case(ordered_dataframe)
+    
+    return(ordered_dataframe)
   }
-  
-  ordered_dataframe <- colnames_to_snake_case(ordered_dataframe)
-  
-  return(ordered_dataframe)
-}
 
 #' Change columns of a dataframe to snake_case
 #' The json returned from Italic APIs generates a dataframe with white spaces (or dots) in column names
@@ -54,7 +61,6 @@ reconstruct_order <-  function(original_vector, result_dataframe, column_with_ve
 #' @noRd
 
 colnames_to_snake_case <- function(dataframe) {
-  
   colnames(dataframe) <- gsub("\\s+", " ", colnames(dataframe))
   colnames(dataframe) <- trimws(colnames(dataframe))
   

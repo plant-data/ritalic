@@ -42,14 +42,14 @@ returns detailed matching information including nomenclatural status and matchin
 # Simple name matching
 result <- italic_match("Cetraria islandica")
 
-# Name matching with spelling mistakes 
+# Name matching with spelling mistakes
 result <- italic_match("Xantoria parietina")
 
 # Matching with uncommon marker
 result <- italic_match("Acarospora sulphurata varietas rubescens",
                       var_marks = "varietas")
 
-# Matching multiple names 
+# Matching multiple names
 result <- c("Cetraria islandica", "Xanthoria parietina")
-}  
+}
 }

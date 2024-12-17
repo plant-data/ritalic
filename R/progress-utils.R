@@ -13,11 +13,13 @@ create_progress_bar <- function(total_items, title = "") {
     message(title)
   }
   
-  txtProgressBar(min = 0, 
-                 max = total_items, 
-                 style = 3,
-                 width = 50,
-                 char = "=")
+  txtProgressBar(
+    min = 0,
+    max = total_items,
+    style = 3,
+    width = 50,
+    char = "="
+  )
 }
 
 #' Update progress bar

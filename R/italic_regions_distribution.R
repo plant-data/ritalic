@@ -7,7 +7,7 @@
 #' Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names
-#'       using `italic_match()`. 
+#'       using `italic_match()`.
 #'       Example workflow:
 #'       names_matched <- italic_match(your_names)
 #'       distribution <- italic_distribution(names_matched$accepted_name)
@@ -49,9 +49,14 @@
 #'
 #' @export
 italic_regions_distribution <- function(sp_names) {
-  data <- call_api_base(sp_names, "https://italic.units.it/api/v1/regions-distribution/", "Retrieving distribution in regions...",
-                        parse_function = parse_api_response,
-                        request_method = "GET",
-                        reorder_result = TRUE)
+  data <-
+    call_api_base(
+      sp_names,
+      "https://italic.units.it/api/v1/regions-distribution/",
+      "Retrieving distribution in regions...",
+      parse_function = parse_api_response,
+      request_method = "GET",
+      reorder_result = TRUE
+    )
   return(data)
 }
