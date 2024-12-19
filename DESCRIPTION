@@ -8,9 +8,10 @@ Authors@R: c(
     person("Alice", "Musina", role = "aut")
            )
 Maintainer: Matteo Conti <matt.ciao@gmail.com>
-Description: A programmatic interface to the Web Service methods provided by the ITALIC (<https://italic.units.it>).
+Description: A programmatic interface to the Web Service methods provided by ITALIC (<https://italic.units.it>).
     ITALIC is a database of lichen data in Italy and bordering European countries. ritalic includes functions for retrieving information
-    on lichen scientific names, geographic distribution, ecological data, morpho-functional traits and identification keys. 
+    on lichen scientific names, geographic distribution, ecological data, morpho-functional traits and identification keys.
+    More information about the data is available at <https://italic.units.it/?procedure=base&t=59&c=60>.
     The API documentation is available at <https://italic.units.it/?procedure=api>.
 License: MIT + file LICENSE
 Encoding: UTF-8

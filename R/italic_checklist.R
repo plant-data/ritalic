@@ -1,4 +1,4 @@
-#' Get the list of species names in the Checklist of the Lichens of Italy
+#' Get the list of species names in the checklist of the lichens of Italy
 #'
 #' @description
 #' Retrieves the complete list of accepted scientific names from the Checklist of

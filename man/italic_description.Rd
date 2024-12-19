@@ -2,7 +2,7 @@
 % Please edit documentation in R/italic_description.R
 \name{italic_description}
 \alias{italic_description}
-\title{Get Descriptions of Lichen Taxa}
+\title{Get descriptions of lichen taxa}
 \usage{
 italic_description(sp_names)
 }

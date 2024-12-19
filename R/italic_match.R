@@ -1,4 +1,4 @@
-#' Match Lichen Scientific Names Against the Database of ITALIC
+#' Match lichen scientific names against the database of ITALIC
 #'
 #' @description
 #' Aligns scientific names of lichens against the Checklist of the Lichens of Italy available in ITALIC

@@ -2,7 +2,7 @@
 % Please edit documentation in R/italic_match.R
 \name{italic_match}
 \alias{italic_match}
-\title{Match Lichen Scientific Names Against the Database of ITALIC}
+\title{Match lichen scientific names against the database of ITALIC}
 \usage{
 italic_match(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }

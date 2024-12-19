@@ -1,4 +1,4 @@
-#' Get Descriptions of Lichen Taxa
+#' Get descriptions of lichen taxa
 #'
 #' @description
 #' Retrieves the morphological description and dditional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy.

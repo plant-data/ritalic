@@ -2,7 +2,7 @@
 % Please edit documentation in R/italic_checklist.R
 \name{italic_checklist}
 \alias{italic_checklist}
-\title{Get the list of species names in the Checklist of the Lichens of Italy}
+\title{Get the list of species names in the checklist of the lichens of Italy}
 \usage{
 italic_checklist(
   genus = NULL,
