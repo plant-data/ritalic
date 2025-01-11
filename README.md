@@ -10,8 +10,6 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![cran
 checks](https://badges.cranchecks.info/worst/ritalic.svg)](https://cran.r-project.org/web/checks/check_results_ritalic.html)
-[![rstudio mirror
-downloads](https://cranlogs.r-pkg.org/badges/ritalic)](https://github.com/r-hub/cranlogs.app)
 [![cran
 version](https://www.r-pkg.org/badges/version/ritalic)](https://cran.r-project.org/package=ritalic)
 <!-- badges: end -->
