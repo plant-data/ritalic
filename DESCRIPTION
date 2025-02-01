@@ -29,4 +29,6 @@ Depends:
 Imports:
   httr,
   jsonlite,
-  utils
+  utils,
+  sf,
+  ggplot2
