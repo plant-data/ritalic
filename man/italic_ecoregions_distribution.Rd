@@ -51,6 +51,8 @@ edist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz", "presence-ab
 
 }
 \references{
-ITALIC - The Information System on Italian Lichens: ecoregions distribution
+For more information about Italian ecoregions see ITALIC ecoregions distribution
 \url{https://italic.units.it/?procedure=base&t=59&c=60#commonness}
+and the scientific publication describing the ecoregions
+\url{https://www.mdpi.com/1424-2818/12/8/294}
 }

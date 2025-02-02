@@ -1,16 +1,45 @@
-#' Create distribution map of a lichen taxa
-#' TODO solve CHECK_PFPROJ: non-valid_pfProj (pfProj = 1.000000)
+#' Create distribution map of a lichen taxon
+#' 
 #' @description
-#' TODO
-#' @param sp_name A lichen scientific names 
+#' Creates a distribution map for a given lichen species based on its commonness/rarity
+#' status across Italian ecoregions and presence/absence across administrative regions. 
+#' The map visually represents the data obtained from
+#' `italic_ecoregions_distribution()` and `italic_regions_distribution()`.
+#' 
+#' @note Before using this function, ensure that you have obtained the accepted name of the
+#'       lichen using `italic_match()`.
+#'       Example workflow:
+#'       \preformatted{
+#'       name_matched <- italic_match("Cetraria islandica")
+#'       map <- italic_distribution_map(name_matched$accepted_name)
+#'       }
+#'       
+#' @param sp_name Character string representing the accepted scientific name of a lichen
+#'                species.
 #'
-#' @return A ggplot map
+#' @return A `ggplot` object representing the distribution map. The map displays Italian
+#'         areas colored according to the commonness/rarity status of the specified
+#'         lichen species.
+#'         
+#' @details
+#' The function internally utilizes `italic_ecoregions_distribution()` and `italic_regions_distribution()` to retrieve the commonness/rarity
+#' status across Italian ecoregions and presence/absence across administrative regions data for the provided species. 
+#' It then joins this data with a geospatial dataset of Italian regions and ecoregions (included in the package) to generate the map.
+#' 
+#' Commonness/rarity categories are visualized with a color scale, where each color
+#' corresponds to a different level of commonness/rarity ("extremely common", "very common",
+#' "common", "rather common", "rather rare", "rare", "very rare", "extremely rare", "absent").
 #'
 #' @examples
 #' \dontrun{
 #' italic_distribution_map("Flavoparmelia caperata (L.) Hale")
 #' }
-#' @importFrom ggplot2 ggplot
+#' 
+#' @references
+#' For more information about Italian ecoregions see ITALIC ecoregions distribution
+#' \url{https://italic.units.it/?procedure=base&t=59&c=60#commonness}
+#' and the scientific publication describing the ecoregions
+#' \url{https://www.mdpi.com/1424-2818/12/8/294}
 #' @importFrom sf read_sf
 #' @export
 italic_distribution_map <- function(sp_name) {
