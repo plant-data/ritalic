@@ -33,6 +33,7 @@
 #' @examples
 #' \dontrun{
 #' italic_distribution_map("Flavoparmelia caperata (L.) Hale")
+#' italic_distribution_map("Anisomeridium biforme (Schaer.) R.C. Harris")
 #' }
 #' 
 #' @references
@@ -42,14 +43,17 @@
 #' \url{https://www.mdpi.com/1424-2818/12/8/294}
 #' @importFrom sf read_sf
 #' @export
-italic_distribution_map <- function(sp_name) {
+italic_distribution_map <- function(sp_name, plot_map=TRUE) {
   
   geopackage_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
   
-  data <- italic_ecoregions_distribution(sp_name)
-  ecoregions <- suppressWarnings(sf::read_sf(geopackage_path))
-
-  plot_rarity_map(ecoregions, data, sp_name)
+  ecoregions_distribution <- italic_ecoregions_distribution(sp_name)
+  regions_distribution <- italic_regions_distribution(sp_name)
+  base_map <- suppressWarnings(sf::read_sf(geopackage_path))
+  
+  
+  plot_rarity_map(base_map, ecoregions_distribution, regions_distribution, sp_name, plot_map)
+  
 }
 
 
@@ -57,7 +61,7 @@ italic_distribution_map <- function(sp_name) {
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_manual theme_minimal ggtitle theme element_text element_rect element_blank
 #' @importFrom stats setNames
 #' @noRd
-plot_rarity_map <- function(ecoregions, data, title_text) {
+plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribution, title_text, plot_map) {
   
   # version using tidyr
   # lichen_data_long <- data %>%
@@ -68,15 +72,25 @@ plot_rarity_map <- function(ecoregions, data, title_text) {
   #   )
   
   # test alternative without external libraries
-  lichen_data_long <- pivot_longer_lichen_distribution(data)
+  ecoregions_distribution_long <- pivot_longer_ecoregions(ecoregions_distribution)
+  regions_distribution_long <- pivot_longer_regions(regions_distribution)
   
   
   # 2 join the reshaped data to the shapefile:
   ecoregions2 <-
-    merge(ecoregions,
-          lichen_data_long,
-          by = "belt",
+    merge(base_map,
+          ecoregions_distribution_long,
+          by = "ecoregion",
           all.x = TRUE)
+  
+  ecoregions2 <-
+    merge(ecoregions2,
+          regions_distribution_long,
+          by = "region",
+          all.x = TRUE)
+  
+  ecoregions2$rarity[ecoregions2$presence == 0] <- "absent"
+  
   
   # 3 create the blue color scale of italic:
   blue_scale <- c(
@@ -110,6 +124,10 @@ plot_rarity_map <- function(ecoregions, data, title_text) {
   ecoregions2$rarity <-
     factor(ecoregions2$rarity, levels = names(rarity_colors))
   rarity <- ecoregions2$rarity
+  
+  if (!plot_map) {
+    return(ecoregions2)
+  }
   
   ggplot() +
     geom_sf(
@@ -150,6 +168,40 @@ pivot_longer_lichen_distribution <- function(data) {
     scientific_name = rep(data$scientific_name, length(value_columns)),
     belt = rep(value_columns, each = nrow(data)),
     rarity = unlist(data[value_columns])
+  )
+  
+  result <- result[order(result$scientific_name),]
+  rownames(result) <- NULL
+  
+  return(result)
+}
+
+#' utility function that replaces tidyr pivot_longer for ecoregions
+#' @noRd
+pivot_longer_ecoregions <- function(data) {
+  value_columns <- setdiff(colnames(data), "scientific_name")
+  
+  result <- data.frame(
+    scientific_name = rep(data$scientific_name, length(value_columns)),
+    ecoregion = rep(value_columns, each = nrow(data)),
+    rarity = unlist(data[value_columns])
+  )
+  
+  result <- result[order(result$scientific_name),]
+  rownames(result) <- NULL
+  
+  return(result)
+}
+
+#' utility function that replaces tidyr pivot_longer for regions
+#' @noRd
+pivot_longer_regions <- function(data) {
+  value_columns <- setdiff(colnames(data), "scientific_name")
+  
+  result <- data.frame(
+    scientific_name = rep(data$scientific_name, length(value_columns)),
+    region = rep(value_columns, each = nrow(data)),
+    presence = unlist(data[value_columns])
   )
   
   result <- result[order(result$scientific_name),]
