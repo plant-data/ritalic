@@ -8,12 +8,11 @@
 #'
 #' @format A GeoPackage file (`.gpkg`) with 6 fields (attributes).
 #' \describe{
-#'   \item{OBJECTID}{Number. The internal id of the polygon.}
-#'   \item{ogu}{Number. The code for the operational geographic unit.}
-#'   \item{fascia}{Number. The code of the ecoregion}
-#'   \item{ecoregion}{Character. The name of the ecoregion}
-#'   \item{region}{Character. The name of the administrative region}
-#'   \item{geom}{MultyPolygon. The polygon shape}
+#'   \item{OBJECTID}{The internal id of the polygon.}
+#'   \item{ogu}{The code for the operational geographic unit.}
+#'   \item{ecoregion}{The name of the ecoregion}
+#'   \item{region}{The name of the administrative region}
+#'   \item{geom}{The polygon shape}
 #' }
 #' Geometry type: MultiPolygon
 #' Coordinate Reference System: WGS 84 (EPSG:4326)

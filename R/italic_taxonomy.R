@@ -7,8 +7,10 @@
 #' @note Before using this function with a list of names, first obtain their accepted names
 #'       using `italic_match()`.
 #'       Example workflow:
+#'       \preformatted{
 #'       names_matched <- italic_match(your_names)
 #'       taxonomy <- italic_taxonomy(names_matched$accepted_name)
+#'       }
 #'
 #' @param sp_names Character vector of accepted names
 #'

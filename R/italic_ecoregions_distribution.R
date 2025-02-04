@@ -7,8 +7,10 @@
 #' @note Before using this function with a list of names, first obtain their accepted names
 #'       using `italic_match()`.
 #'       Example workflow:
+#'       \preformatted{
 #'       names_matched <- italic_match(your_names)
 #'       ecoregions_distribution <- italic_ecoregions_distribution(names_matched$accepted_name)
+#'       }
 #'
 #' @param sp_names Character vector of accepted names
 #' @param result_data Character string specifying the output format: "rarity" (default) returns

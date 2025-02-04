@@ -5,8 +5,10 @@
 #' @note Before using this function with a list of names, first obtain their accepted names
 #'       using `italic_match()`.
 #'       Example workflow:
+#'       \preformatted{
 #'       names_matched <- italic_match(your_names)
 #'       descriptions <- italic_taits_pa(names_matched$accepted_name)
+#'       }
 #' @param sp_names A vector containing scientific names of lichens.
 #' @return A dataframe containing the ecology of the lichen species passed as input.
 #'
