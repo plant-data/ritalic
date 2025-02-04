@@ -77,20 +77,20 @@ plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribut
   regions_distribution_long <- pivot_longer_regions(regions_distribution)
   
   
-  # 2 join the reshaped data to the shapefile:
-  ecoregions2 <-
+  # join the reshaped data to the shapefile:
+  base_map <-
     merge(base_map,
           ecoregions_distribution_long,
           by = "ecoregion",
           all.x = TRUE)
   
-  ecoregions2 <-
-    merge(ecoregions2,
+  base_map <-
+    merge(base_map,
           regions_distribution_long,
           by = "region",
           all.x = TRUE)
   
-  ecoregions2$rarity[ecoregions2$presence == 0] <- "absent"
+  base_map$rarity[base_map$presence == 0] <- "absent"
   
   
   # 3 create the blue color scale of italic:
@@ -122,17 +122,17 @@ plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribut
   )
   
   # hacky way to display all rarity levels in the legend
-  ecoregions2$rarity <-
-    factor(ecoregions2$rarity, levels = names(rarity_colors))
-  rarity <- ecoregions2$rarity
+  base_map$rarity <-
+    factor(base_map$rarity, levels = names(rarity_colors))
+  rarity <- base_map$rarity
   
   if (!plot_map) {
-    return(ecoregions2)
+    return(base_map)
   }
   
   ggplot() +
     geom_sf(
-      data = ecoregions2,
+      data = base_map,
       aes(fill = rarity),
       linewidth = 0.0001,
       show.legend = TRUE
