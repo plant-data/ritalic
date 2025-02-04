@@ -9,11 +9,10 @@
 #' @format A GeoPackage file (`.gpkg`) with 6 fields (attributes).
 #' \describe{
 #'   \item{OBJECTID}{Number. The internal id of the polygon.}
-#'   \item{cat}{Number. The internal category number of the polygon.}
 #'   \item{ogu}{Number. The code for the operational geographic unit.}
 #'   \item{fascia}{Number. The code of the ecoregion}
-#'   \item{belt}{Character. The name of the ecoregion}
-
+#'   \item{ecoregion}{Character. The name of the ecoregion}
+#'   \item{region}{Character. The name of the administrative region}
 #'   \item{geom}{MultyPolygon. The polygon shape}
 #' }
 #' Geometry type: MultiPolygon
