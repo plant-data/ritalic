@@ -9,11 +9,13 @@ italic_distribution_map(sp_name, plot_map = TRUE)
 \arguments{
 \item{sp_name}{Character string representing the accepted scientific name of a lichen
 species.}
+
+\item{plot_map}{plot_map (Optional) Logical. If \bold{\code{TRUE}} (default), plots the map. If \code{FALSE}, returns the \code{sf} object.}
 }
 \value{
-A \code{ggplot} object representing the distribution map. The map displays Italian
-areas colored according to the commonness/rarity status of the specified
-lichen species.
+If \code{plot_map = TRUE} (default), a \code{ggplot} object representing the distribution map,
+where Italian areas are colored according to the species' commonness/rarity.
+If \code{plot_map = FALSE}, an \code{sf} object containing the spatial data used to generate the map.
 }
 \description{
 Creates a distribution map for a given lichen species based on its commonness/rarity
@@ -42,6 +44,7 @@ Example workflow:
 \examples{
 \dontrun{
 italic_distribution_map("Flavoparmelia caperata (L.) Hale")
+italic_distribution_map("Anisomeridium biforme (Schaer.) R.C. Harris")
 }
 
 }
