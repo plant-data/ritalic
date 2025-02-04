@@ -16,10 +16,11 @@
 #'       
 #' @param sp_name Character string representing the accepted scientific name of a lichen
 #'                species.
+#' @param plot_map (Optional) If true the function return the map plotted else returns a sf object. It defaults to TRUE
 #'
 #' @return A `ggplot` object representing the distribution map. The map displays Italian
-#'         areas colored according to the commonness/rarity status of the specified
-#'         lichen species.
+#'         areas colored according to the commonness/rarity status of the specified. If plot_map = FALSE returns the sf object
+#' @param  lichen species.
 #'         
 #' @details
 #' The function internally utilizes `italic_ecoregions_distribution()` and `italic_regions_distribution()` to retrieve the commonness/rarity
