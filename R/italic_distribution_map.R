@@ -160,23 +160,6 @@ plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribut
     )
 }
 
-#' utility function that replaces tidyr pivot_longer for this use case
-#' @noRd
-pivot_longer_lichen_distribution <- function(data) {
-  value_columns <- setdiff(colnames(data), "scientific_name")
-  
-  result <- data.frame(
-    scientific_name = rep(data$scientific_name, length(value_columns)),
-    belt = rep(value_columns, each = nrow(data)),
-    rarity = unlist(data[value_columns])
-  )
-  
-  result <- result[order(result$scientific_name),]
-  rownames(result) <- NULL
-  
-  return(result)
-}
-
 #' utility function that replaces tidyr pivot_longer for ecoregions
 #' @noRd
 pivot_longer_ecoregions <- function(data) {
