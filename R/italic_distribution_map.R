@@ -16,12 +16,8 @@
 #'       
 #' @param sp_name Character string representing the accepted scientific name of a lichen
 #'                species.
-#' @param plot_map plot_map (Optional) Logical. If \bold{`TRUE`} (default), plots the map. If `FALSE`, returns the `sf` object.
-#' 
-#' @return If `plot_map = TRUE` (default), a `ggplot` object representing the distribution map,
-#'         where Italian areas are colored according to the species' commonness/rarity.
-#'         If `plot_map = FALSE`, an `sf` object containing the spatial data used to generate the map.
-
+#'                
+#' @return a `ggplot` object representing the distribution map where Italian areas are colored according to the species' commonness/rarity.
 #'         
 #' @details
 #' The function internally utilizes `italic_ecoregions_distribution()` and `italic_regions_distribution()` to retrieve the commonness/rarity
@@ -51,7 +47,7 @@ italic_distribution_map <- function(sp_name, plot_map=TRUE) {
   
   ecoregions_distribution <- italic_ecoregions_distribution(sp_name)
   regions_distribution <- italic_regions_distribution(sp_name)
-  base_map <- suppressWarnings(sf::read_sf(geopackage_path))
+  base_map <- suppressMessages(suppressWarnings(sf::read_sf(geopackage_path)))
   
   
   plot_rarity_map(base_map, ecoregions_distribution, regions_distribution, sp_name, plot_map)
@@ -140,7 +136,7 @@ plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribut
     ) +
     scale_fill_manual(values = rarity_colors,
                       drop = FALSE,
-                      # This is important to show all levels in the legend
+                      # this is important to show all levels in the legend
                       name = "Rarity") +
     theme_minimal() +
     ggtitle(title_text) +
