@@ -41,16 +41,16 @@
 #' \url{https://www.mdpi.com/1424-2818/12/8/294}
 #' @importFrom sf read_sf
 #' @export
-italic_distribution_map <- function(sp_name, plot_map=TRUE) {
+italic_distribution_map <- function(sp_name) {
   
   geopackage_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
   
   ecoregions_distribution <- italic_ecoregions_distribution(sp_name)
   regions_distribution <- italic_regions_distribution(sp_name)
-  base_map <- suppressMessages(suppressWarnings(sf::read_sf(geopackage_path)))
+  base_map <- sf::read_sf(geopackage_path)
   
   
-  plot_rarity_map(base_map, ecoregions_distribution, regions_distribution, sp_name, plot_map)
+  plot_rarity_map(base_map, ecoregions_distribution, regions_distribution, sp_name, plot_map=TRUE)
   
 }
 
@@ -155,6 +155,7 @@ plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribut
       panel.grid.major = element_blank(),
       panel.grid.minor = element_blank()
     )
+
 }
 
 #' utility function that replaces tidyr pivot_longer for ecoregions

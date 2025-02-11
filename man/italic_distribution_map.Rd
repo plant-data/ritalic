@@ -4,7 +4,7 @@
 \alias{italic_distribution_map}
 \title{Create distribution map of a lichen taxon}
 \usage{
-italic_distribution_map(sp_name, plot_map = TRUE)
+italic_distribution_map(sp_name)
 }
 \arguments{
 \item{sp_name}{Character string representing the accepted scientific name of a lichen
