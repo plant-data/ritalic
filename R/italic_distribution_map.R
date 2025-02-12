@@ -43,14 +43,15 @@
 #' @export
 italic_distribution_map <- function(sp_name) {
   
-  geopackage_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
+  ecoregions_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
+  regions_path <- system.file("extdata", "regions.gpkg", package = "ritalic")
   
   ecoregions_distribution <- italic_ecoregions_distribution(sp_name)
   regions_distribution <- italic_regions_distribution(sp_name)
-  base_map <- sf::read_sf(geopackage_path)
+  base_map <- sf::read_sf(ecoregions_path)
+  regions_map <- sf::read_sf(regions_path)
   
-  
-  plot_rarity_map(base_map, ecoregions_distribution, regions_distribution, sp_name, plot_map=TRUE)
+  plot_rarity_map(base_map, regions_map, ecoregions_distribution, regions_distribution, sp_name, plot_map=TRUE)
   
 }
 
@@ -59,7 +60,7 @@ italic_distribution_map <- function(sp_name) {
 #' @importFrom ggplot2 ggplot geom_sf aes scale_fill_manual theme_minimal ggtitle theme element_text element_rect element_blank
 #' @importFrom stats setNames
 #' @noRd
-plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribution, title_text, plot_map) {
+plot_rarity_map <- function(base_map, regions_map, ecoregions_distribution, regions_distribution, title_text, plot_map) {
   
   # version using tidyr
   # lichen_data_long <- data %>%
@@ -131,9 +132,10 @@ plot_rarity_map <- function(base_map, ecoregions_distribution, regions_distribut
     geom_sf(
       data = base_map,
       aes(fill = rarity),
-      linewidth = 0.0001,
+      linewidth = 0,
       show.legend = TRUE
     ) +
+    geom_sf(data = regions_map, fill = NA, color = "black", linewidth = 0.1) + 
     scale_fill_manual(values = rarity_colors,
                       drop = FALSE,
                       # this is important to show all levels in the legend
