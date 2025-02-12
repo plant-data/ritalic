@@ -57,7 +57,7 @@ library(ritalic)
 ## Usage
 
 Italic has a guide designed to help users: [function and
-examples](https://italic.units.it/ritalic-basic/)
+examples](https://italic.units.it/ritalic/)
 
 ## Citation
 
