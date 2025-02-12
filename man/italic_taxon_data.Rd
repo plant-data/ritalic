@@ -20,8 +20,10 @@ Only accepts names that exist in the database of ITALIC.
 Before using this function with a list of names, first obtain their accepted names
 using \code{italic_match()}.
 Example workflow:
-names_matched <- italic_match(your_names)
-descriptions <- italic_taxon_data(names_matched$accepted_name)
+\preformatted{
+      names_matched <- italic_match(your_names)
+      descriptions <- italic_taxon_data(names_matched$accepted_name)
+      }
 }
 \examples{
 italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora cenisia Ach."))

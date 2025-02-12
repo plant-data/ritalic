@@ -41,8 +41,10 @@ and poleotolerance data for lichen taxa. Only accepts names that exist in the da
 Before using this function with a list of names, first obtain their accepted names
 using \code{italic_match()}.
 Example workflow:
-names_matched <- italic_match(your_names)
-data <- italic_ecology_traits(names_matched$accepted_name)
+\preformatted{
+      names_matched <- italic_match(your_names)
+      data <- italic_ecology_traits(names_matched$accepted_name)
+      }
 }
 \examples{
 \dontrun{

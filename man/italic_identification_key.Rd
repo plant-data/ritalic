@@ -22,8 +22,10 @@ the KeyMaker system of ITALIC. Only accepts names that exist in the database of 
 Before using this function with a list of names, first obtain their accepted names
 using \code{italic_match()}.
 Example workflow:
-names_matched <- italic_match(your_names)
-key_url <- italic_identification_key(names_matched$accepted_name)
+\preformatted{
+      names_matched <- italic_match(your_names)
+      key_url <- italic_identification_key(names_matched$accepted_name)
+      }
 }
 \examples{
 \dontrun{
