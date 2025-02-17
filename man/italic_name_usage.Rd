@@ -12,14 +12,23 @@ italic_name_usage(sp_names)
 \value{
 A data frame with columns:
 \describe{
-\item{scientific_name}{Scientific name}
-\item{description}{Morphological description}
-\item{notes}{Additional taxonomic or ecological information}
+\item{input_name}{The original name provided as input}
+\item{scientific_name_id}{Unique identifier of ITALIC for the scientific name}
+\item{index_fungorum_id}{Corresponding Index Fungorum identifier}
+\item{scientific_name_full}{Complete scientific name including authority}
+\item{scientific_name}{Scientific name without authority}
+\item{authorship}{Authority information for the name}
+\item{notes}{Additional notes about the taxon, if any}
+\item{rank}{Taxonomic rank of the name}
+\item{status}{Taxonomic status ('accepted', 'synonym' or 'basionym')}
+\item{related_accepted_name_id}{ID of the currently accepted name related to the input name in ITALIC}
+\item{related_accepted_name}{Full accepted name}
+\item{related_taxon_id}{ID of the related taxon in ITALIC}
 }
 }
 \description{
-Retrieves the morphological description and dditional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy.
-Only accepts names that exist in the database of ITALIC.
+Retrieves information for given scientific name, including name id,
+taxonomic status, Index Fungorum id and related taxon id used in ITALIC.
 }
 \note{
 Before using this function with a list of names, first obtain their matched names or
