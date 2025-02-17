@@ -12,7 +12,7 @@ italic_regions_distribution(sp_names)
 \value{
 A data frame with columns:
 \describe{
-\item{scientific_name}{Scientific name}
+\item{scientific_name}{The scientific name provided as input}
 \item{abruzzo}{Presence (1) or absence (0) in Abruzzo}
 \item{basilicata}{Presence (1) or absence (0) in Basilicata}
 \item{calabria}{Presence (1) or absence (0) in Calabria}

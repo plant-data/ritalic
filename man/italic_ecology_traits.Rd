@@ -12,7 +12,7 @@ italic_ecology_traits(sp_names)
 \value{
 A data frame with:
 \describe{
-\item{scientific_name}{Scientific name}
+\item{scientific_name}{The scientific name provided as input}
 \item{substrata}{Substrate}
 \item{photobiont}{Type of photosynthetic partner}
 \item{growth_form}{Growth form}

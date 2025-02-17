@@ -18,7 +18,7 @@
 #'
 #' @return A data frame with occurrence records. Column names follow the Darwin Core standard, with the additional column substratum, which is particularly relevant for lichens. For simple output:
 #'   \describe{
-#'     \item{scientificName}{Full scientific name}
+#'     \item{scientificName}{The scientific name provided as input}
 #'     \item{decimalLatitude}{Latitude in decimal degrees}
 #'     \item{decimalLongitude}{Longitude in decimal degrees}
 #'     \item{coordinatesUncertaintyInMeters}{Spatial uncertainty of the coordinates}

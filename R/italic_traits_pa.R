@@ -10,7 +10,7 @@
 #'       descriptions <- italic_taits_pa(names_matched$accepted_name)
 #'       }
 #' @param sp_names A vector containing scientific names of lichens.
-#' @return A dataframe containing the ecology of the lichen species passed as input.
+#' @return A dataframe containing a series of traits for the lichen species passed as input.
 #'
 #' @examples
 #'italic_traits_pa("Cetraria ericetorum Opiz")

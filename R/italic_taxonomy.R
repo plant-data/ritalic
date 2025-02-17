@@ -16,7 +16,7 @@
 #'
 #' @return A data frame with:
 #'   \describe{
-#'     \item{scientific_name}{Scientific name}
+#'     \item{scientific_name}{The scientific name provided as input}
 #'     \item{phylum}{Phylum}
 #'     \item{class}{Class}
 #'     \item{order}{Order}

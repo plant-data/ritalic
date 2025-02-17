@@ -16,7 +16,7 @@
 #'
 #' @return A data frame with columns:
 #'   \describe{
-#'     \item{scientific_name}{Scientific name}
+#'     \item{scientific_name}{The scientific name provided as input}
 #'     \item{description}{Morphological description}
 #'     \item{notes}{Additional taxonomic or ecological information}
 #'   }

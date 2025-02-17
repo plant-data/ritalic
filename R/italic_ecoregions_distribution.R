@@ -18,7 +18,7 @@
 #'
 #' @return A data frame with:
 #'   \describe{
-#'     \item{scientific_name}{Scientific name with authorities}
+#'     \item{scientific_name}{The scientific name provided as input}
 #'     \item{alpine}{Status in alpine belt (extremely common to absent)}
 #'     \item{subalpine}{Status in subalpine belt (extremely common to absent)}
 #'     \item{oromediterranean}{Status in oromediterranean belt (extremely common to absent)}

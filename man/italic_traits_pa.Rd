@@ -10,7 +10,7 @@ italic_traits_pa(sp_names)
 \item{sp_names}{A vector containing scientific names of lichens.}
 }
 \value{
-A dataframe containing the ecology of the lichen species passed as input.
+A dataframe containing a series of traits for the lichen species passed as input.
 }
 \description{
 This function returns the functional traits of the lichen species passed as input.

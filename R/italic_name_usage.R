@@ -1,7 +1,7 @@
 #' Get details for specific names
 #'
 #' @description
-#' Retrieves information for given scientific name, including name id,
+#' Retrieves information for a scientific name, including name id,
 #' taxonomic status, Index Fungorum id and related taxon id used in ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their matched names or 
@@ -14,11 +14,11 @@
 #'       accepted_name_data <- italic_name_usage(names_matched$accepted_name)
 #'       }
 #'
-#' @param sp_names Character vector of accepted names
+#' @param sp_names Character vector of accepted names or matched names
 #'
 #' @return A data frame with columns:
 #'   \describe{
-#'     \item{input_name}{The original name provided as input}
+#'     \item{input_name}{The scientific name provided as input}
 #'     \item{scientific_name_id}{Unique identifier of ITALIC for the scientific name}
 #'     \item{index_fungorum_id}{Corresponding Index Fungorum identifier}
 #'     \item{scientific_name_full}{Complete scientific name including authority}
