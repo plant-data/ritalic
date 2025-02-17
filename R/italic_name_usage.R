@@ -2,7 +2,7 @@
 #'
 #' @description
 #' Retrieves information for given scientific name, including name id,
-#'taxonomic status, Index Fungorum id and related taxon id used in ITALIC.
+#' taxonomic status, Index Fungorum id and related taxon id used in ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their matched names or 
 #'       accepted names using `italic_match()`.
