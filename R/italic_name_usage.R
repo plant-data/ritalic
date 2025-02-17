@@ -34,7 +34,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' italic_name_usage("Cetraria islandica (L.) Ach. subsp. islandica")
+#' italic_name_usage(c("Cetraria islandica (L.) Ach. subsp. islandica", "Secoliga annexa Arnold"))
 #' }
 #'
 #'
