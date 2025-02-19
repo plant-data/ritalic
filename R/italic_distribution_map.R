@@ -133,6 +133,7 @@ plot_rarity_map <- function(base_map, regions_map, ecoregions_distribution, regi
       data = base_map,
       aes(fill = rarity),
       linewidth = 0,
+      color = "white",
       show.legend = TRUE
     ) +
     geom_sf(data = regions_map, fill = NA, color = "black", linewidth = 0.1) + 
