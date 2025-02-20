@@ -5,7 +5,12 @@ Authors@R: c(
     person("Matteo", "Conti", email="matt.ciao@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0003-4917-2639")),
     person("Luana", "Francesconi", role = "aut"),
-    person("Alice", "Musina", role = "aut")
+    person("Alice", "Musina", role = "aut"),
+    person("Luca", "Di Nuzzo", role = "aut"),
+    person("Gabriele", "Gheza", role = "aut"),
+    person("Juri", "Nascimbene", role = "aut"),
+    person("Pier Luigi", "Nimis", role = "aut"),
+    person("Stefano", "Martellos", role = "aut")
            )
 Maintainer: Matteo Conti <matt.ciao@gmail.com>
 Description: A programmatic interface to the Web Service methods provided by ITALIC (<https://italic.units.it>).
