@@ -132,11 +132,11 @@ plot_rarity_map <- function(base_map, regions_map, ecoregions_distribution, regi
     geom_sf(
       data = base_map,
       aes(fill = rarity),
-      linewidth = 00000000000000000000.1,
+      lwd = 00000000000000000000.1,
       color = NA,
       show.legend = TRUE
     ) +
-    geom_sf(data = regions_map, fill = NA, color = "black", linewidth = 0.1) + 
+    geom_sf(data = regions_map, fill = NA, color = "black", lwd = 0.1) + 
     scale_fill_manual(values = rarity_colors,
                       drop = FALSE,
                       # this is important to show all levels in the legend
