@@ -43,6 +43,9 @@
 #' @export
 italic_distribution_map <- function(sp_name) {
   
+  if (!is.atomic(sp_name) || length(sp_name) != 1){
+    stop("Only one name allowed")
+  }
   ecoregions_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
   regions_path <- system.file("extdata", "regions.gpkg", package = "ritalic")
   
@@ -70,10 +73,15 @@ plot_rarity_map <- function(base_map, regions_map, ecoregions_distribution, regi
   #     values_to = "rarity"
   #   )
   
+  
   # test alternative without external libraries
   ecoregions_distribution_long <- pivot_longer_ecoregions(ecoregions_distribution)
   regions_distribution_long <- pivot_longer_regions(regions_distribution)
-  
+  if (is.na(ecoregions_distribution_long$rarity[1])) {
+    ecoregions_distribution_long$rarity = 0
+    regions_distribution_long$presence = 0
+    warning("Name not in ITALIC")
+  }
   
   # join the reshaped data to the shapefile:
   base_map <-
