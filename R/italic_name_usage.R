@@ -45,7 +45,7 @@ italic_name_usage <- function(sp_names) {
       sp_names,
       api_endpoint = "https://italic.units.it/api/v1/name-usage/",
       loading_text = "Retrieving name data...",
-      parse_function = parse_match_response,
+      parse_function = parse_name_usage_response,
       request_method = "GET",
       reorder_result = TRUE
     )
@@ -57,7 +57,7 @@ italic_name_usage <- function(sp_names) {
 #' @param response API response object
 #' @return Parsed dataframe
 #' @noRd
-parse_match_response <- function(response) {
+parse_name_usage_response <- function(response) {
   data <- fromJSON(rawToChar(response$content))
   
   
