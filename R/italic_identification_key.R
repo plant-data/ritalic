@@ -63,7 +63,7 @@ italic_identification_key <- function(sp_names) {
       paste(
         'https://italic.units.it/key-maker/',
         unique_id,
-        '/nodes/1/species',
+        '/nodes/1/interactive',
         sep = ''
       )
     )
