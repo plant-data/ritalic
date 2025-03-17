@@ -8,6 +8,7 @@ Authors@R: c(
     person("Alice", "Musina", role = "aut"),
     person("Luca", "Di Nuzzo", role = "aut"),
     person("Gabriele", "Gheza", role = "aut"),
+    person("Chiara", "Pistocchi", role = "aut"),
     person("Juri", "Nascimbene", role = "aut"),
     person("Pier Luigi", "Nimis", role = "aut"),
     person("Stefano", "Martellos", role = "aut")
