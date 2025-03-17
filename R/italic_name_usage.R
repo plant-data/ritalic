@@ -38,7 +38,6 @@
 #' }
 #'
 #'
-#' @noRd
 italic_name_usage <- function(sp_names) {
   data <-
     call_api_base(
