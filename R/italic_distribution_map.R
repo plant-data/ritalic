@@ -47,7 +47,7 @@ italic_distribution_map <- function(sp_name, plot_map=TRUE) {
   if (!is.atomic(sp_name) || length(sp_name) != 1){
     stop("Only one name allowed")
   }
-  ecoregions_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
+  ecoregions_path <- system.file("extdata", "simple_shapefile.gpkg", package = "ritalic")
   regions_path <- system.file("extdata", "regions.gpkg", package = "ritalic")
   
   ecoregions_distribution <- italic_ecoregions_distribution(sp_name)
