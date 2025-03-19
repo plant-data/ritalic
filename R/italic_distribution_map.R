@@ -16,8 +16,9 @@
 #'       
 #' @param sp_name Character string representing the accepted scientific name of a lichen
 #'                species.
+#' @param plot_map If TRUE (default) the function returns a ggplot object, if FALSE returns a sf object 
 #'                
-#' @return a `ggplot` object representing the distribution map where Italian areas are colored according to the species' commonness/rarity.
+#' @return if plot_map = TRUE (default) a `ggplot` object representing the distribution map where Italian areas are colored according to the species' commonness/rarity. If plot_map = FALSE the sf object used to create the plot
 #'         
 #' @details
 #' The function internally utilizes `italic_ecoregions_distribution()` and `italic_regions_distribution()` to retrieve the commonness/rarity
@@ -41,7 +42,7 @@
 #' \url{https://www.mdpi.com/1424-2818/12/8/294}
 #' @importFrom sf read_sf
 #' @export
-italic_distribution_map <- function(sp_name) {
+italic_distribution_map <- function(sp_name, plot_map=TRUE) {
   
   if (!is.atomic(sp_name) || length(sp_name) != 1){
     stop("Only one name allowed")
@@ -54,7 +55,7 @@ italic_distribution_map <- function(sp_name) {
   base_map <- sf::read_sf(ecoregions_path)
   regions_map <- sf::read_sf(regions_path)
   
-  plot_rarity_map(base_map, regions_map, ecoregions_distribution, regions_distribution, sp_name, plot_map=TRUE)
+  plot_rarity_map(base_map, regions_map, ecoregions_distribution, regions_distribution, sp_name, plot_map)
   
 }
 
@@ -82,7 +83,7 @@ plot_rarity_map <- function(base_map, regions_map, ecoregions_distribution, regi
     regions_distribution_long$presence = 0
     warning("Name not in ITALIC")
   }
-  
+  regions_distribution_long <- regions_distribution_long[,-1]
   # join the reshaped data to the shapefile:
   base_map <-
     merge(base_map,

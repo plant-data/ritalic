@@ -4,14 +4,16 @@
 \alias{italic_distribution_map}
 \title{Create distribution map of a lichen taxon}
 \usage{
-italic_distribution_map(sp_name)
+italic_distribution_map(sp_name, plot_map = TRUE)
 }
 \arguments{
 \item{sp_name}{Character string representing the accepted scientific name of a lichen
 species.}
+
+\item{plot_map}{If TRUE (default) the function returns a ggplot object, if FALSE returns a sf object}
 }
 \value{
-a \code{ggplot} object representing the distribution map where Italian areas are colored according to the species' commonness/rarity.
+if plot_map = TRUE (default) a \code{ggplot} object representing the distribution map where Italian areas are colored according to the species' commonness/rarity. If plot_map = FALSE the sf object used to create the plot
 }
 \description{
 Creates a distribution map for a given lichen species based on its commonness/rarity
