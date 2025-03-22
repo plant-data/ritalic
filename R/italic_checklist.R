@@ -2,8 +2,9 @@
 #'
 #' @description
 #' Retrieves the complete list of accepted scientific names from the Checklist of
-#' the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy and in bordering countries
-#'
+#' the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy.
+#' If the parameter include_bordering_countries is set to TRUE the function returns all the accepted names of species occurring in Italy and in bordering countries available in ITALIC.
+#' @param include_bordering_countries Optional. If TRUE the result include taxa occurring in bordering countries but not in Italy. Default FALSE
 #' @param genus Optional. A genus name to filter the checklist.
 #' @param family Optional. A family name to filter the checklist.
 #' @param order Optional. An order name to filter the checklist.
@@ -28,15 +29,18 @@
 #' @importFrom jsonlite fromJSON
 #' @export
 italic_checklist <-
-  function(genus = NULL,
+  function(include_bordering_countries = FALSE,
+           genus = NULL,
            family = NULL,
            order = NULL,
            class = NULL,
            phylum = NULL) {
     url <- "https://italic.units.it/api/v2/checklist/"
     
-    
     params <- list()
+    
+    if (include_bordering_countries == TRUE)
+      params$`include-bordering-countries`  <- URLencode('true', reserved = TRUE)
     if (!is.null(genus))
       params$genus <- URLencode(genus, reserved = TRUE)
     if (!is.null(family))
@@ -47,6 +51,7 @@ italic_checklist <-
       params$class <- URLencode(class, reserved = TRUE)
     if (!is.null(phylum))
       params$phylum <- URLencode(phylum, reserved = TRUE)
+    
     
     
     if (length(params) > 0) {

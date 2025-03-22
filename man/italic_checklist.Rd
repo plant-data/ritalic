@@ -5,6 +5,7 @@
 \title{Get the list of species names in the checklist of the lichens of Italy}
 \usage{
 italic_checklist(
+  include_bordering_countries = FALSE,
   genus = NULL,
   family = NULL,
   order = NULL,
@@ -13,6 +14,8 @@ italic_checklist(
 )
 }
 \arguments{
+\item{include_bordering_countries}{Optional. If TRUE the result include taxa occurring in bordering countries but not in Italy. Default FALSE}
+
 \item{genus}{Optional. A genus name to filter the checklist.}
 
 \item{family}{Optional. A family name to filter the checklist.}
@@ -28,7 +31,8 @@ A character vector containing all accepted scientific names from the checklist o
 }
 \description{
 Retrieves the complete list of accepted scientific names from the Checklist of
-the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy and in bordering countries
+the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy.
+If the parameter include_bordering_countries is set to TRUE the function returns all the accepted names of species occurring in Italy and in bordering countries available in ITALIC.
 }
 \examples{
 \dontrun{
