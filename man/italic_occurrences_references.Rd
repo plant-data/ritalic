@@ -7,7 +7,7 @@
 italic_occurrences_references(occurrences_dataframe)
 }
 \arguments{
-\item{occurrences_dataframe}{Data frame containing occurrence records, must include
+\item{occurrences_dataframe}{Data frame containing occurrence records, obtained from \code{italic_occurrences()}. Must include
 an 'institutionCode' column}
 }
 \value{
@@ -24,10 +24,10 @@ occurrence datasets from specific herbarium collections.
 \examples{
 \dontrun{
 # Get occurrences first
-occ <- italic_occurrences("Cetraria ericetorum Opiz")
+occurrences <- italic_occurrences("Cetraria ericetorum Opiz")
 
 # Then get associated references
-refs <- italic_occurrences_references(occ)
+italic_occurrences_references(occurrences)
 }
 
 }

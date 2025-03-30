@@ -45,10 +45,10 @@ Example workflow:
 \examples{
 \dontrun{
 # Get commonness/rarity categories
-ecodist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz")
+italic_ecoregions_distribution("Cetraria ericetorum Opiz")
 
 # Get presence/absence data
-edist <- italic_ecoregions_distribution("Cetraria ericetorum Opiz", "presence-absence")
+italic_ecoregions_distribution("Cetraria ericetorum Opiz", result_data="presence-absence")
 }
 
 }

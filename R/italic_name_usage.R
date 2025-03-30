@@ -1,8 +1,8 @@
-#' Get details for specific names
+#' Get details of species names
 #'
 #' @description
-#' Retrieves information for a scientific name, including name id,
-#' taxonomic status, Index Fungorum id and related taxon id used in ITALIC.
+#' Retrieves information for a scientific name used in ITALIC, including name id,
+#' taxonomic status, Index Fungorum id and related taxon id.
 #'
 #' @note Before using this function with a list of names, first obtain their matched names or 
 #'       accepted names using `italic_match()`.
@@ -14,7 +14,7 @@
 #'       accepted_name_data <- italic_name_usage(names_matched$accepted_name)
 #'       }
 #'
-#' @param sp_names Character vector of accepted names or matched names
+#' @param sp_names Character vector of matched names or accepted names
 #'
 #' @return A data frame with columns:
 #'   \describe{
@@ -23,7 +23,7 @@
 #'     \item{index_fungorum_id}{Corresponding Index Fungorum identifier}
 #'     \item{scientific_name_full}{Complete scientific name including authority}
 #'     \item{scientific_name}{Scientific name without authority}
-#'     \item{authorship}{Authority information for the name}
+#'     \item{authorship}{Author of the name}
 #'     \item{notes}{Additional notes about the taxon, if any}
 #'     \item{rank}{Taxonomic rank of the name}
 #'     \item{status}{Taxonomic status ('accepted', 'synonym' or 'basionym')}
@@ -37,7 +37,7 @@
 #' italic_name_usage(c("Cetraria islandica (L.) Ach. subsp. islandica", "Secoliga annexa Arnold"))
 #' }
 #'
-#'
+#' @export
 italic_name_usage <- function(sp_names) {
   data <-
     call_api_base(

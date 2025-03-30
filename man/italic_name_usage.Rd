@@ -2,12 +2,12 @@
 % Please edit documentation in R/italic_name_usage.R
 \name{italic_name_usage}
 \alias{italic_name_usage}
-\title{Get details for specific names}
+\title{Get details of species names}
 \usage{
 italic_name_usage(sp_names)
 }
 \arguments{
-\item{sp_names}{Character vector of accepted names or matched names}
+\item{sp_names}{Character vector of matched names or accepted names}
 }
 \value{
 A data frame with columns:
@@ -17,7 +17,7 @@ A data frame with columns:
 \item{index_fungorum_id}{Corresponding Index Fungorum identifier}
 \item{scientific_name_full}{Complete scientific name including authority}
 \item{scientific_name}{Scientific name without authority}
-\item{authorship}{Authority information for the name}
+\item{authorship}{Author of the name}
 \item{notes}{Additional notes about the taxon, if any}
 \item{rank}{Taxonomic rank of the name}
 \item{status}{Taxonomic status ('accepted', 'synonym' or 'basionym')}
@@ -27,8 +27,8 @@ A data frame with columns:
 }
 }
 \description{
-Retrieves information for a scientific name, including name id,
-taxonomic status, Index Fungorum id and related taxon id used in ITALIC.
+Retrieves information for a scientific name used in ITALIC, including name id,
+taxonomic status, Index Fungorum id and related taxon id.
 }
 \note{
 Before using this function with a list of names, first obtain their matched names or
@@ -45,6 +45,5 @@ Example workflow:
 \dontrun{
 italic_name_usage(c("Cetraria islandica (L.) Ach. subsp. islandica", "Secoliga annexa Arnold"))
 }
-
 
 }

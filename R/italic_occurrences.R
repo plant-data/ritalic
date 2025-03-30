@@ -40,10 +40,13 @@
 #' @examples
 #' \dontrun{
 #' # Get simple occurrence data
-#' occ <- italic_occurrences("Cetraria ericetorum Opiz")
+#' italic_occurrences("Cetraria ericetorum Opiz")
 #'
 #' # Get extended occurrence data
 #' occ_ext <- italic_occurrences("Cetraria ericetorum Opiz", result_data = "extended")
+#' 
+#' # Then get citations for the retrieved occurrences
+#' italic_occurrences_references(occ_ext)
 #' }
 #'
 #' @references

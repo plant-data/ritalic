@@ -4,7 +4,7 @@
 #' Retrieves bibliographic references and DOIs for scientific publications describing
 #' occurrence datasets from specific herbarium collections.
 #'
-#' @param occurrences_dataframe Data frame containing occurrence records, must include
+#' @param occurrences_dataframe Data frame containing occurrence records, obtained from `italic_occurrences()`. Must include
 #'        an 'institutionCode' column
 #'
 #' @return A data frame with two columns:
@@ -16,10 +16,10 @@
 #' @examples
 #' \dontrun{
 #' # Get occurrences first
-#' occ <- italic_occurrences("Cetraria ericetorum Opiz")
+#' occurrences <- italic_occurrences("Cetraria ericetorum Opiz")
 #'
 #' # Then get associated references
-#' refs <- italic_occurrences_references(occ)
+#' italic_occurrences_references(occurrences)
 #' }
 #'
 #' @export

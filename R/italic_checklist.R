@@ -1,10 +1,10 @@
-#' Get the list of species names in the checklist of the lichens of Italy
+#' Get species names in the checklist of the lichens of Italy
 #'
 #' @description
 #' Retrieves the complete list of accepted scientific names from the Checklist of
 #' the Lichens of Italy in ITALIC. The function returns all accepted names of species occurring in Italy.
-#' If the parameter include_bordering_countries is set to TRUE the function returns all the accepted names of species occurring in Italy and in bordering countries available in ITALIC.
-#' @param include_bordering_countries Optional. If TRUE the result include taxa occurring in bordering countries but not in Italy. Default FALSE
+#' If the parameter include_bordering_countries is set to TRUE the function returns all the accepted names of species in ITALIC occurring both in Italy and in bordering countries.
+#' @param include_bordering_countries Optional. Default FALSE. If TRUE the result includes also taxa occurring in bordering countries.
 #' @param genus Optional. A genus name to filter the checklist.
 #' @param family Optional. A family name to filter the checklist.
 #' @param order Optional. An order name to filter the checklist.
@@ -15,14 +15,16 @@
 #'
 #' @examples
 #' \dontrun{
-#' # Get the complete checklist
-#' checklist <- italic_checklist()
+#' # Get the complete checklist of Italy
+#' italic_checklist()
+#' # Get the complete checklist of Italy and bordering countries
+#' italic_checklist(include_bordering_countries=TRUE)
 #' # Get the checklist of the species of genus Lecanora
-#' check_lecanora <- italic_checklist(genus ="Lecanora")
+#' italic_checklist(genus ="Lecanora")
 #' }
 #'
 #' @references
-#' ITALIC - The Information System on Italian Lichens: National Checklist
+#' ITALIC - The Information System on Italian Lichens: checklist
 #' \url{https://italic.units.it/index.php?procedure=checklist}
 #'
 #' @importFrom httr GET

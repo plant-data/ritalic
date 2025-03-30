@@ -3,7 +3,7 @@
 #' @return Cleaned vector of species names
 #' @noRd
 prepare_species_names <- function(sp_names) {
-  # Input is a character vector
+  # input is a character vector
   if (!is.character(sp_names) && !is.vector(sp_names)) {
     stop("sp_names must be a character vector")
   }
@@ -13,7 +13,7 @@ prepare_species_names <- function(sp_names) {
     "[\u00AD\u034F\u200B-\u200F\u2028-\u202E\u2060-\u206F\uFEFF]"
   sp_names <- gsub(invisible_char_regex, "", sp_names, perl = TRUE)
   
-  # Replace NA with empty strings
+  # replace NA with empty strings
   sp_names <- ifelse(is.na(sp_names), "", sp_names)
   
   return(sp_names)

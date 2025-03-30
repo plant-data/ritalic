@@ -21,7 +21,7 @@ A data frame with:
 }
 }
 \description{
-Retrieves the complete taxonomic hierarchy for lichen taxa from the ITALIC database.
+Retrieves the complete taxonomic classification of lichen taxa from the ITALIC database.
 Only accepts names that exist in the database of ITALIC.
 }
 \note{
@@ -35,7 +35,7 @@ Example workflow:
 }
 \examples{
 \dontrun{
-taxonomy <- italic_taxonomy("Cetraria islandica (L.) Ach. subsp. islandica")
+italic_taxonomy("Cetraria islandica (L.) Ach. subsp. islandica")
 }
 
 }

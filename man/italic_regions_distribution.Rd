@@ -47,7 +47,7 @@ using \code{italic_match()}.
 Example workflow:
 \preformatted{
       names_matched <- italic_match(your_names)
-      distribution <- italic_distribution(names_matched$accepted_name)
+      distribution <- italic_regions_distribution(names_matched$accepted_name)
       }
 }
 \examples{

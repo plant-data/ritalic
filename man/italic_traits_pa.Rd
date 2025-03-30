@@ -13,7 +13,7 @@ italic_traits_pa(sp_names)
 A dataframe containing a series of traits for the lichen species passed as input.
 }
 \description{
-This function returns the functional traits of the lichen species passed as input.
+This function returns morphological traits of the lichen species passed as input.
 Only accepts names that exist in the database of ITALIC.
 }
 \note{
@@ -22,10 +22,11 @@ using \code{italic_match()}.
 Example workflow:
 \preformatted{
       names_matched <- italic_match(your_names)
-      descriptions <- italic_taits_pa(names_matched$accepted_name)
+      traits <- italic_taits_pa(names_matched$accepted_name)
       }
 }
 \examples{
+\dontrun{
 italic_traits_pa("Cetraria ericetorum Opiz")
-
+}
 }

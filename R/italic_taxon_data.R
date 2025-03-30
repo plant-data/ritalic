@@ -7,14 +7,21 @@
 #'       Example workflow:
 #'       \preformatted{
 #'       names_matched <- italic_match(your_names)
-#'       descriptions <- italic_taxon_data(names_matched$accepted_name)
+#'       italic_taxon_data(names_matched$accepted_name)
 #'       }
 #' @param sp_names A vector containing the scientific names of the lichen species.
-#' @return A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
-#' @examples
-#' italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora cenisia Ach."))
-#' @import utils
+#' @return A dataframe containing the taxonomy, ecology distribution and rarity of the lichen species passed as input.
 #'
+#' @examples
+#' \dontrun{
+#' italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora salicicola H. Magn."))
+#' }
+#' 
+#' @references
+#' ITALIC - The Information System on Italian Lichens: data about taxa
+#' \url{https://italic.units.it/?procedure=base&t=59&c=60#otherdata}
+#'
+#' @import utils
 #' @export
 italic_taxon_data <- function(sp_names) {
   taxonomy <- italic_taxonomy(sp_names)

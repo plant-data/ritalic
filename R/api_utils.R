@@ -83,5 +83,5 @@ parse_api_response <- function(response) {
 #' @description NOTE: the rate limit is server-side, changing this value won't speed up the data retrieval process
 #' @noRd
 wait_api_cooldown <- function() {
-  Sys.sleep(10)  # Wait 10 seconds for the soft rate limit reset
+  Sys.sleep(10)  # wait 10 seconds for the soft rate limit reset
 }

@@ -10,7 +10,7 @@ italic_distribution_map(sp_name, plot_map = TRUE)
 \item{sp_name}{Character string representing the accepted scientific name of a lichen
 species.}
 
-\item{plot_map}{If TRUE (default) the function returns a ggplot object, if FALSE returns a sf object}
+\item{plot_map}{If TRUE (default) the function returns a ggplot graph, if FALSE returns a sf object}
 }
 \value{
 if plot_map = TRUE (default) a \code{ggplot} object representing the distribution map where Italian areas are colored according to the species' commonness/rarity. If plot_map = FALSE the sf object used to create the plot
@@ -49,6 +49,6 @@ italic_distribution_map("Anisomeridium biforme (Schaer.) R.C. Harris")
 \references{
 For more information about Italian ecoregions see ITALIC ecoregions distribution
 \url{https://italic.units.it/?procedure=base&t=59&c=60#commonness}
-and the scientific publication describing the ecoregions
+and the scientific publication describing the ecoregions used in ITALIC
 \url{https://www.mdpi.com/1424-2818/12/8/294}
 }

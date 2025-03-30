@@ -2,7 +2,7 @@
 % Please edit documentation in R/italic_match.R
 \name{italic_match}
 \alias{italic_match}
-\title{Match lichen scientific names against the database of ITALIC}
+\title{Match scientific names of lichens against the database of ITALIC}
 \usage{
 italic_match(sp_names, subsp_marks = c(), var_marks = c(), form_marks = c())
 }
@@ -39,17 +39,17 @@ returns detailed matching information including nomenclatural status and matchin
 }
 \examples{
 \dontrun{
-# Simple name matching
-result <- italic_match("Cetraria islandica")
+# Simple name match
+italic_match("Cetraria islandica")
 
-# Name matching with spelling mistakes
-result <- italic_match("Xantoria parietina")
+# Name match where the name contains spelling mistakes
+italic_match("Xantoria parietina")
 
-# Matching with uncommon marker
-result <- italic_match("Acarospora sulphurata varietas rubescens",
+# Match where the name contains uncommon marker
+italic_match("Acarospora sulphurata varietas rubescens",
                       var_marks = "varietas")
 
-# Matching multiple names
-result <- c("Cetraria islandica", "Xanthoria parietina")
+# Match multiple names
+italic_match(c("Cetraria islandica", "Xanthoria parietina"))
 }
 }

@@ -23,7 +23,6 @@ call_api_base <-
     sp_names <- prepare_species_names(sp_names)
     unique_sp_names <- unique(sp_names)
     
-    # start progress bar
     pb <- create_progress_bar(length(unique_sp_names), loading_text)
     
     # create results list
@@ -34,7 +33,7 @@ call_api_base <-
       sp_name <- unique_sp_names[i]
       
       if (!is.null(body)) {
-        # when body is not null, modify body to include species name
+
         body_with_sp <- body
         body_with_sp$sp <- sp_name
         
@@ -42,7 +41,7 @@ call_api_base <-
                                  url = api_endpoint,
                                  body = body_with_sp)
       } else {
-        # when body is null, encode species name in URL
+
         sp_encoded <- URLencode(sp_name, reserved = TRUE)
         url <- if (extra_param != "") {
           paste0(api_endpoint, sp_encoded, extra_param)
@@ -59,7 +58,6 @@ call_api_base <-
       update_progress(pb, i)
     }
     
-    # close progress bar
     close_progress_bar(pb)
     
     # combine results

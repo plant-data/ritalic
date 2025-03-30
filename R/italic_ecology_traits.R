@@ -39,7 +39,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' traits <- italic_ecology_traits("Cetraria islandica (L.) Ach. subsp. islandica")
+#' italic_ecology_traits("Cetraria islandica (L.) Ach. subsp. islandica")
 #' }
 #'
 #' @references

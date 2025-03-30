@@ -10,7 +10,7 @@ italic_taxon_data(sp_names)
 \item{sp_names}{A vector containing the scientific names of the lichen species.}
 }
 \value{
-A dataframe containing the classification, description, ecology and rarity of the lichen species passed as input.
+A dataframe containing the taxonomy, ecology distribution and rarity of the lichen species passed as input.
 }
 \description{
 This function returns a dataframe containing taxonomy, ecology_traits, regions_distribution, ecoregions_distribution of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata
@@ -22,9 +22,16 @@ using \code{italic_match()}.
 Example workflow:
 \preformatted{
       names_matched <- italic_match(your_names)
-      descriptions <- italic_taxon_data(names_matched$accepted_name)
+      italic_taxon_data(names_matched$accepted_name)
       }
 }
 \examples{
-italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora cenisia Ach."))
+\dontrun{
+italic_taxon_data(c("Cetraria ericetorum Opiz", "Lecanora salicicola H. Magn."))
+}
+
+}
+\references{
+ITALIC - The Information System on Italian Lichens: data about taxa
+\url{https://italic.units.it/?procedure=base&t=59&c=60#otherdata}
 }

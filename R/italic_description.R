@@ -1,7 +1,7 @@
 #' Get descriptions of lichen taxa
 #'
 #' @description
-#' Retrieves the morphological description and dditional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy.
+#' Retrieves morphological descriptions and additional taxonomic or ecological notes about lichen taxa present in the Checklist of the Lichens of Italy.
 #' Only accepts names that exist in the database of ITALIC.
 #'
 #' @note Before using this function with a list of names, first obtain their accepted names

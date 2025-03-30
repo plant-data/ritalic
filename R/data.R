@@ -3,7 +3,7 @@
 #' This dataset contains the ecoregions of Italy, represented as polygons in a GeoPackage file.
 #' The data is used to show the distribution of lichen species within different ecoregions.
 #'
-#' @name ecoregions_italy
+#' @name ecoregions
 #' @noRd
 #'
 #' @format A GeoPackage file (`.gpkg`) with 6 fields (attributes).
@@ -18,7 +18,7 @@
 #' Coordinate Reference System: WGS 84 (EPSG:4326)
 #'
 #' @source The original data was obtained from ITALIC 
-#' and simplified with sf: to reduce the complexity of polygons. 
+#' and simplified with mapshaper to reduce the complexity of polygons. 
 #'
 #' @keywords datasets
 NULL
@@ -28,7 +28,7 @@ NULL
 #' This dataset contains the administrative regions of Italy, represented as polygons in a GeoPackage file.
 #' This data is used to show the distribution of lichen species within different regions.
 #'
-#' @name regions_italy
+#' @name regions
 #' @noRd
 #'
 #' @format A GeoPackage file (`.gpkg`) with the following fields (attributes):
@@ -39,7 +39,7 @@ NULL
 #' Coordinate Reference System: WGS 84 (EPSG:4326)
 #'
 #' @source The original data was obtained from ITALIC 
-#' and simplified with sf: to reduce the complexity of polygons. 
+#' and simplified with mapshaper to reduce the complexity of polygons. 
 #'
 #'
 #' @keywords datasets
