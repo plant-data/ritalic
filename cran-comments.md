@@ -1,4 +1,7 @@
-## Resubmission
-This is a resubmission. In this version I have:
+## R CMD check results
 
-* Added single quotes to packages names in DESCRIPTION
+0 errors | 0 warnings | 1 note
+
+## Old submission notes
+
+* First release
