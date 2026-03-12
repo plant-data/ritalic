@@ -2,9 +2,8 @@
 #' @param method HTTP method ("GET" or "POST")
 #' @param url API endpoint URL
 #' @param body Request body (optional)
-#' @param ... Additional arguments passed to httr functions
+#' @param ... Additional arguments passed to request functions
 #' @return HTTP response object
-#' @importFrom httr GET POST add_headers
 #' @noRd
 make_request <- function(method, url, body = NULL, ...) {
   MAX_RETRIES <- 5
@@ -12,28 +11,25 @@ make_request <- function(method, url, body = NULL, ...) {
   
   while (retry_count < MAX_RETRIES) {
     tryCatch({
-      response <- if (method == "GET") {
-        GET(url, ...)
-      } else {
-        POST(
-          url,
-          body = if (!is.null(body))
-            jsonlite::toJSON(body)
-          else
-            NULL,
-          encode = "json",
-          add_headers('Content-Type' = 'application/json'),
-          ...
-        )
+      req <- httr2::request(url)
+      
+      if (method == "POST") {
+        request_body <- if (is.null(body)) list() else body
+        req <- req |>
+          httr2::req_headers('Content-Type' = 'application/json') |>
+          httr2::req_body_json(request_body)
       }
       
-      if (response$status_code == 200) {
+      response <- httr2::req_perform(req)
+      status_code <- httr2::resp_status(response)
+      
+      if (status_code == 200) {
         return(response)
-      } else if (response$status_code == 429) {
+      } else if (status_code == 429) {
         wait_api_cooldown()
         retry_count <- retry_count + 1
       } else {
-        handle_api_error(response$status_code)
+        handle_api_error(status_code)
       }
       
     }, error = function(e) {
@@ -63,7 +59,7 @@ handle_api_error <- function(status_code) {
 #' @return Parsed dataframe
 #' @noRd
 parse_api_response <- function(response) {
-  json_data <- fromJSON(rawToChar(response$content))
+  json_data <- fromJSON(httr2::resp_body_string(response))
   input <- as.data.frame(json_data[1])
   
   # for common api the data needed is in the third value

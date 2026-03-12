@@ -57,7 +57,7 @@ italic_name_usage <- function(sp_names) {
 #' @return Parsed dataframe
 #' @noRd
 parse_name_usage_response <- function(response) {
-  data <- fromJSON(rawToChar(response$content))
+  data <- fromJSON(httr2::resp_body_string(response))
   
   
   input <- as.data.frame(data['scientific name full'])

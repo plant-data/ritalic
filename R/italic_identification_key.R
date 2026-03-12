@@ -28,8 +28,7 @@
 #' ITALIC - The KeyMaker
 #' \url{https://italic.units.it/key-maker/}
 #'
-#' @importFrom httr POST add_headers http_error http_status
-#' @importFrom jsonlite toJSON
+#' @importFrom jsonlite fromJSON
 #' @export
 
 italic_identification_key <- function(sp_names) {
@@ -41,21 +40,19 @@ italic_identification_key <- function(sp_names) {
   }
   
   url <- "https://italic.units.it/api/v1/taxa-records"
-  headers <- c('Content-Type' = 'application/json')
   body <- sp_names
   
-  response <-
-    POST(url,
-         body = jsonlite::toJSON(body),
-         encode = "json",
-         add_headers(headers))
+  response <- httr2::request(url) |>
+    httr2::req_headers('Content-Type' = 'application/json') |>
+    httr2::req_body_json(body) |>
+    httr2::req_perform()
   
-  if (http_error(response)) {
-    message("Request failed: ", http_status(response)$message)
+  if (httr2::resp_status(response) >= 400) {
+    message("Request failed: ", httr2::resp_status_desc(response))
     return(NULL)
   }
   
-  parsed_response <- fromJSON(rawToChar(response$content))
+  parsed_response <- fromJSON(httr2::resp_body_string(response))
   
   if (!is.null(parsed_response$`key-id`)) {
     unique_id <- parsed_response$`key-id`

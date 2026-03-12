@@ -83,7 +83,7 @@ construct_references_url <- function(herbaria) {
 #' @return Dataframe of references and DOIs
 #' @noRd
 parse_references_response <- function(response) {
-  content <- fromJSON(rawToChar(response$content))
+  content <- fromJSON(httr2::resp_body_string(response))
   
   if (length(content$references) == 0) {
     return(data.frame(

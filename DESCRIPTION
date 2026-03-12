@@ -33,7 +33,8 @@ BugReports: https://github.com/plant-data/ritalic/issues
 Depends:
   R (>= 3.5.3)
 Imports:
-  httr,
+  httr2 (>= 1.1.0),
+  curl (>= 6.4),
   jsonlite,
   utils,
   sf,

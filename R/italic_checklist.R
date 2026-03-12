@@ -27,7 +27,6 @@
 #' ITALIC - The Information System on Italian Lichens: checklist
 #' \url{https://italic.units.it/index.php?procedure=checklist}
 #'
-#' @importFrom httr GET
 #' @importFrom jsonlite fromJSON
 #' @export
 italic_checklist <-
@@ -64,19 +63,21 @@ italic_checklist <-
               collapse = "&")
       url <- paste0(url, "?", query_string)
     }
-    response <- GET(url)
+    response <- httr2::request(url) |>
+      httr2::req_perform()
+    status_code <- httr2::resp_status(response)
     
-    if (response$status_code == 500) {
+    if (status_code == 500) {
       stop("Impossible to connect to the server, please try again later")
-    } else if (response$status_code == 429) {
+    } else if (status_code == 429) {
       stop("Rate limit reached, please try again later")
-    } else if (response$status_code == 200) {
+    } else if (status_code == 200) {
       success <- TRUE
     } else {
       stop("An unknown error occurred, please try again later")
     }
     
-    data <- fromJSON(rawToChar(response$content))
+    data <- fromJSON(httr2::resp_body_string(response))
     
     checklist <- data[1]
     checklist <- checklist$checklist

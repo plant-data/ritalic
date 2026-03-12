@@ -73,7 +73,7 @@ italic_match <-
 #' @return Parsed dataframe
 #' @noRd
 parse_match_response <- function(response) {
-  data <- fromJSON(rawToChar(response$content))
+  data <- fromJSON(httr2::resp_body_string(response))
   
   
   input <- as.data.frame(data[1])

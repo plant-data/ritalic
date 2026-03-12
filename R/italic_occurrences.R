@@ -82,7 +82,7 @@ italic_occurrences <- function(sp_names, result_data = 'simple') {
 #' @return Parsed dataframe or NULL if empty
 #' @noRd
 parse_occurrences_response <- function(response) {
-  json_data <- fromJSON(rawToChar(response$content))
+  json_data <- fromJSON(httr2::resp_body_string(response))
   
   input <- as.data.frame(json_data[1])
   data <- json_data[3]$data
