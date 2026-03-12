@@ -39,7 +39,7 @@
 #' For more information about Italian ecoregions see ITALIC ecoregions distribution
 #' \url{https://italic.units.it/?procedure=base&t=59&c=60#commonness}
 #' and the scientific publication describing the ecoregions used in ITALIC
-#' \url{https://www.mdpi.com/1424-2818/12/8/294}
+#' \doi{10.3390/d12080294}
 #' @importFrom sf read_sf
 #' @export
 italic_distribution_map <- function(sp_name, plot_map=TRUE) {

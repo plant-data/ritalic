@@ -2,6 +2,6 @@
 
 0 errors | 0 warnings | 1 note
 
-## Old submission notes
+## Submission notes
 
-* First release
+* Replaced httr with httr2
