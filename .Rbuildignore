@@ -7,6 +7,7 @@
 ^\.RData$
 ^\.Rhistory$
 ^\.gitignore$
-
+^\.DS_Store$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^revdep$
