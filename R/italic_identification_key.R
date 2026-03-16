@@ -42,10 +42,10 @@ italic_identification_key <- function(sp_names) {
   url <- "https://italic.units.it/api/v1/taxa-records"
   body <- sp_names
   
-  response <- httr2::request(url) |>
-    httr2::req_headers('Content-Type' = 'application/json') |>
-    httr2::req_body_json(body) |>
-    httr2::req_perform()
+  request <- httr2::request(url)
+  request <- httr2::req_headers(request, 'Content-Type' = 'application/json')
+  request <- httr2::req_body_json(request, body)
+  response <- httr2::req_perform(request)
   
   if (httr2::resp_status(response) >= 400) {
     message("Request failed: ", httr2::resp_status_desc(response))

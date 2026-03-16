@@ -63,8 +63,7 @@ italic_checklist <-
               collapse = "&")
       url <- paste0(url, "?", query_string)
     }
-    response <- httr2::request(url) |>
-      httr2::req_perform()
+    response <- httr2::req_perform(httr2::request(url))
     status_code <- httr2::resp_status(response)
     
     if (status_code == 500) {

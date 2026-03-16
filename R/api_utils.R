@@ -15,9 +15,8 @@ make_request <- function(method, url, body = NULL, ...) {
       
       if (method == "POST") {
         request_body <- if (is.null(body)) list() else body
-        req <- req |>
-          httr2::req_headers('Content-Type' = 'application/json') |>
-          httr2::req_body_json(request_body)
+        req <- httr2::req_headers(req, 'Content-Type' = 'application/json')
+        req <- httr2::req_body_json(req, request_body)
       }
       
       response <- httr2::req_perform(req)
