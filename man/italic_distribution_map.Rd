@@ -8,12 +8,15 @@ italic_distribution_map(sp_name, plot_map = TRUE)
 }
 \arguments{
 \item{sp_name}{Character string representing the accepted scientific name of a lichen
-species.}
+species. If multiple names are provided, a list is returned.}
 
 \item{plot_map}{If TRUE (default) the function returns a ggplot graph, if FALSE returns a sf object}
 }
 \value{
-if plot_map = TRUE (default) a \code{ggplot} object representing the distribution map where Italian areas are colored according to the species' commonness/rarity. If plot_map = FALSE the sf object used to create the plot
+If one name is provided: if plot_map = TRUE (default), a \code{ggplot} object;
+if plot_map = FALSE, the \code{sf} object used to create the plot.
+If multiple names are provided, a named list of \code{ggplot} or \code{sf} objects,
+one for each input name.
 }
 \description{
 Creates a distribution map for a given lichen species based on its commonness/rarity
