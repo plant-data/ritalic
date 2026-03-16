@@ -15,10 +15,13 @@
 #'       }
 #'       
 #' @param sp_name Character string representing the accepted scientific name of a lichen
-#'                species.
+#'                species. If multiple names are provided, a list is returned.
 #' @param plot_map If TRUE (default) the function returns a ggplot graph, if FALSE returns a sf object 
 #'                
-#' @return if plot_map = TRUE (default) a `ggplot` object representing the distribution map where Italian areas are colored according to the species' commonness/rarity. If plot_map = FALSE the sf object used to create the plot
+#' @return If one name is provided: if plot_map = TRUE (default), a `ggplot` object;
+#'         if plot_map = FALSE, the `sf` object used to create the plot.
+#'         If multiple names are provided, a named list of `ggplot` or `sf` objects,
+#'         one for each input name.
 #'         
 #' @details
 #' The function internally utilizes `italic_ecoregions_distribution()` and `italic_regions_distribution()` to retrieve the commonness/rarity
@@ -44,18 +47,30 @@
 #' @export
 italic_distribution_map <- function(sp_name, plot_map=TRUE) {
   
-  if (!is.atomic(sp_name) || length(sp_name) != 1){
-    stop("Only one name allowed")
+  if (!is.atomic(sp_name) || length(sp_name) < 1){
+    stop("Provide at least one name")
   }
+  sp_name <- as.character(sp_name)
+
   ecoregions_path <- system.file("extdata", "ecoregions.gpkg", package = "ritalic")
   regions_path <- system.file("extdata", "regions.gpkg", package = "ritalic")
-  
-  ecoregions_distribution <- italic_ecoregions_distribution(sp_name)
-  regions_distribution <- italic_regions_distribution(sp_name)
-  base_map <- sf::read_sf(ecoregions_path)
-  regions_map <- sf::read_sf(regions_path)
-  
-  plot_rarity_map(base_map, regions_map, ecoregions_distribution, regions_distribution, sp_name, plot_map)
+
+  build_single_map <- function(single_name) {
+    ecoregions_distribution <- italic_ecoregions_distribution(single_name)
+    regions_distribution <- italic_regions_distribution(single_name)
+    base_map <- sf::read_sf(ecoregions_path)
+    regions_map <- sf::read_sf(regions_path)
+
+    plot_rarity_map(base_map, regions_map, ecoregions_distribution, regions_distribution, single_name, plot_map)
+  }
+
+  if (length(sp_name) == 1) {
+    return(build_single_map(sp_name))
+  }
+
+  out <- lapply(sp_name, build_single_map)
+  names(out) <- sp_name
+  out
   
 }
 
@@ -78,10 +93,10 @@ plot_rarity_map <- function(base_map, regions_map, ecoregions_distribution, regi
   # test alternative without external libraries
   ecoregions_distribution_long <- pivot_longer_ecoregions(ecoregions_distribution)
   regions_distribution_long <- pivot_longer_regions(regions_distribution)
-  if (is.na(ecoregions_distribution_long$rarity[1])) {
+  if (all(is.na(ecoregions_distribution_long$rarity))) {
     ecoregions_distribution_long$rarity = 0
     regions_distribution_long$presence = 0
-    warning("Name not in ITALIC")
+    warning(paste0("Name not in ITALIC: ", title_text), call. = FALSE)
   }
   regions_distribution_long <- regions_distribution_long[,-1]
   # join the reshaped data to the shapefile:
