@@ -399,7 +399,7 @@ mcp_tool_checklist <- function(include_bordering_countries = FALSE,
 mcp_tool_search <- function() {
   filter_names <- setdiff(names(mcp_search_arguments()), "max_results")
 
-  fun <- function() {
+  fun <- function(max_results = MCP_DEFAULT_MAX_RESULTS) {
     mcp_run({
       filters <- mget(filter_names, envir = environment())
       filters <- Filter(function(x) !is.null(x) && length(x) > 0, filters)
@@ -409,9 +409,10 @@ mcp_tool_search <- function() {
       mcp_truncated(result, "taxa", taxa, max_results)
     })
   }
+  # an argument for each filter, before max_results
   formals(fun) <- c(
     setNames(rep(list(NULL), length(filter_names)), filter_names),
-    list(max_results = MCP_DEFAULT_MAX_RESULTS)
+    formals(fun)
   )
   fun
 }

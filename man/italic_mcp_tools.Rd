@@ -11,7 +11,7 @@ A list of \code{ellmer} tool definitions.
 }
 \description{
 Returns the functions of ritalic as tools for AI assistants, created with
-\code{ellmer::tool()}. They can be served to Claude, Cursor or other MCP clients
+\code{ellmer::tool()}. They can be served to Claude, Positron or other MCP clients
 with \code{\link[=italic_mcp_server]{italic_mcp_server()}}, or registered in an \code{ellmer} chat with
 \code{chat$register_tools(italic_mcp_tools())}.
 

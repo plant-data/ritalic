@@ -1,6 +1,6 @@
 Package: ritalic
 Title: Interface to the ITALIC Database of Lichen Biodiversity
-Version: 0.12.0
+Version: 0.13.0
 Authors@R: c(
     person("Matteo", "Conti", email="matt.ciao@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0003-4917-2639")),
@@ -22,7 +22,6 @@ Description: A programmatic interface to the Web Service methods provided by ITA
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
 Suggests: 
     ellmer (>= 0.3.0),
     knitr,
@@ -41,3 +40,4 @@ Imports:
   utils,
   sf,
   ggplot2
+Config/roxygen2/version: 8.1.1

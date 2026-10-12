@@ -24,13 +24,10 @@ client, not in an interactive session. Requires the packages \code{mcptools} and
 \section{Connecting an assistant}{
 
 Claude Code:
-
 \preformatted{
 claude mcp add ritalic -- Rscript -e "ritalic::italic_mcp_server()"
 }
-
 Claude Desktop, in \code{claude_desktop_config.json}:
-
 \preformatted{
 {
   "mcpServers": {
@@ -41,7 +38,6 @@ Claude Desktop, in \code{claude_desktop_config.json}:
   }
 }
 }
-
 Use the full path of \code{Rscript} if it is not found (e.g. the output of
 \code{file.path(R.home("bin"), "Rscript")}).
 }
