@@ -10,7 +10,16 @@ italic_taxon_data(sp_names)
 \item{sp_names}{A vector containing the scientific names of the lichen species.}
 }
 \value{
-A dataframe containing the taxonomy, ecology distribution and rarity of the lichen species passed as input.
+A data frame with one row for each name in \code{sp_names} (in the same order) and the columns:
+\describe{
+\item{scientific_name}{The scientific name provided as input}
+\item{phylum, class, order, family, genus}{Taxonomy, see \code{\link[=italic_taxonomy]{italic_taxonomy()}}}
+\item{substrata, ..., poleotolerance_max}{Ecology and traits, see \code{\link[=italic_ecology_traits]{italic_ecology_traits()}}}
+\item{abruzzo, ..., veneto}{Presence (1) or absence (0) in the Italian administrative regions,
+see \code{\link[=italic_regions_distribution]{italic_regions_distribution()}}}
+\item{alpine, ..., dry_mediterranean}{Commonness/rarity in the Italian ecoregions,
+see \code{\link[=italic_ecoregions_distribution]{italic_ecoregions_distribution()}}}
+}
 }
 \description{
 This function returns a dataframe containing taxonomy, ecology_traits, regions_distribution, ecoregions_distribution of the lichen species passed as input. For more info about these parameters see https://italic.units.it/?procedure=base&t=59&c=60#otherdata

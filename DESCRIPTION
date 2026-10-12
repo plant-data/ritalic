@@ -28,7 +28,8 @@ Suggests:
     knitr,
     mcptools,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    webfakes
 Config/testthat/edition: 3
 URL: https://github.com/plant-data/ritalic
 BugReports: https://github.com/plant-data/ritalic/issues

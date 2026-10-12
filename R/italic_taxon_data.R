@@ -10,7 +10,16 @@
 #'       italic_taxon_data(names_matched$accepted_name)
 #'       }
 #' @param sp_names A vector containing the scientific names of the lichen species.
-#' @return A dataframe containing the taxonomy, ecology distribution and rarity of the lichen species passed as input.
+#' @return A data frame with one row for each name in `sp_names` (in the same order) and the columns:
+#'   \describe{
+#'     \item{scientific_name}{The scientific name provided as input}
+#'     \item{phylum, class, order, family, genus}{Taxonomy, see [italic_taxonomy()]}
+#'     \item{substrata, ..., poleotolerance_max}{Ecology and traits, see [italic_ecology_traits()]}
+#'     \item{abruzzo, ..., veneto}{Presence (1) or absence (0) in the Italian administrative regions,
+#'       see [italic_regions_distribution()]}
+#'     \item{alpine, ..., dry_mediterranean}{Commonness/rarity in the Italian ecoregions,
+#'       see [italic_ecoregions_distribution()]}
+#'   }
 #'
 #' @examples
 #' \dontrun{
@@ -29,14 +38,13 @@ italic_taxon_data <- function(sp_names) {
   regions <- italic_regions_distribution(sp_names)
   ecoregions <- italic_ecoregions_distribution(sp_names)
   
-  # in each dataframe remove the first and last column
-  # scientific name is alwais the same and warning is not needed
-  taxonomy2 <- taxonomy[, 1:ncol(taxonomy) - 1]
-  data2 <- data[, 3:ncol(data) - 1]
-  regions2 <- regions[, 3:ncol(regions) - 1]
-  ecoregions2 <- ecoregions[, 3:ncol(ecoregions) - 1]
+  # the first column of each dataframe is the scientific name:
+  # keep it only from the taxonomy
+  data2 <- data[, -1, drop = FALSE]
+  regions2 <- regions[, -1, drop = FALSE]
+  ecoregions2 <- ecoregions[, -1, drop = FALSE]
   
-  result <- cbind(taxonomy2, data2, regions2, ecoregions2)
+  result <- cbind(taxonomy, data2, regions2, ecoregions2)
   
   return(result)
 }

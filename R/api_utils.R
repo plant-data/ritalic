@@ -7,38 +7,40 @@
 #' @noRd
 make_request <- function(method, url, body = NULL, ...) {
   MAX_RETRIES <- 5
-  retry_count <- 0
   
-  while (retry_count < MAX_RETRIES) {
-    tryCatch({
-      req <- httr2::request(url)
-      
-      if (method == "POST") {
-        request_body <- if (is.null(body)) list() else body
-        req <- httr2::req_headers(req, 'Content-Type' = 'application/json')
-        req <- httr2::req_body_json(req, request_body)
-      }
-      
-      response <- httr2::req_perform(req)
-      status_code <- httr2::resp_status(response)
-      
-      if (status_code == 200) {
-        return(response)
-      } else if (status_code == 429) {
-        wait_api_cooldown()
-        retry_count <- retry_count + 1
-      } else {
-        handle_api_error(status_code)
-      }
-      
-    }, error = function(e) {
-      retry_count <- retry_count + 1
-      if (retry_count >= MAX_RETRIES) {
-        stop(paste("Failed after", MAX_RETRIES, "attempts:", e$message))
-      }
-      Sys.sleep(1)
-    })
+  req <- httr2::request(url)
+  
+  if (method == "POST") {
+    request_body <- if (is.null(body)) list() else body
+    req <- httr2::req_headers(req, 'Content-Type' = 'application/json')
+    req <- httr2::req_body_json(req, request_body)
   }
+  
+  # retry when the rate limit is reached (429) or the server is unavailable (503),
+  # and when the request fails (e.g. network down); keep the error responses to
+  # handle them with handle_api_error
+  req <- httr2::req_retry(
+    req,
+    max_tries = MAX_RETRIES,
+    retry_on_failure = TRUE,
+    after = function(resp) api_cooldown_seconds(),
+    backoff = function(tries) api_failure_wait_seconds()
+  )
+  req <- httr2::req_error(req, is_error = function(resp) FALSE)
+  
+  response <- tryCatch(
+    httr2::req_perform(req),
+    httr2_failure = function(e) {
+      stop(paste("Failed after", MAX_RETRIES, "attempts:", conditionMessage(e)),
+           call. = FALSE)
+    }
+  )
+  
+  status_code <- httr2::resp_status(response)
+  if (status_code != 200) {
+    handle_api_error(status_code)
+  }
+  return(response)
 }
 
 #' Handle API error responses
@@ -74,9 +76,15 @@ parse_api_response <- function(response) {
   return(result)
 }
 
-#' Wait for API rate limit refresh
+#' Seconds to wait for the API rate limit refresh
 #' @description NOTE: the rate limit is server-side, changing this value won't speed up the data retrieval process
 #' @noRd
-wait_api_cooldown <- function() {
-  Sys.sleep(10)  # wait 10 seconds for the soft rate limit reset
+api_cooldown_seconds <- function() {
+  10  # wait 10 seconds for the soft rate limit reset
+}
+
+#' Seconds to wait before retrying a failed request (e.g. network error)
+#' @noRd
+api_failure_wait_seconds <- function() {
+  1
 }
