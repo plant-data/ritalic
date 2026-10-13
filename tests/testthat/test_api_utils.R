@@ -1,9 +1,42 @@
 library(testthat)
 
-# a local fake API (a server on 127.0.0.1) that answers with a sequence of status codes (the last one is
-# repeated) and records the requests; httr2 mocked responses skip req_retry, so
-# the retries are tested against a real (local) HTTP server
+# a local fake API (a server on 127.0.0.1) that records the requests; httr2 mocked
+# responses skip req_retry, so the retries are tested against a real (local) HTTP server.
+# The server runs in another R process, so a single server is shared by all the tests
+# (it starts on the first use and stops at the end of the file); these tests are
+# skipped on CRAN, where starting the process can fail on busy machines
+fake_api_app <- function() {
+  app <- webfakes::new_app()
+  app$use(webfakes::mw_json())
+  app$locals$requests <- list()
+  # each test has its own id; the status codes of its answers are in the query
+  # (the last one is repeated)
+  answer <- function(req, res) {
+    id <- req$params$id
+    requests <- req$app$locals$requests
+    requests[[id]] <- c(requests[[id]], list(list(method = req$method, json = req$json)))
+    req$app$locals$requests <- requests
+    statuses <- as.integer(strsplit(req$query$statuses, ",")[[1]])
+    status <- statuses[min(length(requests[[id]]), length(statuses))]
+    res$set_status(status)$send_json(list(status = status), auto_unbox = TRUE)
+  }
+  app$get("/api/:id", answer)
+  app$post("/api/:id", answer)
+  app$get("/requests/:id", function(req, res) {
+    requests <- req$app$locals$requests[[req$params$id]]
+    res$send_json(if (is.null(requests)) list() else requests, auto_unbox = TRUE)
+  })
+  app
+}
+
+if (requireNamespace("webfakes", quietly = TRUE)) {
+  fake_api_server <- webfakes::local_app_process(fake_api_app())
+}
+fake_api_ids <- 0
+
+# a fake API that answers with a sequence of status codes
 local_fake_api <- function(statuses, env = parent.frame()) {
+  skip_on_cran()
   skip_if_not_installed("webfakes")
   local_mocked_bindings(
     api_cooldown_seconds = function() 0,
@@ -11,33 +44,14 @@ local_fake_api <- function(statuses, env = parent.frame()) {
     .env = env
   )
 
-  app <- webfakes::new_app()
-  app$use(webfakes::mw_json())
-  app$locals$calls <- 0
-  app$locals$requests <- list()
-  app$locals$statuses <- statuses
-  answer <- function(req, res) {
-    locals <- req$app$locals
-    locals$calls <- locals$calls + 1
-    locals$requests[[locals$calls]] <- list(method = req$method, json = req$json)
-    req$app$locals <- locals
-    status <- locals$statuses[min(locals$calls, length(locals$statuses))]
-    res$set_status(status)$send_json(list(status = status), auto_unbox = TRUE)
-  }
-  app$get("/test", answer)
-  app$post("/test", answer)
-  # the server runs in another process: the recorded requests are read with a request
-  app$get("/requests", function(req, res) {
-    res$send_json(req$app$locals$requests, auto_unbox = TRUE)
-  })
-
-  server <- webfakes::local_app_process(app, .local_envir = env)
+  fake_api_ids <<- fake_api_ids + 1
+  id <- as.character(fake_api_ids)
   requests <- function() {
-    resp <- httr2::req_perform(httr2::request(server$url("/requests")))
+    resp <- httr2::req_perform(httr2::request(fake_api_server$url(paste0("/requests/", id))))
     httr2::resp_body_json(resp)
   }
   list(
-    url = server$url("/test"),
+    url = fake_api_server$url(paste0("/api/", id), query = list(statuses = paste(statuses, collapse = ","))),
     calls = function() length(requests()),
     requests = requests
   )
